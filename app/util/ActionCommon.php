@@ -8,6 +8,7 @@
   // error_reporting(E_ERROR | E_WARNING | E_PARSE);
   // 引用公用类
   require_once $_SERVER['DOCUMENT_ROOT'].'/app/util/Common.php';
+  require_once $_SERVER['DOCUMENT_ROOT'].'/app/util/JsonResult.php';
 
   // 缓存设置
   header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

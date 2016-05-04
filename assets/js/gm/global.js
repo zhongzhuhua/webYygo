@@ -22,21 +22,71 @@ define(function(require, exports, module) {
     }
   };
 
-  // 微信登录
-  if ('sessionStorage' in window) {
-    var openid = ice.toEmpty(sessionStorage.getItem('openid'));
-    if (openid == '') {
-      var state = encodeURIComponent(location.href);
-      var redirect = 'http://' + _host + '/html/wx/code.html';
-      console.log('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + configs.appid() + '&redirect_uri=' + redirect + '&response_type=code&scope=snsapi_base&state=1&connect_redirect=1#wechat_redirect');
-      //location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + configs.appid() + '&redirect_uri=' + redirect + '&response_type=code&scope=snsapi_userinfo&state=' + state + '#wechat_redirect';
+  // 设置 session [openid][redirect]
+  var _session = {
+    set: function(k, v) {
+      if(!ice.isEmpty(k)) {
+        sessionStorage.setItem(k, ice.toEmpty(v));
+      }
+    },
+    get: function(k) {
+      return ice.isEmpty(k) ? '' : sessionStorage.getItem(k);
     }
-  }
+  };
+  exports.session = _session;
+
+  // 微信登录
+  exports.login = function() { 
+    var openid = ice.toEmpty(_session.get('openid'));
+    if (openid == '') {
+
+      // 登录成功后指向的地址
+      _session.set('redirect', encodeURIComponent(location.href));
+
+      // 微信跳转地址
+      var redirect = 'http://' + _host + '/html/wx/code.html';
+
+      // 跳转获取用户 code 值
+      var href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + configs.appid() + '&redirect_uri=' + redirect + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
+
+      // 测试下只要输出
+      if(ice.request('__ice__') == '1') {
+        console.log(href);
+      } else {
+        location.href = href;
+      }
+    } 
+
+    return this;
+  };
 
   // 公用调用
   var domMain = ice.query('.ice-main');
   var domArrow = ice.query('.ice-main .i-hide');
   var domRefresh = ice.query('.ice-refresh');
+
+  // 绑定下拉刷新
+  exports.bindScroll = function(ref, more) {
+    if(ref == null) {
+      ref = _reload;
+    }
+    ice.scrollY(domMain, {
+      arrow: domArrow,
+      refresh: domRefresh,
+      refreshFun: ref,
+      loadFun: more
+    });
+  };
+
+  // 最后一页
+  exports.scrollEnd = function() {
+    ice.addClass(domRefresh, 'i-last');
+  };
+
+  // 重置分页
+  exports.scrollStart = function() {
+    ice.removeClass(domRefresh, 'i-last');
+  };
 
   // 插件
   exports.ice = ice;
@@ -44,6 +94,11 @@ define(function(require, exports, module) {
   // 获取不含 # 之后的整个 url
   exports.getUrl = function() {
     return location.href.split('#')[0];
+  };
+
+  // 跳转
+  exports.go = function (url) {
+    location.href = url == null || url == '' ? '/' : url;
   };
 
   // 重新加载
@@ -117,28 +172,7 @@ define(function(require, exports, module) {
   };
   exports.mess = _mess;
 
-  // 绑定下拉刷新
-  exports.bindScroll = function(ref, more) {
-    if(ref == null) {
-      ref = _reload;
-    }
-    ice.scrollY(domMain, {
-      arrow: domArrow,
-      refresh: domRefresh,
-      refreshFun: ref,
-      loadFun: more
-    });
-  };
-
-  // 最后一页
-  exports.scrollEnd = function() {
-    ice.addClass(domRefresh, 'i-last');
-  };
-
-  // 重置分页
-  exports.scrollStart = function() {
-    ice.removeClass(domRefresh, 'i-last');
-  };
+  
 
   // 统一 ajax
   function _ajax(o) {
@@ -150,11 +184,34 @@ define(function(require, exports, module) {
       dataType: 'json',
       data: o.data == null ? {} : o.data,
       async: o.async,
-      success: function(data) {
+      success: function(result) {
+        try {
+          var status = result.status;
+          var msg = result.msg;
+          data = result.data;
+          if(status == '-1') {
+            _mess('系统维护中...');
+            return;
+          } else if(msg != null) {
+            _mess(msg);
+          }
+
+          // 成功后执行方法
+          if(status == '0') {
+            if (ice.isFunction(o.success)) {
+              o.success(data);
+            }
+          }
+        } catch (e) {
+          _mess('系统维护中...');
+        }
         // 公用处理
         if (ice.isFunction(o.success)) {
           o.success(data);
         }
+      },
+      error: function () {
+        _mess('网络异常，请稍后再试！');
       }
     });
   };

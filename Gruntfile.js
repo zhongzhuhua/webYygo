@@ -85,7 +85,7 @@ module.exports = function(grunt) {
       app: {
         files: [{
           expand: true,
-          src: ['app/**', 'wechat/**'],
+          src: ['app/**', 'action/**'],
           dest: 'dist/'
         }]
       }
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
         debounceDelay: 1000
       },
       app: {
-        files: ['app/**', 'wechat/**'],
+        files: ['app/**', 'action/**'],
         tasks: ['copy:app']
       },
       lib: {
@@ -193,6 +193,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', '默认任务', function() {
-    grunt.task.run(['concat', 'cssmin', 'uglify', 'includereplace'])
+    grunt.task.run(['concat', 'cssmin', 'uglify', 'includereplace', 'htmlmin', 'copy'])
   });
 };

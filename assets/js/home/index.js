@@ -1,8 +1,14 @@
 define(function(require, exports, module) {
-  var gm = require('global');
+  var gm = require('global').login();
   var ice = gm.ice;
+ 
+  // 初始化
+  (function() {
 
-  gm.bindScroll(null, function() {
-    console.log('more');
-  });
+    // 绑定滑动事件
+    gm.bindScroll(null, function() {
+      console.log('more');
+    });
+
+  })();
 });

@@ -7,9 +7,10 @@
     /** 
      * 记录系统日志
      * @param type 错误位置 action bll
+     * @param funName 错误的方法
      * @param mess 错误信息
      */
-    public static function log($type, $mess) {
+    public static function log($type, $funName, $mess) {
       return;
     } 
 

@@ -11,6 +11,9 @@
     // 获取 jsapi_ticket 的地址
     static $ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=%s';
 
+    // 获取用户openid 的地址
+    static $openIdUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code';
+
     // access_token 存放路径
     static $tokenPath = '/cache/wechatToken.txt';
 
@@ -25,15 +28,20 @@
      * @param echostr 加密成功后的返回值
      */
     static function checkSignature($signature, $timestamp, $nonce, $echostr) {
-      $token = configs::$wechat['token'];
-      // 微信加密签名算法
-      $tmpArr = array($token, $timestamp, $nonce);
-      sort($tmpArr, SORT_STRING);
-      $tmpArr = implode($tmpArr);
-      $tmpStr = sha1($tmpArr);
+      try {
+        $token = configs::$wechat['token'];
+        // 微信加密签名算法
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr, SORT_STRING);
+        $tmpArr = implode($tmpArr);
+        $tmpStr = sha1($tmpArr);
 
-      // 判断是否加密成功
-      return $tmpStr == $signature ? $echostr : '';
+        // 判断是否加密成功
+        return $tmpStr == $signature ? $echostr : '';
+      } catch(Exception $e) {
+        gm::log('WechatUtil', 'checkSignature', $e);
+        return '';
+      }
     }
 
     /**
@@ -42,24 +50,29 @@
      * @return 解析后的 signature
      */
     static function buildSignature($url) {
-      $jsapiTicket = WechatUtil::getJsApiTicket();
-      $timestamp = time();
-      $nonceStr = WechatUtil::createNonceStr();
+      try {
+        $jsapiTicket = WechatUtil::getJsApiTicket();
+        $timestamp = time();
+        $nonceStr = WechatUtil::createNonceStr();
 
-      // 这里参数的顺序要按照 key 值 ASCII 码升序排序
-      $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+        // 这里参数的顺序要按照 key 值 ASCII 码升序排序
+        $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
 
-      $signature = sha1($string);
+        $signature = sha1($string);
 
-      $signPackage = array(
-        "appId"     => configs::$wechat['appid'],
-        "nonceStr"  => $nonceStr,
-        "timestamp" => $timestamp,
-        "url"       => $url,
-        "signature" => $signature,
-        "rawString" => $string
-      );
-      return $signPackage;
+        $signPackage = array(
+          "appId"     => configs::$wechat['appid'],
+          "nonceStr"  => $nonceStr,
+          "timestamp" => $timestamp,
+          "url"       => $url,
+          "signature" => $signature,
+          "rawString" => $string
+        );
+        return $signPackage;
+      } catch(Exception $e) {
+        gm::log('WechatUtil', 'buildSignature', $e);
+        return '';
+      }
     }
 
     // 随机字符串
@@ -80,6 +93,7 @@
       try {
         $result = file_get_contents($_SERVER['DOCUMENT_ROOT'].WechatUtil::$tokenPath);
       } catch(Exception $e) {
+        gm::log('WechatUtil', 'getAccessToken', $e);
         $result = '';
       }
       return $result;
@@ -93,6 +107,7 @@
       try {
         $result = file_get_contents($_SERVER['DOCUMENT_ROOT'].WechatUtil::$ticketPath);
       } catch(Exception $e) {
+        gm::log('WechatUtil', 'getJsApiTicket', $e);
         $result = '';
       }
       return $result;
@@ -125,7 +140,8 @@
 
       } catch(Exception $e) { 
         if($myfile != null) fclose($myfile);
-        throw $e;
+        gm::log('WechatUtil', 'setAccessToken', $e);
+        return '';
       }
 
       return $token;
@@ -145,7 +161,7 @@
         // 获取 access_token 
         $result = gm::http($url);
 
-        // 解析 json {"ticket:"","expires_in":7200 ... }
+        // 解析 json {"ticket": "", "expires_in":7200 ... }
         $json = json_decode($result, true);
 
         // 设置 jsapi_ticket
@@ -158,10 +174,38 @@
 
       } catch(Exception $e) { 
         if($myfile != null) fclose($myfile);
-        throw $e;
+        gm::log('WechatUtil', 'setJsApiTicket', $e);
+        return '';
       }
 
       return $ticket;
+    }
+
+    /**
+     * 获取用户 opendid
+     * @param code 用户授权码
+     * @return 用户 openid
+     */
+    static function getOpenId($code) {
+      $openid = '';
+      try {
+        if(!gm::isNull($code)) {
+          $url = sprintf(WechatUtil::$openIdUrl, configs::$wechat['appid'], configs::$wechat['appsecret'], $code);
+
+          // 获取 openId 
+          $result = gm::http($url);
+
+          // 解析 json {"access_token":"", "refresh_token":"", "openid": "" ... }
+          $json = json_decode($result, true);
+
+          // 获取用户 openid
+          $openid = $json['openid'];
+        }
+      } catch(Exception $e) {
+        gm::log('WechatUtil', 'getOpenId', $e);
+      }
+
+      return $openid;
     }
   }
 ?>
