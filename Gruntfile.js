@@ -193,6 +193,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', '默认任务', function() {
-    grunt.task.run(['concat', 'cssmin', 'uglify', 'includereplace'])
+    grunt.task.run(['includereplace', 'htmlmin', 'concat', 'cssmin', 'uglify', 'copy'])
   });
 };
