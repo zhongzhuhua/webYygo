@@ -10,7 +10,7 @@
     request: function(key) {
       var s = location.search.match(new RegExp('[?&]' + key + '=([^&]*)(&?)', 'i'));
       return (s == undefined || s == 'undefined' ? '' : s ? s[1] : s).replace(/[\<\>]/g, '');
-    },
+    }, 
     // 去掉 html 字符串
     removeAttr: function(s) {
       return s == null ? '' : s.replace(/<|>|\&/g, ' ');
@@ -104,7 +104,7 @@
     parseInt: function(str) {
       try {
         var v = parseInt(str, 10);
-        return isNaN(v) || v == undefined ? 0 : v;
+        return isNaN(v) || v == null ? 0 : v;
       } catch (e) {
         return 0;
       }
@@ -112,7 +112,7 @@
     parseFloat: function(str, point) {
       try {
         var v = parseFloat(str);
-        return isNaN(v) || v == undefined ? 0 : v.toFixed(point == undefined ? 0 : point);
+        return isNaN(v) || v == null ? 0 : point == null ? v : v.toFixed(point);
       } catch (e) {
         return 0;
       }
@@ -120,7 +120,7 @@
     parseDate: function(str) {
       var date = null;
       try {
-        if (str != undefined && str != '') {
+        if (str != null && str != '') {
           var regNum = /^[1-3][0-9]{7}$/;
           if (str instanceof Date) {
             date = str
@@ -330,7 +330,7 @@
       children: 'div',
       // 选中时附加的 class 样式
       chooseClass: '',
-      // 默认选中
+      // 默认选中下标，如果是 -1 则找第一个 chooseClass
       chooseIndex: 0,
       // function 绑定 click 事件执行的方法
       success: null
@@ -359,7 +359,14 @@
     var $doms = ice.queryAll(options.children, $domSel);
     var len = $doms == null ? 0 : $doms.length;
     if (len > 0) {
-      var $choose = $doms[options.chooseIndex];
+      var $choose = null; 
+      var cidx = options.chooseIndex;
+      if(cidx != null && cidx == '-1') {
+        $choose = ice.query('.' + options.chooseClass, $domSel);
+      } else {
+        $choose = $doms[options.chooseIndex];
+      }
+
       ice.addClass($choose, clazz);
       for (var i = 0; i < len; i++) {
         (function(idx) {
