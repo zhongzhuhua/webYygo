@@ -43,7 +43,6 @@ a {
   bottom: 0;
   width: 100%;
   height: 3rem;
-  line-height: 3rem;
   background-color: #f3f3f3;
   z-index: 2 !important;
 }
@@ -133,29 +132,6 @@ a {
 
 /* ======== 公用颜色 ======== */
 
-
-/* [bg- col-]*/
-
-/* 蓝色 */
-
-.col-blue {
-  color: #2b7aff;
-}
-
-
-/* 黑色 */
-
-.col-black {
-  color: #18191a;
-}
-
-
-/* 白色 */
-
-.col-white {
-  color: #fff;
-}
-
 /* 灰色 */
 .col-grey {
   color: #333;
@@ -168,6 +144,23 @@ a {
 
 .col-green01 {
   color: #ade870;
+}
+
+/* 灰色 */
+.col-grey {
+  color: #494b4c;
+}
+
+.col-grey01 {
+  color: #7a7c80;
+}
+
+.col-grey02 {
+  color: #abaeb2;
+}
+
+.col-grey03 {
+  color: #c4c7cc;
 }
 
 /* ======== 公用颜色 ======== */
@@ -224,6 +217,3 @@ a {
 }
 
 /* ======== 公用文本框  =========== */
-
-/* ======== 公用数值 ========= */
-/* ======== 公用数值 ========= */

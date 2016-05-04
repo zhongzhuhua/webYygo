@@ -10,7 +10,7 @@ define(function(require, exports, module) {
   var configs = {
     // 获取公众号 appid
     appid: function() {
-      if(_istest) {
+      if (_istest) {
         return 'wxea3db525582377d1';
       } else {
         return 'wx2bb7a8b9edef392a';
@@ -23,9 +23,9 @@ define(function(require, exports, module) {
   };
 
   // 微信登录
-  if('sessionStorage' in window) {
+  if ('sessionStorage' in window) {
     var openid = ice.toEmpty(sessionStorage.getItem('openid'));
-    if(openid == '') {
+    if (openid == '') {
       var state = encodeURIComponent(location.href);
       var redirect = 'http://' + _host + '/html/wx/code.html';
       console.log('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + configs.appid() + '&redirect_uri=' + redirect + '&response_type=code&scope=snsapi_base&state=1&connect_redirect=1#wechat_redirect');
@@ -45,7 +45,13 @@ define(function(require, exports, module) {
   exports.getUrl = function() {
     return location.href.split('#')[0];
   };
- 
+
+  // 重新加载
+  function _reload() {
+    location.reload();
+  };
+  exports.reload = _reload;
+
   // 打开弹窗
   exports.open = function(content) {
     return layer.open({
@@ -55,13 +61,13 @@ define(function(require, exports, module) {
   };
 
   // 提示
-  exports.alert = function(content, _callback) {
+  exports.alert = function(content, callback) {
     return layer.open({
       content: content,
       btn: ['朕知道了'],
       yes: function(index) {
-        if(ice.isFunction(_callback)) {
-          _callback();
+        if (ice.isFunction(callback)) {
+          callback();
         } else {
           layer.close(index);
         }
@@ -112,12 +118,15 @@ define(function(require, exports, module) {
   exports.mess = _mess;
 
   // 绑定下拉刷新
-  exports.bindScroll = function(_reload, _load) {
+  exports.bindScroll = function(ref, more) {
+    if(ref == null) {
+      ref = _reload;
+    }
     ice.scrollY(domMain, {
       arrow: domArrow,
       refresh: domRefresh,
-      refreshFun: _reload,
-      loadFun: _load
+      refreshFun: ref,
+      loadFun: more
     });
   };
 
@@ -130,7 +139,7 @@ define(function(require, exports, module) {
   exports.scrollStart = function() {
     ice.removeClass(domRefresh, 'i-last');
   };
- 
+
   // 统一 ajax
   function _ajax(o) {
     o = o == null ? {} : o;
@@ -143,11 +152,11 @@ define(function(require, exports, module) {
       async: o.async,
       success: function(data) {
         // 公用处理
-        if(ice.isFunction(o.success)) {
+        if (ice.isFunction(o.success)) {
           o.success(data);
         }
       }
-    }); 
+    });
   };
   exports.ajax = _ajax;
 });

@@ -181,14 +181,12 @@ img {
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1462258178_197537.eot');
-  /* IE9*/
-  src: url('//at.alicdn.com/t/font_1462258178_197537.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1462258178_197537.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1462258178_197537.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1462258178_197537.svg#iconfont') format('svg');
-  /* iOS 4.1- */
-}
+  src: url('//at.alicdn.com/t/font_1462352224_9136443.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1462352224_9136443.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1462352224_9136443.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1462352224_9136443.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1462352224_9136443.svg#iconfont') format('svg'); /* iOS 4.1- */
+}             
 
 i {
   font-family: 'iconfont' !important;
@@ -197,8 +195,11 @@ i {
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
   display: inline-block;
-  margin-left: .14rem;
   vertical-align: middle;
+}
+
+.icon-one:before {
+  content: '\e60a';
 }
 
 .icon-medal:before {
@@ -229,8 +230,8 @@ i {
   content: '\e606';
 }
 
-.icon-photo:before {
-  content: '\e607';
+.icon-camera:before {
+  content: '\e610';
 }
 
 .icon-plane:before {
@@ -238,5 +239,21 @@ i {
 }
 
 .icon-car:before {
-  content: '\e609';
+  content: '\e60f';
+}
+
+.icon-123:before {
+  content: '\e60c';
+}
+
+.icon-clock:before {
+  content: '\e60b';
+}
+
+.icon-email:before {
+  content: '\e60d';
+}
+
+.icon-user:before {
+  content: '\e60e';
 }

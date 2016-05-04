@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     concat: {
       // 合并公用 css
       commonCss: {
-        src: ['assets/lib/layer.mobile/layer/need/layer.css', 'assets/css/global.css', 'assets/css/layout.css', 'assets/css/dev.css'],
+        src: ['assets/lib/layer.mobile/layer/need/layer.css', 'assets/css/global.css', 'assets/css/layout.css', 'assets/css/dev.css', 'assets/css/theme-orange.css'],
         dest: 'assets/css/common.css'
       },
       // 合并插件 js
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
       app: {
         files: [{
           expand: true,
-          src: ['app/**', 'action/**'],
+          src: ['app/**', 'wechat/**'],
           dest: 'dist/'
         }]
       }
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
         debounceDelay: 1000
       },
       app: {
-        files: ['app/**', 'action/**'],
+        files: ['app/**', 'wechat/**'],
         tasks: ['copy:app']
       },
       lib: {
@@ -143,7 +143,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: 'assets/js/**/*',
-        tasks: ['jsmin']
+        tasks: ['uglify']
       },
       css: {
         files: 'assets/css/*.css',
@@ -193,6 +193,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', '默认任务', function() {
-    grunt.task.run(['includereplace', 'htmlmin', 'concat', 'cssmin', 'uglify', 'copy'])
+    grunt.task.run(['concat', 'cssmin', 'uglify', 'includereplace'])
   });
 };
