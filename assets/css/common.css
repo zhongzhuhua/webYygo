@@ -286,87 +286,26 @@ img {
 .ice-main.ice-main-nav {
   top: 3rem !important;
 }
-/* ========== 框架布局 ========== */
+/* ========== 重写框架布局 ========== */
 
 a {
   color: inherit;
 }
 
-.ice {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.ice div {
-  z-index: 1;
-}
-
-.ice-refresh {
-  width: 100%;
-  height: 3rem;
-  line-height: 3rem;
-  text-align: center;
-  color: #aaa;
-}
-
-.ice-refresh:after {
-  content: '上拉加载更多';
-}
-
-.ice-nav {
-  position: relative;
-  width: 100%;
-  height: 3rem;
-  line-height: 3rem;
-  background-color: #f3f3f3;
-  z-index: 2 !important;
-}
-
-.ice-bar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 3rem;
-  background-color: #f3f3f3;
-  z-index: 2 !important;
-}
-
-.ice-main {
-  position: absolute;
-  width: 100%;
-  top: -5rem;
-  bottom: 0rem;
-  left: 0;
-  right: 0;
-  overflow: auto;
+.ice-bar .i-link {
+  display: block;
+  border-top: 1px solid #D6D4D0;
+  border-right: 1px solid #D6D4D0;
+  font-size: .96rem;
 }
 
 
-/* 有 ice-bar 的 ice-main */
+/* ========== 重写框架布局 ========== */
 
-.ice-main.ice-main-bar {
-  bottom: 3rem !important;
-}
 
-.ice-main .i-hide {
-  height: 5rem;
-  line-height: 5rem;
-  text-align: center;
-}
+/* ========== 公用提示信息 ========== */
 
-.ice-main .i-hide:after {
-  content: '↓'
-}
-
-.ice-nav ~ .ice-main {
-  top: -2rem;
-}
-
-.ice-mess {
+.alert-mess {
   position: absolute;
   top: 0;
   left: 0;
@@ -380,13 +319,8 @@ a {
   overflow: hidden;
 }
 
-.ice-pdlr {
-  padding-left: .6rem;
-  padding-right: .6rem;
-}
 
-
-/* ========== 框架布局 ========== */
+/* ========== 公用提示信息 ========== */
 
 
 /* ======= 重写 layer ========= */
@@ -403,13 +337,13 @@ a {
   padding: 0;
 }
 
-.ice-mess.layermchild {
+.alert-mess.layermchild {
   z-index: 3 !important;
   max-width: 100% !important;
   border-radius: 0 !important;
 }
 
-.ice-mess .layermcont {
+.alert-mess .layermcont {
   line-height: 1.8rem !important;
   line-height: none;
 }
@@ -420,12 +354,16 @@ a {
 
 /* ======== 公用颜色 ======== */
 
+
 /* 灰色 */
+
 .col-grey {
   color: #333;
 }
 
+
 /* 绿色 */
+
 .col-green {
   color: #51c332;
 }
@@ -434,7 +372,9 @@ a {
   color: #ade870;
 }
 
+
 /* 灰色 */
+
 .col-grey {
   color: #494b4c;
 }
@@ -450,6 +390,7 @@ a {
 .col-grey03 {
   color: #c4c7cc;
 }
+
 
 /* ======== 公用颜色 ======== */
 
@@ -504,18 +445,22 @@ a {
   padding: .8rem .5rem;
 }
 
+
 /* ======== 公用文本框  =========== */
+
 
 /* iconfont */
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1462352224_9136443.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1462352224_9136443.eot');
+  /* IE9*/
   src: url('//at.alicdn.com/t/font_1462352224_9136443.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
   url('//at.alicdn.com/t/font_1462352224_9136443.woff') format('woff'), /* chrome、firefox */
   url('//at.alicdn.com/t/font_1462352224_9136443.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1462352224_9136443.svg#iconfont') format('svg'); /* iOS 4.1- */
-}             
+  url('//at.alicdn.com/t/font_1462352224_9136443.svg#iconfont') format('svg');
+  /* iOS 4.1- */
+}
 
 i {
   font-family: 'iconfont' !important;
@@ -587,7 +532,9 @@ i {
   content: '\e60e';
 }
 
+
 /* iconfont */
+
 /* user-bottom */
 
 .user-bottom .link {
