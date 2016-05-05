@@ -165,7 +165,7 @@ define(function(require, exports, module) {
   function _mess(m) {
     return layer.open({
       shade: false,
-      className: 'ice-mess',
+      className: 'alert-mess',
       content: (m == null || m == '' ? '操作成功' : m),
       time: 3
     });
