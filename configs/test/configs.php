@@ -11,5 +11,14 @@
       'appid' => 'wxea3db525582377d1',
       'appsecret' => '042eac868be10c5c38fe591cac802465'
     );
+
+    // 数据库配置
+    static $dblink = array(
+      "DB_HOST" => "localhost",
+      "DB_BASE" => "com_yyg",
+      "DB_USER" => "root",
+      "DB_PWD"  => "123456",
+      "DB_PORT" => "3306"
+    );
   }
 ?>

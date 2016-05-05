@@ -28,6 +28,7 @@
      * @param echostr 加密成功后的返回值
      */
     static function checkSignature($signature, $timestamp, $nonce, $echostr) {
+      $tmpArr = null;
       try {
         $token = configs::$wechat['token'];
         // 微信加密签名算法
@@ -35,13 +36,12 @@
         sort($tmpArr, SORT_STRING);
         $tmpArr = implode($tmpArr);
         $tmpStr = sha1($tmpArr);
-
-        // 判断是否加密成功
-        return $tmpStr == $signature ? $echostr : '';
       } catch(Exception $e) {
-        gm::log('WechatUtil', 'checkSignature', $e);
-        return '';
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
+
+      // 判断是否加密成功
+      return $tmpStr == $signature ? $echostr : '';
     }
 
     /**
@@ -50,6 +50,7 @@
      * @return 解析后的 signature
      */
     static function buildSignature($url) {
+      $signPackage = null;
       try {
         $jsapiTicket = WechatUtil::getJsApiTicket();
         $timestamp = time();
@@ -68,11 +69,10 @@
           "signature" => $signature,
           "rawString" => $string
         );
-        return $signPackage;
       } catch(Exception $e) {
-        gm::log('WechatUtil', 'buildSignature', $e);
-        return '';
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
+      return $signPackage;
     }
 
     // 随机字符串
@@ -93,8 +93,7 @@
       try {
         $result = file_get_contents($_SERVER['DOCUMENT_ROOT'].WechatUtil::$tokenPath);
       } catch(Exception $e) {
-        gm::log('WechatUtil', 'getAccessToken', $e);
-        $result = '';
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
       return $result;
     }
@@ -107,8 +106,7 @@
       try {
         $result = file_get_contents($_SERVER['DOCUMENT_ROOT'].WechatUtil::$ticketPath);
       } catch(Exception $e) {
-        gm::log('WechatUtil', 'getJsApiTicket', $e);
-        $result = '';
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
       return $result;
     }
@@ -140,8 +138,7 @@
 
       } catch(Exception $e) { 
         if($myfile != null) fclose($myfile);
-        gm::log('WechatUtil', 'setAccessToken', $e);
-        return '';
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
 
       return $token;
@@ -174,8 +171,7 @@
 
       } catch(Exception $e) { 
         if($myfile != null) fclose($myfile);
-        gm::log('WechatUtil', 'setJsApiTicket', $e);
-        return '';
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
 
       return $ticket;
@@ -202,7 +198,7 @@
           $openid = $json['openid'];
         }
       } catch(Exception $e) {
-        gm::log('WechatUtil', 'getOpenId', $e);
+        gm::log(__CLASS__, __FUNCTION__, $e);
       }
 
       return $openid;

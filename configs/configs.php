@@ -11,5 +11,14 @@
       'appid' => 'wxea3db525582377d1',
       'appsecret' => '042eac868be10c5c38fe591cac802465'
     );
+
+    // 数据库配置
+    static $dblink = array(
+      "DB_HOST" => "my2886337.xincache1.cn",
+      "DB_BASE" => "my2886337",
+      "DB_USER" => "my2886337",
+      "DB_PWD"  => "suxueduwang",
+      "DB_PORT" => "3306"
+    );
   }
 ?>
