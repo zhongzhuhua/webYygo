@@ -91,7 +91,7 @@ module.exports = function(grunt) {
       action: {
         files: [{
           expand: true,
-          src: ['action/**'],
+          src: ['wechat/**'],
           dest: 'dist/'
         }]
       },
@@ -156,7 +156,7 @@ module.exports = function(grunt) {
 
       // 接口文件
       action: {
-        files: ['action/**'],
+        files: ['wechat/**'],
         tasks: ['copy:action']
       },
 
@@ -168,13 +168,13 @@ module.exports = function(grunt) {
 
       // 合并压缩 common.js
       commonJs: {
-        files: ['assets/lib/*.js', 'assets/lib/ice.scrollY/main.js'],
+        files: ['assets/lib/*.js', 'assets/lib/ice*/*.js'],
         tasks: ['concat:commonJs', 'uglify:commonJs']
       },
 
       // 合并压缩 common.css
       commonCss: {
-        files: ['assets/css/*.css', 'assets/lib/ice.scrollY/main.css'],
+        files: ['assets/css/*.css', 'assets/lib/ice*/*.css'],
         tasks: ['concat:commonCss', 'cssmin:commonCss' ]
       },
 
