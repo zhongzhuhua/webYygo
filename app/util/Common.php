@@ -9,10 +9,16 @@
      * @param type 错误位置 action bll
      * @param funName 错误的方法
      * @param mess 错误信息
+     * @param logkey 日志标识 time().'_'.gm::getcode(4)
      */
-    public static function log($type, $funName, $mess) {
+    public static function log($type, $funName, $mess, $logkey) {
       return;
-    } 
+    }
+
+    // 获取日志标识
+    public static function getLogKey() {
+      return time().'_'.gm::getcode(4);
+    }
 
     // ================== 日志操作 ======================
 
@@ -134,6 +140,7 @@
     // 获取校验提示字符串
     public static function regMess($key) {
       static $configs = array(
+        openId => '获取微信账号失败',
         needLogin => '请先登录',
         mobile => '请输入正确的手机号码',
         mobileCheck => '请输入接收验证码的手机号',
@@ -215,8 +222,8 @@
      * @return 返回字符串
      */
     public static function getcode($len = 4, $type = 0) {
-      $len = gm::regInt($len) ? 4 : $len;
-      if($len <= 0 || $len >= 9) {
+      $len = gm::regInt($len) ? $len : 4;
+      if($len <= 0 || $len >= 20) {
         $len = 4;
       }
       $chars = '0123456789';

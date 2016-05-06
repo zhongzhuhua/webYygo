@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
   require('layer');
 
+  // ajax 数据
+  exports.path = '';
   // 域名和端口
   var _host = location.host;
   // 是否测试
@@ -171,49 +173,4 @@ define(function(require, exports, module) {
     });
   };
   exports.mess = _mess;
-
-  
-
-  // 统一 ajax
-  function _ajax(o) {
-    o = o == null ? {} : o;
-    ice.ajax({
-      url: o.url,
-      type: 'post',
-      cache: false,
-      dataType: 'json',
-      data: o.data == null ? {} : o.data,
-      async: o.async,
-      success: function(result) {
-        try {
-          var status = result.status;
-          var msg = result.msg;
-          data = result.data;
-          if(status == '-1') {
-            _mess('系统维护中...');
-            return;
-          } else if(msg != null) {
-            _mess(msg);
-          }
-
-          // 成功后执行方法
-          if(status == '0') {
-            if (ice.isFunction(o.success)) {
-              o.success(data);
-            }
-          }
-        } catch (e) {
-          _mess('系统维护中...');
-        }
-        // 公用处理
-        if (ice.isFunction(o.success)) {
-          o.success(data);
-        }
-      },
-      error: function () {
-        _mess('网络异常，请稍后再试！');
-      }
-    });
-  };
-  exports.ajax = _ajax;
 });

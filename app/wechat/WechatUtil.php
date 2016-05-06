@@ -37,7 +37,7 @@
         $tmpArr = implode($tmpArr);
         $tmpStr = sha1($tmpArr);
       } catch(Exception $e) {
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
 
       // 判断是否加密成功
@@ -70,7 +70,7 @@
           "rawString" => $string
         );
       } catch(Exception $e) {
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
       return $signPackage;
     }
@@ -93,7 +93,7 @@
       try {
         $result = file_get_contents($_SERVER['DOCUMENT_ROOT'].WechatUtil::$tokenPath);
       } catch(Exception $e) {
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
       return $result;
     }
@@ -106,7 +106,7 @@
       try {
         $result = file_get_contents($_SERVER['DOCUMENT_ROOT'].WechatUtil::$ticketPath);
       } catch(Exception $e) {
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
       return $result;
     }
@@ -138,7 +138,7 @@
 
       } catch(Exception $e) { 
         if($myfile != null) fclose($myfile);
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
 
       return $token;
@@ -171,7 +171,7 @@
 
       } catch(Exception $e) { 
         if($myfile != null) fclose($myfile);
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
 
       return $ticket;
@@ -198,7 +198,7 @@
           $openid = $json['openid'];
         }
       } catch(Exception $e) {
-        gm::log(__CLASS__, __FUNCTION__, $e);
+        gm::log(__CLASS__, __FUNCTION__, $e, gm::getLogKey());
       }
 
       return $openid;

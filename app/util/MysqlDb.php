@@ -4,10 +4,10 @@
   // 数据库链接
   class MysqlDb {
     // 数据库配置文件
-    protected $config = configs::$dblink;
-
+    protected $config = null;
     private $conn = null;
     public function __construct(){
+      $this->config = configs::$dblink;
       $this->getConn();
     }
 

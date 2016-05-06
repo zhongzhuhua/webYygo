@@ -49,6 +49,12 @@ a {
   padding: 0;
 }
 
+.layermbtn {
+  border-radius: 1rem;
+  -webkit-border-radius: 1rem;
+  overflow: hidden;
+}
+
 .alert-mess.layermchild {
   z-index: 3 !important;
   max-width: 100% !important;

@@ -91,7 +91,7 @@ module.exports = function(grunt) {
       action: {
         files: [{
           expand: true,
-          src: ['wechat/**'],
+          src: ['action/**'],
           dest: 'dist/'
         }]
       },
@@ -156,7 +156,7 @@ module.exports = function(grunt) {
 
       // 接口文件
       action: {
-        files: ['wechat/**'],
+        files: ['action/**'],
         tasks: ['copy:action']
       },
 
