@@ -308,11 +308,6 @@ a {
   bottom: 3rem;
 }
 
-.ice.ice-have-nav .ice-refresh {
-  margin-top: 3rem;
-}
-
-
 /* ========== 重写框架布局 ========== */
 
 
@@ -580,3 +575,7 @@ i {
 	font-size: 4rem;
 }
 /* memo-icon */
+.te-col {
+  color: #f2460c;
+}
+ 
