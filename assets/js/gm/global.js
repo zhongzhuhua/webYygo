@@ -63,8 +63,7 @@ define(function(require, exports, module) {
   };
 
   // 公用调用
-  var domMain = ice.query('.ice-main');
-  var domArrow = ice.query('.ice-main .i-hide');
+  var domMain = ice.query('.ice');
   var domRefresh = ice.query('.ice-refresh');
 
   // 绑定下拉刷新
@@ -73,7 +72,6 @@ define(function(require, exports, module) {
       ref = _reload;
     }
     ice.scrollY(domMain, {
-      arrow: domArrow,
       refresh: domRefresh,
       refreshFun: ref,
       loadFun: more
