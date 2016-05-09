@@ -1,14 +1,70 @@
-/* ========== 重写框架布局 ========== */
+/* ========== 框架布局 ========== */
 
 a {
   color: inherit;
 }
 
+/* 顶部 */
+.ice-nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.ice-nav a {
+  display: block;
+}
+
+.ice-nav >div {
+  display: block;
+  height: 100%;
+  font-size: 1rem;
+  border-bottom: 1px solid #e6e3da;
+  text-align: center;
+  z-index: 2;
+}
+
+.ice-nav >div.nav-choose {
+  height: 2.78rem;
+  border-bottom: .3rem solid #fa702a;
+  color: #fa702a;
+}
+
+/* 底部 */
+.ice-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  z-index: 2;
+}
+
 .ice-bar .i-link {
   display: block;
-  border-top: 1px solid #D6D4D0;
-  border-right: 1px solid #D6D4D0;
+  border-top: 1px solid #d6d4d0;
+  border-right: 1px solid #d6d4d0;
   font-size: .96rem;
+}
+
+/* 重写 */
+
+
+.ice.ice-have-nav {
+  top: 3rem;
+}
+
+.ice.ice-have-bar {
+  bottom: 3rem;
+}
+
+.ice.ice-have-nav .ice-refresh {
+  margin-top: 3rem;
 }
 
 
