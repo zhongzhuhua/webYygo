@@ -4,13 +4,29 @@
 	@@include('../../modules/meta.html', {"title": "一元购"})
 </head>
 <body> 
-  <div class="ice ice-have-bar">
+	@@include('../../modules/nav-sort.html') 
+  <div class="ice ice-have-nav ice-have-bar">
     <div class="ice-refresh"><span></span></div>
     <div class="ice-main">
-      首页内容
+      <!-- 产品列表 begin -->
+      <div class="prod-list" id="list">
+      </div>
+      <div class="hidden" id="listTemp">
+        <a href="javascript:;" class="sec border-box">
+          <div class="image">
+            {{img}}
+          </div>
+          <div class="name">
+            {{name}}
+          </div>
+        </a>
+      </div>
+      <div class="clear"></div>
+      <!-- 产品列表 -->
+      <div class="ice-load"></div>
     </div>
   </div>
-  @@include('../../modules/user-bottom.html', {"index": "te-col"}) 
+  @@include('../../modules/user-bottom.html', {"index": "te-col"})
 </body>
 @@include('../../modules/script.html')
 <script>

@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     concat: {
       // 合并公用 css
       commonCss: {
-        src: ['assets/lib/layer.mobile/layer/need/layer.css', 'assets/css/global.css', 'assets/lib/ice.scrollY/main.css', 'assets/css/layout.css', 'assets/css/dev.css', 'assets/css/theme-orange.css'],
+        src: ['assets/lib/layer.mobile/layer/need/layer.css', 'assets/css/global.css', 'assets/lib/ice.scrollY/main.css', 'assets/css/layout.css', 'assets/css/dev.css', 'assets/css/theme-default.css'],
         dest: 'assets/css/common.css'
       },
       // 合并 commonjs

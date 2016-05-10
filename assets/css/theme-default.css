@@ -1,0 +1,37 @@
+.te-col {
+  color: #fe3068;
+}
+
+
+/* 顶部链接 */
+
+.ice-nav .link {
+  border-color: #e6e3da;
+}
+
+.ice-nav .link.choose {
+  border-color: #fe3068;
+  color: #fe3068;
+}
+
+
+/* 顶部链接 */
+
+.nav-sort .last {
+  border-color: #d6d4d0;
+}
+
+
+/* 底部链接 */
+
+.ice-bar .link {
+  border-color: #d6d4d0;
+}
+
+
+/* 一元购产品列表 */
+
+.prod-list,
+.prod-list .sec {
+  border-color: #e6e3da;
+}

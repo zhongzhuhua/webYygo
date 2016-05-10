@@ -27,10 +27,10 @@ section {
 }
 
 body {
-  overflow-x: hidden;
   font-family: 'Microsoft YaHei', 'PingHei', 'Lucida Grande', 'Lucida Sans Unicode', 'STHeiti', 'Helvetica', 'Arial', 'Verdana', 'sans-serif'; 
-  color: #494b4c;
-  font-size: 85%;
+  color: #7a7c80;
+  font-size: 88%;
+  overflow-x: hidden;
   /* 关闭字体自动调整大小 */
   -webkit-text-size-adjust: none;
   /* 滚动顺畅 */
@@ -38,7 +38,7 @@ body {
 }
 
 a {
-  color: #494b4c;
+  color: #7a7c80;
   text-decoration: none;
   display: inline-block;
 }
@@ -51,37 +51,9 @@ input {
   -webkit-box-shadow: none;
 }
 
-@media screen and (max-width: 360px) {
-  html {
-    font-size: 85%;
-  }
-}
-
-@media screen and (min-width: 361px) and (max-width: 480px) {
-  body {
-    font-size: 90%;
-  }
-}
-
-@media screen and (min-width: 481px) and (max-width: 640px) {
-  body {
-    font-size: 95%;
-  }
-}
-
-@media screen and (min-width: 641px) and (max-width: 800px) {
-  body {
-    font-size: 100%;
-  }
-}
-
-@media screen and (min-width: 801px) {
-  body {
-    font-size: 105%;
-  }
-}
-
 a,
+span,
+div,
 img {
   /* 长按不要呼出默认菜单 */
   -webkit-touch-callout: none;
@@ -89,6 +61,10 @@ img {
   -webkit-tap-highlight-color: transparent;
   /* 不要选中文本 */
   user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -ms-user-select: -ms-none;
+  -o-user-select: none;
 }
 
 a {
@@ -98,6 +74,7 @@ a {
 img {
   width: 100%;
   height: 100%;
+  border: 0;
 }
 
 .user-select {
@@ -138,6 +115,15 @@ img {
   display: block;
 }
 
+.border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+
+  box-sizing: border-box;
+}
+
 .txt-l {
   text-align: left;
 }
@@ -175,9 +161,6 @@ img {
 .hidden {
   display: none !important;
 }
-
-
-
 /* 框架入口 */
 body {
   margin: 0;
@@ -190,7 +173,7 @@ body {
   width: 100%;
   top: 0;
   bottom: 0;
-  overflow: auto;
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 
@@ -206,11 +189,10 @@ body {
 /* 刷新块 */
 
 .ice-refresh {
-  position: fixed;
-  top: -3rem;
+  position: absolute;
+  top: -2.5rem;
   width: 100%;
   height: 1rem;
-  padding-top: .5rem;
   padding-bottom: 1.5rem;
   text-align: center;
   color: #aaa;
@@ -245,41 +227,51 @@ body {
 }
 /* ========== 框架布局 ========== */
 
+div,
+a {
+  border-style: solid;
+  border-width: 0;
+}
+
 a {
   color: inherit;
 }
 
+.ice-nav,
+.ice-bar {
+  background-color: #fff;
+}
+
 /* 顶部 */
+
 .ice-nav {
   position: fixed;
   width: 100%;
   top: 0;
-  height: 3rem;
-  line-height: 3rem;
+  height: 2.4rem;
+  line-height: 2.3rem;
   text-align: center;
   z-index: 2;
 }
 
-.ice-nav a {
-  display: block;
-}
-
-.ice-nav >div {
+.ice-nav .link {
   display: block;
   height: 100%;
-  font-size: 1rem;
-  border-bottom: 1px solid #e6e3da;
+  border-bottom-width: 1px;
+  font-size: .86rem;
   text-align: center;
+  cursor: pointer;
   z-index: 2;
 }
 
-.ice-nav >div.nav-choose {
-  height: 2.78rem;
-  border-bottom: .3rem solid #fa702a;
-  color: #fa702a;
+.ice-nav .link.choose {
+  height: 2.2rem;
+  border-bottom-width: .24rem;
 }
 
+
 /* 底部 */
+
 .ice-bar {
   position: fixed;
   width: 100%;
@@ -290,23 +282,17 @@ a {
   z-index: 2;
 }
 
-.ice-bar .i-link {
-  display: block;
-  border-top: 1px solid #d6d4d0;
-  border-right: 1px solid #d6d4d0;
-  font-size: .96rem;
-}
 
 /* 重写 */
 
-
 .ice.ice-have-nav {
-  top: 3rem;
+  top: 2.4rem;
 }
 
 .ice.ice-have-bar {
   bottom: 3rem;
 }
+
 
 /* ========== 重写框架布局 ========== */
 
@@ -352,7 +338,7 @@ a {
 }
 
 .alert-mess.layermchild {
-  z-index: 3 !important;
+  z-index: 5 !important;
   max-width: 100% !important;
   border-radius: 0 !important;
 }
@@ -390,18 +376,14 @@ a {
 /* 灰色 */
 
 .col-grey {
-  color: #494b4c;
-}
-
-.col-grey01 {
   color: #7a7c80;
 }
 
-.col-grey02 {
+.col-grey01 {
   color: #abaeb2;
 }
 
-.col-grey03 {
+.col-grey02 {
   color: #c4c7cc;
 }
 
@@ -467,13 +449,11 @@ a {
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1462352224_9136443.eot');
-  /* IE9*/
-  src: url('//at.alicdn.com/t/font_1462352224_9136443.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1462352224_9136443.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1462352224_9136443.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1462352224_9136443.svg#iconfont') format('svg');
-  /* iOS 4.1- */
+  src: url('//at.alicdn.com/t/font_1462867817_2717898.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1462867817_2717898.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1462867817_2717898.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1462867817_2717898.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1462867817_2717898.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 i {
@@ -546,36 +526,126 @@ i {
   content: '\e60e';
 }
 
+.icon-type:before {
+  content: '\e607';
+}
 
 /* iconfont */
 
-/* user-bottom */
+/* user-bottom begin */
 
 .user-bottom .link {
   display: block;
-	padding-top: .3rem;
-  border-top: 1px solid #d6d4d0;
+  padding-top: .3rem;
+  border-top-width: 1px;
 }
 
 .user-bottom i {
   line-height: 1.5rem;
-	font-size: 1.32rem;
-	font-weight: 400;
+  font-size: 1.32rem;
+  font-weight: 400;
 }
 
 .user-bottom div {
   line-height: 1rem;
-	font-size: .68rem;
+  font-size: .68rem;
 }
+
 
 /* user-bottom */
 
-/* memo-icon */
+
+/* nav-sort begin */
+
+.nav-sort .long {
+  padding: 0 .6rem;
+}
+
+.nav-sort .last {
+  border-left-width: 0;
+}
+
+
+/* nav-sort */
+
+
+/* memo-icon begin */
+
 .memo-icon {
-	font-size: 4rem;
+  font-size: 4rem;
 }
+
+
 /* memo-icon */
-.te-col {
-  color: #f2460c;
+
+
+/* prod-list begin */
+
+.prod-list {
+  border-top-width: 1px;
 }
- 
+
+.prod-list .sec {
+  padding: 1rem .6rem;
+  float: left;
+  width: 50%;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  font-size: .76rem;
+  overflow: hidden;
+}
+
+.prod-list .sec:nth-of-type(even) {
+  border-right: none;
+}
+
+.prod-list .image {
+  width: 100%;
+  text-align: center;
+}
+
+.prod-list .image img {
+  width: 6rem;
+  height: 6rem;
+}
+
+
+/* prod-list */
+
+.te-col {
+  color: #fe3068;
+}
+
+
+/* 顶部链接 */
+
+.ice-nav .link {
+  border-color: #e6e3da;
+}
+
+.ice-nav .link.choose {
+  border-color: #fe3068;
+  color: #fe3068;
+}
+
+
+/* 顶部链接 */
+
+.nav-sort .last {
+  border-color: #d6d4d0;
+}
+
+
+/* 底部链接 */
+
+.ice-bar .link {
+  border-color: #d6d4d0;
+}
+
+
+/* 一元购产品列表 */
+
+.prod-list,
+.prod-list .sec {
+  border-color: #e6e3da;
+}

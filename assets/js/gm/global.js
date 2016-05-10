@@ -9,7 +9,7 @@ define(function(require, exports, module) {
   var _istest = _host.indexOf(':') > -1;
 
   // 公用配置
-  var configs = {
+  var _configs = {
     // 获取公众号 appid
     appid: function() {
       if (_istest) {
@@ -27,7 +27,7 @@ define(function(require, exports, module) {
   // 设置 session [openid][redirect]
   var _session = {
     set: function(k, v) {
-      if(!ice.isEmpty(k)) {
+      if (!ice.isEmpty(k)) {
         sessionStorage.setItem(k, ice.toEmpty(v));
       }
     },
@@ -38,7 +38,7 @@ define(function(require, exports, module) {
   exports.session = _session;
 
   // 微信登录
-  exports.login = function() { 
+  exports.login = function() {
     var openid = ice.toEmpty(_session.get('openid'));
     if (openid == '') {
 
@@ -49,44 +49,76 @@ define(function(require, exports, module) {
       var redirect = 'http://' + _host + '/html/wx/code.html';
 
       // 跳转获取用户 code 值
-      var href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + configs.appid() + '&redirect_uri=' + redirect + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
+      var href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + _configs.appid() + '&redirect_uri=' + redirect + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
 
       // 测试下只要输出
-      if(ice.request('__ice__') == '1') {
+      if (ice.request('__ice__') == '1') {
         console.log(href);
       } else {
         location.href = href;
       }
-    } 
+    }
 
     return this;
   };
 
-  // 公用调用
-  var domMain = ice.query('.ice');
-  var domRefresh = ice.query('.ice-refresh');
+  // 公用调用 绑定下拉刷新
+  var _domScroll = ice.query('.ice');
+  var _domRefresh = ice.query('.ice-refresh');
+  var _mytimer = null;
+  var $_load = ice.query('.ice-load');
 
-  // 绑定下拉刷新
-  exports.bindScroll = function(ref, more) {
-    if(ref == null) {
-      ref = _reload;
-    }
-    ice.scrollY(domMain, {
-      refresh: domRefresh,
-      refreshFun: ref,
-      loadFun: more
+  if ($_load) {
+    $_load.innerHTML = '上拉加载更多';
+  }
+
+  exports.bindScroll = function(_reload, _load) {
+    ice.scrollY(_domScroll, {
+      refreshFun: _reload,
+      loadFun: function() {},
+      endFun: function(dom, load) {
+        var textArr = ['.', '..', '...', '....'];
+        if (load && dom.getAttribute('scroll-load') == '1') {
+          var idx = 0;
+          clearInterval(_mytimer);
+          _mytimer = setInterval(function() {
+            try {
+              if (idx == 100) {
+                scrollLoadded();
+              }
+              $_load.innerHTML = '数据加载中' + textArr[idx % 4];
+              idx++;
+            } catch (e) {
+              clearInterval(_mytimer);
+            }
+          }, 200);
+
+          setTimeout(function() {
+            if (ice.isFunction(_load)) {
+              _load();
+            }
+          }, 1000);
+        }
+      }
     });
   };
 
-  // 最后一页
-  exports.scrollEnd = function() {
-    ice.addClass(domRefresh, 'i-last');
+  // 加载完成 type='i'[初始化] type=false[结束] type=other[普通]
+  function scrollLoad(type) {
+    if ($_load) {
+      clearInterval(_mytimer);
+      if (type === false) {
+        ice.scrollY.stop(_domScroll);
+        $_load.innerHTML = '已经加载全部数据';
+      } else if (type == 'i') {
+        ice.scrollY.start(_domScroll);
+        $_load.innerHTML = '上拉加载更多';
+      } else {
+        $_load.innerHTML = '上拉加载更多';
+      }
+    }
   };
-
-  // 重置分页
-  exports.scrollStart = function() {
-    ice.removeClass(domRefresh, 'i-last');
-  };
+  exports.scrollLoad = scrollLoad;
 
   // 插件
   exports.ice = ice;
@@ -97,7 +129,7 @@ define(function(require, exports, module) {
   };
 
   // 跳转
-  exports.go = function (url) {
+  exports.go = function(url) {
     location.href = url == null || url == '' ? '/' : url;
   };
 
@@ -171,4 +203,40 @@ define(function(require, exports, module) {
     });
   };
   exports.mess = _mess;
+
+  // 弹出选择
+  exports.select = function(m) {
+    if(m != null && m != '') {
+      return layer.open({
+        type: 1,
+        content: m,
+        anim: 0,
+        style: 'position:fixed; bottom:0; left:0; width:100%; height:150px; padding:10px 0; border:none;'
+      });
+    }
+  };
+
+  // 获取 # 后面的数字
+  function _getHashCode() {
+    return ice.parseInt(location.hash.replace('#', ''))
+  };
+  exports.getHashCode = _getHashCode;
+
+  // 切换顶部 nav 
+  exports.navChoose = function(success) {
+    ice.choose({
+      selector: '#nav',
+      children: 'a',
+      chooseClass: 'choose',
+      chooseIndex: _getHashCode(),
+      success: success
+    });
+  };
+
+  // 转成 img
+  exports.buildImage = function(img, alt) {
+    img = img == null || img == '' ? '/assets/images/prod.jpg' : img;
+    alt = alt == null ? '1元购' : alt;
+    return '<img src="' + img + '" alt="' + alt + '" />'
+  };
 });

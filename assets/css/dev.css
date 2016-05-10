@@ -1,26 +1,79 @@
-/* user-bottom */
+/* user-bottom begin */
 
 .user-bottom .link {
   display: block;
-	padding-top: .3rem;
-  border-top: 1px solid #d6d4d0;
+  padding-top: .3rem;
+  border-top-width: 1px;
 }
 
 .user-bottom i {
   line-height: 1.5rem;
-	font-size: 1.32rem;
-	font-weight: 400;
+  font-size: 1.32rem;
+  font-weight: 400;
 }
 
 .user-bottom div {
   line-height: 1rem;
-	font-size: .68rem;
+  font-size: .68rem;
 }
+
 
 /* user-bottom */
 
-/* memo-icon */
-.memo-icon {
-	font-size: 4rem;
+
+/* nav-sort begin */
+
+.nav-sort .long {
+  padding: 0 .6rem;
 }
+
+.nav-sort .last {
+  border-left-width: 0;
+}
+
+
+/* nav-sort */
+
+
+/* memo-icon begin */
+
+.memo-icon {
+  font-size: 4rem;
+}
+
+
 /* memo-icon */
+
+
+/* prod-list begin */
+
+.prod-list {
+  border-top-width: 1px;
+}
+
+.prod-list .sec {
+  padding: 1rem .6rem;
+  float: left;
+  width: 50%;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  font-size: .76rem;
+  overflow: hidden;
+}
+
+.prod-list .sec:nth-of-type(even) {
+  border-right: none;
+}
+
+.prod-list .image {
+  width: 100%;
+  text-align: center;
+}
+
+.prod-list .image img {
+  width: 6rem;
+  height: 6rem;
+}
+
+
+/* prod-list */
