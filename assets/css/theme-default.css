@@ -28,10 +28,29 @@
   border-color: #d6d4d0;
 }
 
+/* 进度条 */
+
+.ice-process {
+	background-color: #ccc;
+}
+
+.ice-process div {
+	background-color: #fe3068;
+}
 
 /* 一元购产品列表 */
 
 .prod-list,
 .prod-list .sec {
   border-color: #e6e3da;
+}
+
+.prod-list .car-buy {
+  color: #fe3068;
+  border-color: #fe3068;
+}
+
+.prod-list .car-add {
+  background-color: #fe3068;
+  color: #fff;
 }

@@ -21,8 +21,8 @@ a {
   position: fixed;
   width: 100%;
   top: 0;
-  height: 2.4rem;
-  line-height: 2.3rem;
+  height: 2.4em;
+  line-height: 2.3em;
   text-align: center;
   z-index: 2;
 }
@@ -31,15 +31,15 @@ a {
   display: block;
   height: 100%;
   border-bottom-width: 1px;
-  font-size: .86rem;
+  font-size: .86em;
   text-align: center;
   cursor: pointer;
   z-index: 2;
 }
 
 .ice-nav .link.choose {
-  height: 2.2rem;
-  border-bottom-width: .24rem;
+  height: 2.6em;
+  border-bottom-width: .24em;
 }
 
 
@@ -49,8 +49,8 @@ a {
   position: fixed;
   width: 100%;
   bottom: 0;
-  height: 3rem;
-  line-height: 3rem;
+  height: 2.8em;
+  line-height: 2.8em;
   text-align: center;
   z-index: 2;
 }
@@ -59,15 +59,31 @@ a {
 /* 重写 */
 
 .ice.ice-have-nav {
-  top: 2.4rem;
+  top: 2.4em;
 }
 
 .ice.ice-have-bar {
-  bottom: 3rem;
+  bottom: 2.8em;
 }
 
 
 /* ========== 重写框架布局 ========== */
+
+/* ========== 公用进度条 =========== */
+
+.ice-process {
+  height: .4em;
+  margin: .1em 0;
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.ice-process div {
+  height: .4em;
+  min-width: 2%;
+}
+
+/* ========== 公用进度条 =========== */
 
 
 /* ========== 公用提示信息 ========== */
@@ -77,9 +93,9 @@ a {
   top: 0;
   left: 0;
   width: 100% !important;
-  height: 1.8rem;
-  line-height: 1.8rem;
-  font-size: .8rem;
+  height: 1.8em;
+  line-height: 1.8em;
+  font-size: .8em;
   text-align: center;
   background-color: rgba(0, 0, 0, .4);
   color: #fff;
@@ -97,7 +113,8 @@ a {
 }
 
 .layermanim {
-  border-radius: .68rem;
+  border-radius: .68em;
+  overflow: hidden;
 }
 
 .layermcont {
@@ -105,8 +122,8 @@ a {
 }
 
 .layermbtn {
-  border-radius: 1rem;
-  -webkit-border-radius: 1rem;
+  border-radius: 0 0 1rem 1rem;
+  -webkit-border-radius: 0 0 1rem 1rem;
   overflow: hidden;
 }
 
@@ -117,7 +134,7 @@ a {
 }
 
 .alert-mess .layermcont {
-  line-height: 1.8rem !important;
+  line-height: 1.8em !important;
   line-height: none;
 }
 
@@ -158,6 +175,11 @@ a {
 
 .col-grey02 {
   color: #c4c7cc;
+}
+
+/* 黑色 */
+.col-black {
+  color: #666;
 }
 
 
@@ -208,10 +230,10 @@ a {
 
 .input01 {
   border: 1px solid #ddd;
-  width: 14rem;
-  border-radius: .4rem;
-  margin: 1.6rem 2rem;
-  padding: .8rem .5rem;
+  width: 14em;
+  border-radius: .4em;
+  margin: 1.6em 2em;
+  padding: .8em .5em;
 }
 
 

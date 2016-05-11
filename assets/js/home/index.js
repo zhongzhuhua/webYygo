@@ -18,7 +18,10 @@ define(function(require, exports, module) {
     for (var i = 0; i < len; i++) {
       var name = '苹果手机苹果手机苹果手机苹果手机苹果手机';
       var img = gm.buildImage();
-      html += listTemp.replace('{{name}}', name).replace('{{img}}', img);
+      var price = '5288.00';
+      var num = i;
+      var proc = 20;
+      html += listTemp.replace('{{num}}', num).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
     }
     var dom = document.createElement('div');
     dom.innerHTML = html;

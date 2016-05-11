@@ -2,19 +2,21 @@
 
 .user-bottom .link {
   display: block;
-  padding-top: .3rem;
+  padding-top: .3em;
   border-top-width: 1px;
 }
 
 .user-bottom i {
-  line-height: 1.5rem;
-  font-size: 1.32rem;
+  height: 1.5em;
+  line-height: 1.5em;
+  font-size: 1.2em;
   font-weight: 400;
 }
 
 .user-bottom div {
-  line-height: 1rem;
-  font-size: .68rem;
+  height: 1em;
+  line-height: 1em;
+  font-size: .82em;
 }
 
 
@@ -24,7 +26,7 @@
 /* nav-sort begin */
 
 .nav-sort .long {
-  padding: 0 .6rem;
+  padding: 0 .6em;
 }
 
 .nav-sort .last {
@@ -38,7 +40,7 @@
 /* memo-icon begin */
 
 .memo-icon {
-  font-size: 4rem;
+  font-size: 4em;
 }
 
 
@@ -52,12 +54,12 @@
 }
 
 .prod-list .sec {
-  padding: 1rem .6rem;
+  padding: 1em .6em;
   float: left;
   width: 50%;
   border-right-width: 1px;
   border-bottom-width: 1px;
-  font-size: .76rem;
+  font-size: .76em;
   overflow: hidden;
 }
 
@@ -67,12 +69,38 @@
 
 .prod-list .image {
   width: 100%;
+  margin-bottom: .4em;
   text-align: center;
 }
 
 .prod-list .image img {
-  width: 6rem;
-  height: 6rem;
+  width: 6em;
+  height: 6em;
+}
+
+.prod-list .car {
+  width: 8.4em;
+  text-align: center;
+  margin: .8em auto 0;
+}
+
+.prod-list .car-buy {
+  float: left;
+  width: 6em;
+  line-height: 1.8em;
+  border-width: 1px;
+  border-radius: 1em;
+}
+
+.prod-list .car-add {
+  display: inline-block;
+  width: 1.8em;
+  height: 1.8em;
+  line-height: 1.7em;
+  font-size: 1.02em;
+  border: 1px;
+  background-color: red;
+  color: #fff;
 }
 
 
