@@ -122,8 +122,8 @@ a {
 }
 
 .layermbtn {
-  border-radius: 0 0 1rem 1rem;
-  -webkit-border-radius: 0 0 1rem 1rem;
+  border-radius: 0 0 1em 1em;
+  -webkit-border-radius: 0 0 1em 1em;
   overflow: hidden;
 }
 
