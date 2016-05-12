@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	@@include('../../modules/meta.html', {"title": "一元购"})
+	@@include('../../modules/meta.html', {"title": "首页"})
 </head>
 <body> 
 	@@include('../../modules/nav-sort.html') 
@@ -12,10 +12,10 @@
       <div class="prod-list" id="list">
       </div>
       <div class="hidden" id="listTemp">
-        <a href="javascript:;" class="sec border-box">
-          <div class="image">
+        <div class="sec border-box">
+          <a href="javascript:;" class="image">
             {{img}}
-          </div>
+          </a>
           <div class="name col-black textover">
             <span class="te-col">第{{num}}期：</span>{{name}}
           </div>
@@ -24,10 +24,10 @@
           </div>
           <div class="ice-process"><div style="width: {{process}}%"></div></div>
           <div class="car">
-            <div class="car-buy">立即云购</div>
-            <div class="car-add radius-50"><i class="icon-car"></i></div>
+            <a href="/html/order/car.html" class="car-buy">立即云购</a>
+            <div class="car-add radius-50"><i class="icon-car" data-value="{{id}}"></i></div>
           </div>
-        </a>
+        </div>
       </div>
       <div class="clear"></div>
       <!-- 产品列表 -->
@@ -38,6 +38,6 @@
 </body>
 @@include('../../modules/script.html')
 <script>
-	 require(['/assets/js/home/index.js?v=' + myargs + '001']);
+	 require(['/assets/js/home/index.js?v=' + myargs + '002']);
 </script>
 </html>

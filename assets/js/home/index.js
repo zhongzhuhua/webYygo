@@ -7,9 +7,10 @@ define(function(require, exports, module) {
 
   // 查询列表
   var next = true;
+
   function search(init) {
     var layer = null;
-    if(init) {
+    if (init) {
       // layer = gm.loading();
       $list.innerHTML = '';
     }
@@ -21,7 +22,8 @@ define(function(require, exports, module) {
       var price = '5288.00';
       var num = i;
       var proc = 20;
-      html += listTemp.replace('{{num}}', num).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
+      var id = 'o' + new Date().getTime() + i;
+      html += listTemp.replace('{{id}}', id).replace('{{num}}', num).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
     }
     var dom = document.createElement('div');
     dom.innerHTML = html;
@@ -44,5 +46,7 @@ define(function(require, exports, module) {
       search()
     });
 
+    // 加入购物车
+    gm.car.bindAdd($list);
   })();
 });

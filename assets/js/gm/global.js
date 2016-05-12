@@ -24,7 +24,7 @@ define(function(require, exports, module) {
     }
   };
 
-  // 设置 session [openid][redirect]
+  // 设置 session [openid][redirect][shopcar]
   var _session = {
     set: function(k, v) {
       if (!ice.isEmpty(k)) {
@@ -71,6 +71,11 @@ define(function(require, exports, module) {
   if ($_load) {
     $_load.innerHTML = '上拉加载更多';
   }
+
+  // 刷新
+  exports.refresh = function() {
+    location.reload();
+  };
 
   exports.bindScroll = function(_reload, _load) {
     ice.scrollY(_domScroll, {
@@ -194,12 +199,12 @@ define(function(require, exports, module) {
   exports.close = _close;
 
   // 提示信息
-  function _mess(m) {
+  function _mess(m, t) {
     return layer.open({
       shade: false,
       className: 'alert-mess',
       content: (m == null || m == '' ? '操作成功' : m),
-      time: 3
+      time: t == null ? 3 : t
     });
   };
   exports.mess = _mess;
@@ -239,4 +244,59 @@ define(function(require, exports, module) {
     alt = alt == null ? '1元购' : alt;
     return '<img src="' + img + '" alt="' + alt + '" />'
   };
+
+  // 购物车
+  var $shopcar = ice.query('#shopcar');
+  var _car = {
+    // 初始化
+    init: function() {
+      _car.setNum(_car.get());
+    },
+    // 设置数量
+    setNum: function(car) {
+      if($shopcar && car && car != '') {
+        var arrs = car.replace(/^\|/,'').replace(/\|$/,'').split('|');
+        var len = arrs.length;
+        $shopcar.innerHTML = len;
+      }
+    },
+    // 获取购物车内容
+    get: function() {
+      var car = _session.get('shopcar'); 
+      return ice.toEmpty(car);
+    },
+    // 设置购物车内容
+    set: function(car) {
+      if(car != null) {
+        _session.set('shopcar', car);
+        _car.setNum(car);
+      }
+    },
+    // 绑定添加事件，必须是 class="icon-car" 的父元素
+    bindAdd: function($dom) {
+      if($dom) {
+        $dom.addEventListener(ice.tapClick, function(e) {
+          var ele = e.srcElement;
+          var clz = ele.className;
+          if (clz && clz == 'icon-car') {
+            var car = _car.get();
+            var val = ele.getAttribute('data-value');
+            if(val != null && val != 'undefined') {
+              var val = val + '|';
+              if(car.indexOf(val) <= -1) {
+                car += val;
+                _car.set(car);
+              }
+            }
+          }
+        });
+      }
+    }
+  };
+  exports.car = _car;
+
+  // 公用初始化事件
+  (function(){
+    _car.init();
+  })();
 });

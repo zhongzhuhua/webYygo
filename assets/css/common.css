@@ -77,6 +77,7 @@ input {
   outline: none;
   border-radius: 0;
   background-color: inherit;
+  color: #7a7c80;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
@@ -364,8 +365,9 @@ a {
 /* ========== 公用提示信息 ========== */
 
 
-/* ======= 重写 layer 如果在pc中用的话，去掉 .layermchild 和 .layermanim 中的 animation-name ========= */
+/* ======= 重写 layer ========= */
 
+/* 移动端兼容，pc 下去掉 */
 .layermchild {
   position: fixed;
   top: 50%;
@@ -377,11 +379,18 @@ a {
 }
 
 .layermanim {
-  border-radius: .68rem;
-
   animation-name: none;
   -webkit-animation-name: none;
   -moz-animation-name: none;
+}
+
+.alert-mess.layermchild {
+  top: 1em;
+}
+/* 移动端兼容，pc 下去掉 */
+
+.layermanim {
+  border-radius: .68rem;
 }
 
 .layermcont {
@@ -598,21 +607,36 @@ i {
 
 .user-bottom .link {
   display: block;
-  padding-top: .3em;
+  padding-top: .1em;
   border-top-width: 1px;
 }
 
 .user-bottom i {
   height: 1.5em;
   line-height: 1.5em;
-  font-size: 1.2em;
+  font-size: 1.62em;
   font-weight: 400;
 }
 
 .user-bottom div {
-  height: 1em;
-  line-height: 1em;
-  font-size: .82em;
+  height: .8em;
+  line-height: .8em;
+  font-size: .8em;
+}
+
+.user-bottom .icon-car {
+  position: relative;
+}
+
+.user-bottom .num {
+  position: absolute;
+  top: 0;
+  right: -1.08em;
+  width: 1.6em;
+  height: 1.6em;
+  line-height: 1.8em;
+  font-size: .5em;
+  overflow: hidden;
 }
 
 
@@ -675,32 +699,110 @@ i {
 }
 
 .prod-list .car {
-  width: 8.4em;
+  width: 10em;
   text-align: center;
   margin: .8em auto 0;
 }
 
 .prod-list .car-buy {
+  display: block;
   float: left;
-  width: 6em;
-  line-height: 1.8em;
+  width: 6.8em;
+  line-height: 2.2em;
   border-width: 1px;
   border-radius: 1em;
 }
 
 .prod-list .car-add {
   display: inline-block;
-  width: 1.8em;
-  height: 1.8em;
-  line-height: 1.7em;
+  width: 2.2em;
+  height: 2.2em;
+  line-height: 2.1em;
   font-size: 1.02em;
   border: 1px;
-  background-color: red;
-  color: #fff;
 }
 
 
 /* prod-list */
+
+
+/* car-list */
+
+.car-list {}
+
+.car-list .row {
+  position: relative;
+  float: left;
+  width: 100%;
+  padding: .6em 1em;
+  border-bottom-width: 1px;
+}
+
+.car-list .image {
+  float: left;
+  width: 4.4em;
+  height: 4.4em;
+}
+
+.car-list .main {
+  padding-left: 4.6em;
+}
+
+.car-list .name {
+  height: 1.4em;
+  font-size: .8em;
+}
+
+.car-list .price {
+  height: 1.4em;
+  font-size: .76em;
+}
+
+.car-list .ope {
+  margin-top: .2em;
+}
+
+.car-list .ope >div {
+  height: 1.8em;
+  line-height: 1.7em;
+}
+
+.car-list .min,
+.car-list .add {
+  float: left;
+  width: 2em;
+  text-align: center;
+  border-width: 1px;
+}
+
+.car-list .num {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.car-list .min {
+  border-radius: .6em 0 0 .6em;
+}
+
+.car-list .add {
+  border-radius: 0 .6em .6em 0;
+}
+
+.car-list .num {
+  position: relative;
+  float: left;
+  width: 5em;
+  text-align: center;
+}
+
+.car-list .num input {
+  width: 80%;
+  height: 96%;
+  border: 0;
+}
+
+
+/* car-list */
 
 .te-col {
   color: #fe3068;
@@ -726,10 +828,16 @@ i {
 }
 
 
-/* 底部链接 */
+/* 底部链接，购物车数字 */
 
 .ice-bar .link {
   border-color: #d6d4d0;
+}
+
+.user-bottom .num {
+	background-color: #fe3068;
+  color: #fff;
+	border: 0;
 }
 
 /* 进度条 */
@@ -757,4 +865,13 @@ i {
 .prod-list .car-add {
   background-color: #fe3068;
   color: #fff;
+}
+
+/* 购物车列表 */
+.car-list .row {
+  border-color: #eee;
+}
+
+.car-list .ope >div {
+	border-color: #ccc;
 }

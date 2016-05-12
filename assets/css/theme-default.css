@@ -22,10 +22,16 @@
 }
 
 
-/* 底部链接 */
+/* 底部链接，购物车数字 */
 
 .ice-bar .link {
   border-color: #d6d4d0;
+}
+
+.user-bottom .num {
+	background-color: #fe3068;
+  color: #fff;
+	border: 0;
 }
 
 /* 进度条 */
@@ -53,4 +59,13 @@
 .prod-list .car-add {
   background-color: #fe3068;
   color: #fff;
+}
+
+/* 购物车列表 */
+.car-list .row {
+  border-color: #eee;
+}
+
+.car-list .ope >div {
+	border-color: #ccc;
 }

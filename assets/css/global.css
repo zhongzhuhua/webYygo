@@ -76,6 +76,7 @@ input {
   outline: none;
   border-radius: 0;
   background-color: inherit;
+  color: #7a7c80;
   box-shadow: none;
   -webkit-box-shadow: none;
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	@@include('../../modules/meta.html', {"title": "购物车"})
+</head>
+<body> 
+  <div class="ice ice-have-bar">
+    <div class="ice-refresh"><span></span></div>
+    <div class="ice-main">
+      <!-- 购物车列表 begin -->
+      <div class="car-list" id="list">
+      </div>
+      <div class="clear"></div>
+      <div class="hidden" id="listTemp">
+        <div class="row border-box" data-value="{{id}}">
+          <a href="javascript:;" class="image">
+            {{img}}
+          </a>
+          <div class="main">
+            <div class="name textover">
+              <span class="te-col">第{{num}}期 </span><span>{{name}}</span>
+            </div>
+            <div class="price col-grey01">价值：{{price}} &nbsp;&nbsp; 剩余：{{surplus}}</div>
+            <div class="ope border-box">
+              <div class="min pointer">-</div>
+              <div class="num">
+                <input type="text col-grey" max-value="{{surplus}}" value="1" />
+              </div>
+              <div class="add pointer">+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 购物车列表 -->
+    </div>
+  </div>
+  @@include('../../modules/user-bottom.html', {"car": "te-col"})
+</body>
+@@include('../../modules/script.html')
+<script>
+	 require(['/assets/js/order/car.js?v=' + myargs + '002']);
+</script>
+</html>
