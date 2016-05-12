@@ -18,7 +18,7 @@ a {
 /* 顶部 */
 
 .ice-nav {
-  position: fixed;
+  position: absolute;
   width: 100%;
   top: 0;
   height: 2.4em;
@@ -46,7 +46,7 @@ a {
 /* 底部 */
 
 .ice-bar {
-  position: fixed;
+  position: absolute;
   width: 100%;
   bottom: 0;
   height: 2.8em;
@@ -108,13 +108,26 @@ a {
 
 /* ======= 重写 layer ========= */
 
-.layermmain {
-  font-family: inherit;
+/* 移动端兼容，pc 下去掉 */
+.layermchild {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
 }
 
 .layermanim {
-  border-radius: .68em;
-  overflow: hidden;
+  animation-name: none;
+  -webkit-animation-name: none;
+  -moz-animation-name: none;
+}
+/* 移动端兼容，pc 下去掉 */
+
+.layermanim {
+  border-radius: .68rem;
 }
 
 .layermcont {
@@ -122,19 +135,19 @@ a {
 }
 
 .layermbtn {
-  border-radius: 0 0 1em 1em;
-  -webkit-border-radius: 0 0 1em 1em;
+  border-radius: 0 0 1rem 1rem;
+  -webkit-border-radius: 0 0 1rem 1rem;
   overflow: hidden;
 }
 
 .alert-mess.layermchild {
-  z-index: 5 !important;
+  z-index: 3 !important;
   max-width: 100% !important;
   border-radius: 0 !important;
 }
 
 .alert-mess .layermcont {
-  line-height: 1.8em !important;
+  line-height: 1.8rem !important;
   line-height: none;
 }
 
