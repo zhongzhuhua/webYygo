@@ -4,6 +4,7 @@ define(function(require, exports, module) {
 
   var $list = ice.query('#list');
   var listTemp = ice.query('#listTemp').innerHTML;
+  var _layer = null;
 
   // 查询列表
   var next = true;
@@ -43,6 +44,7 @@ define(function(require, exports, module) {
         var $min = ice.query('.min', dom);
         var $add = ice.query('.add', dom);
         var $input = ice.query('input', dom);
+        var $del = ice.query('.delete', dom);
 
         $min.addEventListener(ice.tapClick, function() {
           opeNumber($input, -1);
@@ -52,11 +54,27 @@ define(function(require, exports, module) {
           opeNumber($input, 1);
         });
 
+        $del.addEventListener('click', function() {
+          _layer = gm.confirm('<div style="padding: 1em 2em;">您确定抛弃该产品吗？</div>', function() {
+            removeProd(dom);
+          });
+        });
+
         $input.addEventListener('change', function() {
-          opeNumber($input)
+          opeNumber($input);
         });
       })($doms[i]);
     };
+  };
+
+  // 删除产品
+  function removeProd(dom) {
+    if(dom) {
+      var id = dom.getAttribute('data-value');
+      gm.car.remove(id);
+      dom.parentNode.removeChild(dom);
+    }
+    gm.close(_layer, 0);
   };
 
   // 操作数字

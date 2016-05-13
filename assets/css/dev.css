@@ -196,5 +196,12 @@
   border: 0;
 }
 
+.car-list .delete {
+  float: right;
+  margin-top: -.32em;
+  margin-right: .8em;
+  font-size: 1.4em;
+}
+
 
 /* car-list */

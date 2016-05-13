@@ -260,6 +260,18 @@ define(function(require, exports, module) {
         $shopcar.innerHTML = len;
       }
     },
+    // 删除购物车产品
+    remove: function(id) {
+      id = ice.trim(ice.toEmpty(id));
+      if(id != '') {
+        id = id + '|';
+        var car = _car.get();
+        if(car != '') {
+          car = car.replace(id, '');
+          _car.set(car);
+        }
+      }
+    },
     // 获取购物车内容
     get: function() {
       var car = _session.get('shopcar'); 
