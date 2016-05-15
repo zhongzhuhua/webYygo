@@ -89,7 +89,8 @@
 }
 
 .prod-list .image img {
-  width: 6em;
+  max-width: 7em;
+  min-width: 6em;
   height: 6em;
 }
 
@@ -140,7 +141,7 @@
 }
 
 .car-list .main {
-  padding-left: 4.6em;
+  padding-left: 4.8em;
 }
 
 .car-list .name {
@@ -205,3 +206,24 @@
 
 
 /* car-list */
+
+
+/* win-type */
+
+.win-type {
+  padding: 1em;
+}
+
+.win-type .cell {
+  margin: .5em;
+  width: 5em;
+  height: 5em;
+  line-height: 5em;
+  text-align: center;
+  font-size: .82em;
+  cursor: pointer;
+  border: 0 !important;
+}
+
+
+/* win-type */

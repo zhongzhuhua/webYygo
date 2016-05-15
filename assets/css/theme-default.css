@@ -69,3 +69,8 @@
 .car-list .ope >div {
 	border-color: #ccc;
 }
+
+/* 分类弹窗 */
+.win-type {
+  color: #fff;
+}

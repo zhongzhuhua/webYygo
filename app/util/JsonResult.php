@@ -18,7 +18,7 @@
       $this->msg = $_msg;
     }
 
-    public function success($_msg) {
+    public function success($_msg = '') {
       $this->status = 0;
       $this->msg = $_msg;
     }

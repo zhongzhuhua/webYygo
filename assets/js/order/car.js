@@ -6,33 +6,60 @@ define(function(require, exports, module) {
   var listTemp = ice.query('#listTemp').innerHTML;
   var _layer = null;
 
-  // 查询列表
-  var next = true;
-
+  // 查询购物车
   function search(init) {
     var layer = null;
-    if (init) {
-      // layer = gm.loading();
+    if (init == '1') {
+      layer = gm.loading();
       $list.innerHTML = '';
+      gm.scrollLoad('i');
     }
-    var html = '';
-    var len = 10;
-    for (var i = 0; i < len; i++) {
-      var name = '苹果手机苹果手机苹果手机苹果手机苹果手机';
-      var img = gm.buildImage();
-      var price = '5288.00';
-      var surplus = '2800';
-      var num = i;
-      var proc = 20;
-      var id = 'o' + new Date().getTime() + i;
-      html += listTemp.replace('{{id}}', id).replace('{{num}}', num).replace(/{{surplus}}/g, surplus).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
-    }
-    var dom = document.createElement('div');
-    dom.innerHTML = html;
-    $list.appendChild(dom);
-    gm.scrollLoad(!!next);
 
-    bindOpe();
+    var ids = gm.car.get();
+    if (ids == null || ids == '') {} else {
+      ice.ajax({
+        url: gm.path + '/action/order/car.php',
+        cache: false,
+        data: {
+          ids: ids
+        },
+        dataType: 'json',
+        success: function(data) {
+          gm.ajaxMsg(data);
+          try {
+            var html = '';
+            var list = data.data;
+            var len = list == null ? 0 : list.length;
+            var car = '';
+
+            for (var i = 0; i < len; i++) {
+              var model = list[i];
+              var id = model.id;
+              car += id + '|';
+              var orderno = model.orderno;
+              var name = model.name;
+              var img = gm.buildImage(model.img_path);
+              var price = ice.parseInt(model.prod_price);
+              var nprice = ice.parseInt(model.now_price);
+              var num = model.ordernum;
+              var proc = price == 0 ? 100 : ice.parseInt(nprice / price);
+              html += listTemp.replace('{{id}}', id).replace(/{{nprice}}/g, nprice).replace('{{num}}', num).replace('{{orderno}}', orderno).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
+            }
+            var dom = document.createElement('div');
+            dom.innerHTML = html;
+            $list.appendChild(dom);
+
+            // 绑定操作事件
+            bindOpe();
+            gm.car.set(car);
+            gm.car.init();
+          } catch (e) {
+            console.log(e.message);
+          }
+          gm.close(layer);
+        }
+      });
+    }
   };
 
   // 绑定加减
@@ -56,7 +83,7 @@ define(function(require, exports, module) {
 
         $del.addEventListener('click', function() {
           _layer = gm.confirm('<div style="padding: 1em 2em;">您确定抛弃该产品吗？</div>', function() {
-            removeProd(dom);
+            removeProd(dom, $input);
           });
         });
 
@@ -68,9 +95,9 @@ define(function(require, exports, module) {
   };
 
   // 删除产品
-  function removeProd(dom) {
-    if(dom) {
-      var id = dom.getAttribute('data-value');
+  function removeProd(dom, input) {
+    if (dom) {
+      var id = input.getAttribute('data-value');
       gm.car.remove(id);
       dom.parentNode.removeChild(dom);
     }
@@ -81,12 +108,12 @@ define(function(require, exports, module) {
   function opeNumber($input, num) {
     var v = 0;
     var max = ice.parseInt($input.getAttribute('max-value'));
-    if(num == null) {
+    if (num == null) {
       v = ice.parseInt($input.value);
     } else {
-      v = ice.parseInt($input.value) + num;  
+      v = ice.parseInt($input.value) + num;
     }
-    if(v <= 0) {
+    if (v <= 0) {
       v = 1;
       gm.mess('至少参与1人次');
     } else if (v >= max) {

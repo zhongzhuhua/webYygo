@@ -24,7 +24,7 @@ define(function(require, exports, module) {
     }
   };
 
-  // 设置 session [openid][redirect][shopcar]
+  // 设置 session [openid][redirect]
   var _session = {
     set: function(k, v) {
       if (!ice.isEmpty(k)) {
@@ -36,6 +36,19 @@ define(function(require, exports, module) {
     }
   };
   exports.session = _session;
+
+  // 设置 application [shopcar]
+  var _app = {
+    set: function(k, v) {
+      if (!ice.isEmpty(k)) {
+        localStorage.setItem(k, ice.toEmpty(v));
+      }
+    },
+    get: function(k) {
+      return ice.isEmpty(k) ? '' : localStorage.getItem(k);
+    }
+  };
+  exports.app = _app;
 
   // 微信登录
   exports.login = function() {
@@ -145,8 +158,9 @@ define(function(require, exports, module) {
   exports.reload = _reload;
 
   // 打开弹窗
-  exports.open = function(content) {
+  exports.open = function(content, tit) {
     return layer.open({
+      title: tit,
       style: 'padding: 0;',
       content: content
     });
@@ -211,12 +225,12 @@ define(function(require, exports, module) {
 
   // 弹出选择
   exports.select = function(m) {
-    if(m != null && m != '') {
+    if (m != null && m != '') {
       return layer.open({
         type: 1,
         content: m,
         anim: 0,
-        style: 'position:fixed; bottom:0; left:0; width:100%; height:150px; padding:10px 0; border:none;'
+        style: 'position:fixed; top:0; bottom:0; left:0; width:100%; border:none;'
       });
     }
   };
@@ -240,7 +254,7 @@ define(function(require, exports, module) {
 
   // 转成 img
   exports.buildImage = function(img, alt) {
-    img = img == null || img == '' ? '/assets/images/prod.jpg' : img;
+    img = img == null || img == '' ? '/assets/images/zbit.png' : img;
     alt = alt == null ? '1元购' : alt;
     return '<img src="' + img + '" alt="' + alt + '" />'
   };
@@ -254,8 +268,8 @@ define(function(require, exports, module) {
     },
     // 设置数量
     setNum: function(car) {
-      if($shopcar && car && car != '') {
-        var arrs = car.replace(/^\|/,'').replace(/\|$/,'').split('|');
+      if ($shopcar && car && car != '') {
+        var arrs = car.replace(/^\|/, '').replace(/\|$/, '').split('|');
         var len = arrs.length;
         $shopcar.innerHTML = len;
       }
@@ -263,10 +277,10 @@ define(function(require, exports, module) {
     // 删除购物车产品
     remove: function(id) {
       id = ice.trim(ice.toEmpty(id));
-      if(id != '') {
+      if (id != '') {
         id = id + '|';
         var car = _car.get();
-        if(car != '') {
+        if (car != '') {
           car = car.replace(id, '');
           _car.set(car);
         }
@@ -274,28 +288,28 @@ define(function(require, exports, module) {
     },
     // 获取购物车内容
     get: function() {
-      var car = _session.get('shopcar'); 
+      var car = _app.get('shopcar');
       return ice.toEmpty(car);
     },
     // 设置购物车内容
     set: function(car) {
-      if(car != null) {
-        _session.set('shopcar', car);
+      if (car != null) {
+        _app.set('shopcar', car);
         _car.setNum(car);
       }
     },
     // 绑定添加事件，必须是 class="icon-car" 的父元素
     bindAdd: function($dom) {
-      if($dom) {
+      if ($dom) {
         $dom.addEventListener(ice.tapClick, function(e) {
           var ele = e.srcElement;
           var clz = ele.className;
           if (clz && clz == 'icon-car') {
             var car = _car.get();
             var val = ele.getAttribute('data-value');
-            if(val != null && val != 'undefined') {
+            if (val != null && val != 'undefined') {
               var val = val + '|';
-              if(car.indexOf(val) <= -1) {
+              if (car.indexOf(val) <= -1) {
                 car += val;
                 _car.set(car);
               }
@@ -307,8 +321,33 @@ define(function(require, exports, module) {
   };
   exports.car = _car;
 
+  // 分页
+  exports.cfgPage = {
+    index: 1,
+    size: 20,
+    time: ice.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
+  };
+
+  // 公用提示
+  exports.ajaxMsg = function(data) {
+    try {
+      if (data != null) {
+        if(typeof data == 'string' && data != '') {
+          _mess(data);
+        } else {
+          if (data.status != '-1') {
+            var msg = ice.toEmpty(data.msg);
+            if (msg != '') {
+              _mess(data.msg);
+            }
+          }
+        }
+      }
+    } catch (e) {}
+  };
+
   // 公用初始化事件
-  (function(){
+  (function() {
     _car.init();
   })();
 });

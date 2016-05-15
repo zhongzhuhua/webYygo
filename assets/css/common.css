@@ -467,6 +467,38 @@ a {
   color: #666;
 }
 
+/* 分类背景 */
+.bgt-green {
+  background: #A8DD99 !important;
+}
+
+.bgt-blue {
+  background: #1e90ff !important;
+}
+
+.bgt-orange {
+  background: #f82 !important;
+}
+
+.bgt-red {
+  background: #FF7360 !important;
+}
+
+.bgt-cyan {
+  background: #2bb2a3 !important;
+}
+
+.bgt-purple {
+  background: #da70d6 !important; 
+}
+
+.bgt-gold {
+  background: #ffd700 !important;
+}
+
+.bgt-grey {
+  background: #a9a9a9 !important;
+}
 
 /* ======== 公用颜色 ======== */
 
@@ -707,7 +739,8 @@ i {
 }
 
 .prod-list .image img {
-  width: 6em;
+  max-width: 7em;
+  min-width: 6em;
   height: 6em;
 }
 
@@ -758,7 +791,7 @@ i {
 }
 
 .car-list .main {
-  padding-left: 4.6em;
+  padding-left: 4.8em;
 }
 
 .car-list .name {
@@ -823,6 +856,27 @@ i {
 
 
 /* car-list */
+
+
+/* win-type */
+
+.win-type {
+  padding: 1em;
+}
+
+.win-type .cell {
+  margin: .5em;
+  width: 5em;
+  height: 5em;
+  line-height: 5em;
+  text-align: center;
+  font-size: .82em;
+  cursor: pointer;
+  border: 0 !important;
+}
+
+
+/* win-type */
 
 .te-col {
   color: #fe3068;
@@ -894,4 +948,9 @@ i {
 
 .car-list .ope >div {
 	border-color: #ccc;
+}
+
+/* 分类弹窗 */
+.win-type {
+  color: #fff;
 }

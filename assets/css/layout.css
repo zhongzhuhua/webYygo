@@ -200,6 +200,38 @@ a {
   color: #666;
 }
 
+/* 分类背景 */
+.bgt-green {
+  background: #A8DD99 !important;
+}
+
+.bgt-blue {
+  background: #1e90ff !important;
+}
+
+.bgt-orange {
+  background: #f82 !important;
+}
+
+.bgt-red {
+  background: #FF7360 !important;
+}
+
+.bgt-cyan {
+  background: #2bb2a3 !important;
+}
+
+.bgt-purple {
+  background: #da70d6 !important; 
+}
+
+.bgt-gold {
+  background: #ffd700 !important;
+}
+
+.bgt-grey {
+  background: #a9a9a9 !important;
+}
 
 /* ======== 公用颜色 ======== */
 
