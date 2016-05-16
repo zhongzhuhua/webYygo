@@ -13,7 +13,7 @@
       <div class="clear"></div>
       <div class="hidden" id="listTemp">
         <div class="row border-box">
-          <a href="javascript:;" class="image">
+          <a href="/html/prod/info.html?orderno={{orderno}}" class="image">
             {{img}}
           </a>
           <div class="main">
@@ -35,6 +35,17 @@
         </div>
       </div>
       <!-- 购物车列表 -->
+      <!-- 空购物车 begin -->
+      <div class="car-none txt-c hidden" id="carNone">
+        <div class="icon radius-50">
+          <i class="icon-car col-grey02"></i>
+        </div>
+        <div>购物车空空</div>
+        <div>
+          <a href="/" class="btn-auto te-bg">云购看看</a>
+        </div>
+      </div>
+      <!-- 空购物车 -->
     </div>
   </div>
   @@include('../../modules/user-bottom.html', {"car": "te-col"})

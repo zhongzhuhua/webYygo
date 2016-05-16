@@ -57,7 +57,7 @@
           $append = "($append)";
 
           // 执行查询
-          $sql = "SELECT b.id,b.name,b.img_path,a.ordernum,a.maxcount,a.prod_price,a.now_price,a.frozen_price FROM o_order a "
+          $sql = "SELECT a.orderno,b.id,b.name,b.img_path,a.ordernum,a.maxcount,a.prod_price,a.now_price,a.frozen_price FROM o_order a "
                 ."INNER JOIN p_prods b ON a.pid = b.id "
                 ."WHERE a.status = 0 AND a.pid IN $append";
           $M = new MysqlDb();

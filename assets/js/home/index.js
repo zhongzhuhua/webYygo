@@ -52,7 +52,7 @@ define(function(require, exports, module) {
             var nprice = model.now_price;
             var num = model.ordernum;
             var proc = ice.parseInt(nprice / price);
-            html += listTemp.replace('{{pid}}', pid).replace('{{num}}', num).replace('{{orderno}}', orderno).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
+            html += listTemp.replace('{{pid}}', pid).replace('{{num}}', num).replace(/{{orderno}}/g, orderno).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
           }
           var dom = document.createElement('div');
           dom.innerHTML = html;

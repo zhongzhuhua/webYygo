@@ -264,7 +264,7 @@ define(function(require, exports, module) {
   var _car = {
     // 初始化
     init: function() {
-      _car.setNum(_car.get());
+      return _car.setNum(_car.get());
     },
     // 设置数量
     setNum: function(car) {
@@ -272,8 +272,16 @@ define(function(require, exports, module) {
         var arrs = car.replace(/^\|/, '').replace(/\|$/, '').split('|');
         var len = arrs.length;
         $shopcar.innerHTML = len;
+        return len;
       }
+      return 0;
     },
+    // 获取购物车数量
+    // getNum: function(car) {
+    //   var car = _app.get('shopcar');
+    //   var arrs = car == null ? '' : car.replace(/^\|/, '').replace(/\|$/, '').split('|');
+    //   return arrs == null ? 0 : arrs.length;
+    // },
     // 删除购物车产品
     remove: function(id) {
       id = ice.trim(ice.toEmpty(id));
@@ -282,9 +290,10 @@ define(function(require, exports, module) {
         var car = _car.get();
         if (car != '') {
           car = car.replace(id, '');
-          _car.set(car);
+          return _car.set(car);
         }
       }
+      return 0;
     },
     // 获取购物车内容
     get: function() {
@@ -295,8 +304,9 @@ define(function(require, exports, module) {
     set: function(car) {
       if (car != null) {
         _app.set('shopcar', car);
-        _car.setNum(car);
+        return _car.setNum(car);
       }
+      return 0;
     },
     // 绑定添加事件，必须是 class="icon-car" 的父元素
     bindAdd: function($dom) {

@@ -1,4 +1,8 @@
 /* ========== 框架布局 ========== */
+.image img {
+  width: 100%;
+  height: 100%;
+}
 
 div,
 a {
@@ -14,6 +18,7 @@ a {
 .ice-bar {
   background-color: #fff;
 }
+
 
 /* 顶部 */
 
@@ -69,12 +74,25 @@ a {
 
 /* ========== 重写框架布局 ========== */
 
+/* ======= 重写 slider ======= */
+
+.ice-slider .is-footer {
+  background-color: transparent;
+}
+
+.ice-slider .is-footer span {
+  background-color: #ddd;
+}
+
+/* ======= 重写 slider ======= */
+
 /* ========== 公用进度条 =========== */
 
 .ice-process {
   height: .4em;
   margin: .1em 0;
   border-radius: 1em;
+  -webkit-border-radius: 1em;
   overflow: hidden;
 }
 
@@ -82,6 +100,7 @@ a {
   height: .4em;
   min-width: 2%;
 }
+
 
 /* ========== 公用进度条 =========== */
 
@@ -108,6 +127,7 @@ a {
 
 /* ======= 重写 layer ========= */
 
+
 /* 移动端兼容，pc 下去掉
 .layermchild {
   position: fixed;
@@ -129,6 +149,8 @@ a {
   top: 1em;
 } 
 */
+
+
 /* 移动端兼容，pc 下去掉 */
 
 .layermanim {
@@ -195,43 +217,48 @@ a {
   color: #c4c7cc;
 }
 
+
 /* 黑色 */
+
 .col-black {
   color: #666;
 }
 
-/* 分类背景 */
-.bgt-green {
+
+/* 背景-类型背景颜色 */
+
+.bg-green {
   background: #A8DD99 !important;
 }
 
-.bgt-blue {
+.bg-blue {
   background: #1e90ff !important;
 }
 
-.bgt-orange {
+.bg-orange {
   background: #f82 !important;
 }
 
-.bgt-red {
+.bg-red {
   background: #FF7360 !important;
 }
 
-.bgt-cyan {
+.bg-cyan {
   background: #2bb2a3 !important;
 }
 
-.bgt-purple {
-  background: #da70d6 !important; 
+.bg-purple {
+  background: #da70d6 !important;
 }
 
-.bgt-gold {
+.bg-gold {
   background: #ffd700 !important;
 }
 
-.bgt-grey {
+.bg-grey {
   background: #a9a9a9 !important;
 }
+
 
 /* ======== 公用颜色 ======== */
 
@@ -260,8 +287,11 @@ a {
 .radius-50 {
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid #d6d4d0;
+  border: 1px solid #c4ccc7;
   background-color: #fff;
+
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
 }
 
 .rotate-180 {
@@ -273,11 +303,11 @@ a {
 }
 
 
-/* ======== 公用边框 ========= */
 
+
+/* ======== 公用文本框  =========== */
 
 /* 弹窗输入 */
-
 .input01 {
   border: 1px solid #ddd;
   width: 14em;
@@ -289,17 +319,30 @@ a {
 
 /* ======== 公用文本框  =========== */
 
+/* ======== 公用按钮  ========= */
+
+/* 自动大小按钮 */
+.btn-auto {
+  display: inline-block;
+  padding: .5em 2em;
+  border-radius: .5em;
+  color: #fff;
+}
+
+/* ======== 公用按钮  ========= */
 
 /* iconfont */
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1463103507_9853487.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1463103507_9853487.eot');
+  /* IE9*/
   src: url('//at.alicdn.com/t/font_1463103507_9853487.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
   url('//at.alicdn.com/t/font_1463103507_9853487.woff') format('woff'), /* chrome、firefox */
   url('//at.alicdn.com/t/font_1463103507_9853487.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1463103507_9853487.svg#iconfont') format('svg'); /* iOS 4.1- */
-}         
+  url('//at.alicdn.com/t/font_1463103507_9853487.svg#iconfont') format('svg');
+  /* iOS 4.1- */
+}
 
 i {
   font-family: 'iconfont' !important;
@@ -378,5 +421,6 @@ i {
 .icon-delete:before {
   content: '\e609';
 }
+
 
 /* iconfont */

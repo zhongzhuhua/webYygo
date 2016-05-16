@@ -208,6 +208,31 @@
 /* car-list */
 
 
+/* car-none */
+
+.car-none {
+  margin-top: 4em;
+}
+
+.car-none .icon {
+  margin: 0 auto 1em;
+  width: 5em;
+  height: 5em;
+  line-height: 5em;
+  border-width: 4px;
+}
+
+.car-none i {
+  font-size: 3em;
+}
+
+.car-none a {
+  margin-top: 1em;
+}
+
+/* car-none */
+
+
 /* win-type */
 
 .win-type {

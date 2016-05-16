@@ -2,6 +2,10 @@
   color: #fe3068;
 }
 
+.te-bg {
+  background-color: #fe3068;
+}
+
 
 /* 顶部链接 */
 
@@ -18,14 +22,14 @@
 /* 顶部链接 */
 
 .nav-sort .last {
-  border-color: #d6d4d0;
+  border-color: #c4ccc7;
 }
 
 
 /* 底部链接，购物车数字 */
 
 .ice-bar .link {
-  border-color: #d6d4d0;
+  border-color: #c4ccc7;
 }
 
 .user-bottom .num {

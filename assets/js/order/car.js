@@ -2,6 +2,7 @@ define(function(require, exports, module) {
   var gm = require('global').login();
   var ice = gm.ice;
 
+  var $carNone = ice.query('#carNone');
   var $list = ice.query('#list');
   var listTemp = ice.query('#listTemp').innerHTML;
   var _layer = null;
@@ -16,7 +17,10 @@ define(function(require, exports, module) {
     }
 
     var ids = gm.car.get();
-    if (ids == null || ids == '') {} else {
+    if (ids == null || ids == '') {
+      gm.close(layer);
+      carNone(0);
+    } else {
       ice.ajax({
         url: gm.path + '/action/order/car.php',
         cache: false,
@@ -25,6 +29,7 @@ define(function(require, exports, module) {
         },
         dataType: 'json',
         success: function(data) {
+          var carNum = 0;
           gm.ajaxMsg(data);
           try {
             var html = '';
@@ -52,11 +57,12 @@ define(function(require, exports, module) {
             // 绑定操作事件
             bindOpe();
             gm.car.set(car);
-            gm.car.init();
+            carNum = gm.car.init();
           } catch (e) {
             console.log(e.message);
           }
           gm.close(layer);
+          carNone(carNum);
         }
       });
     }
@@ -94,13 +100,22 @@ define(function(require, exports, module) {
     };
   };
 
+  // 空购物车
+  function carNone(num) {
+    if(num == null || num == '' || num <= '0') {
+      ice.removeClass($carNone, 'hidden');
+    }
+  };
+
   // 删除产品
   function removeProd(dom, input) {
+    var carNum = 0;
     if (dom) {
       var id = input.getAttribute('data-value');
-      gm.car.remove(id);
+      carNum = gm.car.remove(id);
       dom.parentNode.removeChild(dom);
     }
+    carNone(carNum);
     gm.close(_layer, 0);
   };
 
