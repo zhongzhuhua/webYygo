@@ -52,7 +52,7 @@ define(function(require, exports, module) {
             var nprice = model.now_price;
             var num = model.ordernum;
             var proc = ice.parseInt(nprice / price);
-            html += listTemp.replace('{{pid}}', pid).replace('{{num}}', num).replace(/{{orderno}}/g, orderno).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
+            html += listTemp.replace(/{{pid}}/g, pid).replace('{{num}}', num).replace('{{process}}', proc).replace('{{price}}', price).replace('{{name}}', name).replace('{{img}}', img);
           }
           var dom = document.createElement('div');
           dom.innerHTML = html;
@@ -116,6 +116,7 @@ define(function(require, exports, module) {
 
   // 初始化
   (function() {
+
     // 初始化
     search(1);
 
@@ -129,5 +130,6 @@ define(function(require, exports, module) {
 
     // 加入购物车
     gm.car.bindAdd($list);
+    
   })();
 });

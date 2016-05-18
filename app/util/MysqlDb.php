@@ -28,7 +28,7 @@
       while($row = $result->fetch_array()){
         $list[] = $row;
       }
-      return $list;
+      return $list; 
     }
 
     // 查询单挑记录

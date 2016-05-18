@@ -7,13 +7,14 @@
   <div class="ice ice-have-bar">
     <div class="ice-refresh"><span></span></div>
     <div class="ice-main">
+
       <!-- 购物车列表 begin -->
       <div class="car-list" id="list">
       </div>
       <div class="clear"></div>
       <div class="hidden" id="listTemp">
         <div class="row border-box">
-          <a href="/html/prod/info.html?orderno={{orderno}}" class="image">
+          <a href="/html/prod/info.html?pid={{pid}}" class="image">
             {{img}}
           </a>
           <div class="main">
@@ -24,7 +25,7 @@
             <div class="ope border-box">
               <div class="min pointer">-</div>
               <div class="num">
-                <input type="text col-grey" data-value="{{id}}" max-value="{{nprice}}" orderno="{{orderno}}" value="1" />
+                <input type="text col-grey" data-value="{{pid}}" max-value="{{nprice}}" orderno="{{orderno}}" value="1" />
               </div>
               <div class="add pointer">+</div>
               <div class="delete">
@@ -35,6 +36,7 @@
         </div>
       </div>
       <!-- 购物车列表 -->
+
       <!-- 空购物车 begin -->
       <div class="car-none txt-c hidden" id="carNone">
         <div class="icon radius-50">
@@ -46,6 +48,7 @@
         </div>
       </div>
       <!-- 空购物车 -->
+      
     </div>
   </div>
   @@include('../../modules/user-bottom.html', {"car": "te-col"})

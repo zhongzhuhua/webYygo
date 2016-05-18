@@ -4,12 +4,60 @@
 	@@include('../../modules/meta.html', {"title": "商品详情"})
 </head>
 <body> 
-  <div class="ice ice-have-bar">
+  <div class="ice ice-have-bar bg-greywhite">
     <div class="ice-refresh"><span></span></div>
     <div class="ice-main">
-      <div class="ice-slider"></div>
+
+      <!-- 焦点图 begin -->
+      <div class="ice-slider mg-top"></div>
+      <!-- 焦点图 -->
+
+      <!-- 产品详细 begin -->
+      <div class="prod-info bg-white border-box">
+        <div class="name">
+          <span class="te-col">第<span id="prodNumber">0</span>期：</span>
+          <span id="prodName"></span>
+          <span class="col-grey01" id="prodMess"></span>
+        </div>
+      </div>
+      <!-- 产品详细 -->
+
+      <!-- 产品信息链接列表 begin -->
+      <div class="info-list bg-white mg-top">
+        <a href="javascript:;" class="row">
+          <div class="name textover">
+            <i class="icon-recode cl-red"></i>
+            <span>参与记录</span>
+          </div>
+          <div class="right"><i class="icon-arrowright col-grey02"></i></div>
+        </a>
+        <a href="javascript:;" class="row">
+          <div class="name textover">
+            <i class="icon-medal cl-gold"></i>
+            <span>往期记录</span>
+          </div>
+          <div class="right"><i class="icon-arrowright col-grey02"></i></div>
+        </a>
+        <a href="javascript:;" class="row">
+          <div class="name textover">
+            <i class="icon-picture cl-cyan"></i>
+            <span>图文详情</span>
+          </div>
+          <div class="right"><i class="icon-arrowright col-grey02"></i></div>
+        </a>
+        <a href="javascript:;" class="row">
+          <div class="name textover">
+            <i class="icon-cameramin cl-orange"></i>
+            <span>产品晒单</span>
+          </div>
+          <div class="right"><i class="icon-arrowright col-grey02"></i></div>
+        </a>
+      </div>
+      <!-- 产品信息链接列表 -->
+
     </div>
   </div>
+  @@include('../../modules/user-bottom.html')
 </body>
 @@include('../../modules/script.html')
 <script>

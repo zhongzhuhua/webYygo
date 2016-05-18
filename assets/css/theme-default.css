@@ -33,20 +33,22 @@
 }
 
 .user-bottom .num {
-	background-color: #fe3068;
+  background-color: #fe3068;
   color: #fff;
-	border: 0;
+  border: 0;
 }
+
 
 /* 进度条 */
 
 .ice-process {
-	background-color: #ccc;
+  background-color: #ccc;
 }
 
 .ice-process div {
-	background-color: #fe3068;
+  background-color: #fe3068;
 }
+
 
 /* 一元购产品列表 */
 
@@ -65,16 +67,39 @@
   color: #fff;
 }
 
+
 /* 购物车列表 */
+
 .car-list .row {
   border-color: #eee;
 }
 
 .car-list .ope >div {
-	border-color: #ccc;
+  border-color: #ccc;
 }
 
+
+/* 产品信息 */
+
+.prod-info {
+  border-color: #dedede;
+}
+
+
+/* 信息规划列表 */
+
+.info-list,
+.info-list .row {
+  border-color: #dedede;
+}
+
+.info-list .name {
+  color: #999;
+}
+
+
 /* 分类弹窗 */
+
 .win-type {
   color: #fff;
 }

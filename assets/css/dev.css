@@ -1,4 +1,4 @@
-/* user-bottom begin */
+/* user-bottom [底部固定导航栏] */
 
 .user-bottom .link {
   display: block;
@@ -26,10 +26,10 @@
 .user-bottom .num {
   position: absolute;
   top: 0;
-  right: -1.08em;
-  width: 1.6em;
-  height: 1.6em;
-  line-height: 1.8em;
+  right: -1em;
+  width: 1.4em;
+  height: 1.4em;
+  line-height: 1.6em;
   font-size: .5em;
   overflow: hidden;
 }
@@ -38,7 +38,7 @@
 /* user-bottom */
 
 
-/* nav-sort begin */
+/* nav-sort [顶部固定菜单栏] */
 
 .nav-sort .long {
   padding: 0 .6em;
@@ -52,7 +52,7 @@
 /* nav-sort */
 
 
-/* memo-icon begin */
+/* memo-icon [主图标，微信登录页] */
 
 .memo-icon {
   font-size: 4em;
@@ -62,7 +62,7 @@
 /* memo-icon */
 
 
-/* prod-list begin */
+/* prod-list [产品列表] */
 
 .prod-list {
   border-top-width: 1px;
@@ -122,7 +122,7 @@
 /* prod-list */
 
 
-/* car-list */
+/* car-list [购物车列表] */
 
 .car-list {}
 
@@ -208,7 +208,7 @@
 /* car-list */
 
 
-/* car-none */
+/* car-none [空购物车] */
 
 .car-none {
   margin-top: 4em;
@@ -230,10 +230,63 @@
   margin-top: 1em;
 }
 
+
 /* car-none */
 
 
-/* win-type */
+/* prod-info [产品详情] */
+
+.prod-info {
+  padding: 1em .8em;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.prod-info .name {
+  font-size: .72em;
+}
+
+
+/* prod-info */
+
+
+/* info-list [信息列表] */
+
+.info-list {
+  border-top-width: 1px;
+  font-size: .86em;
+}
+
+.info-list .row {
+  display: block;
+  padding-left: .8em;
+  height: 3em;
+  line-height: 3em;
+  border-bottom-width: 1px;
+  overflow: hidden;
+}
+
+.info-list .name {
+  float: left;
+  padding-right: 2em;
+}
+
+.info-list .name i {
+  font-size: 1.12em;
+  padding-right: .1em;
+  vertical-align: .02em;
+}
+
+.info-list .right {
+  float: right;
+  width: 2em;
+}
+
+
+/* info-list */
+
+
+/* win-type [分类弹窗] */
 
 .win-type {
   padding: 1em;

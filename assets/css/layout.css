@@ -1,4 +1,5 @@
 /* ========== 框架布局 ========== */
+
 .image img {
   width: 100%;
   height: 100%;
@@ -74,6 +75,7 @@ a {
 
 /* ========== 重写框架布局 ========== */
 
+
 /* ======= 重写 slider ======= */
 
 .ice-slider .is-footer {
@@ -84,7 +86,9 @@ a {
   background-color: #ddd;
 }
 
+
 /* ======= 重写 slider ======= */
+
 
 /* ========== 公用进度条 =========== */
 
@@ -126,29 +130,6 @@ a {
 
 
 /* ======= 重写 layer ========= */
-
-
-/* 移动端兼容，pc 下去掉
-.layermchild {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-}
-
-.layermanim {
-  animation-name: none;
-  -webkit-animation-name: none;
-  -moz-animation-name: none;
-}
-
-.alert-mess.layermchild {
-  top: 1em;
-} 
-*/
 
 
 /* 移动端兼容，pc 下去掉 */
@@ -225,38 +206,86 @@ a {
 }
 
 
-/* 背景-类型背景颜色 */
+/* 背景-类型背景颜色 颜色-字体颜色 */
+
+.cl-green {
+  color: #a8dd99;
+}
 
 .bg-green {
-  background: #A8DD99 !important;
+  background: #a8dd99 !important;
+}
+
+.cl-blue {
+  color: #1e90ff;
 }
 
 .bg-blue {
   background: #1e90ff !important;
 }
 
+.cl-orange {
+  color: #f82;
+}
+
 .bg-orange {
   background: #f82 !important;
 }
 
+.cl-red {
+  color: #ff7360;
+}
+
 .bg-red {
-  background: #FF7360 !important;
+  background: #ff7360 !important;
+}
+
+.cl-cyan {
+  color: #2bb2a3;
 }
 
 .bg-cyan {
   background: #2bb2a3 !important;
 }
 
+.cl-purple {
+  color: #da70d6;
+}
+
 .bg-purple {
   background: #da70d6 !important;
+}
+
+.cl-gold {
+  color: #ffd700;
 }
 
 .bg-gold {
   background: #ffd700 !important;
 }
 
+.cl-grey {
+  color: #a9a9a9;
+}
+
 .bg-grey {
   background: #a9a9a9 !important;
+}
+
+.cl-greywhite {
+  color: #f7f7f7;
+}
+
+.bg-greywhite {
+  background: #f7f7f7 !important;
+}
+
+.cl-white {
+  color: #fff;
+}
+
+.bg-white {
+  background: #fff !important;
 }
 
 
@@ -278,6 +307,10 @@ a {
   margin: 0 auto;
 }
 
+.mg-top {
+  margin-top: 1em;
+}
+
 
 /* ======== 公用宽 ========= */
 
@@ -289,7 +322,6 @@ a {
   overflow: hidden;
   border: 1px solid #c4ccc7;
   background-color: #fff;
-
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
 }
@@ -303,11 +335,11 @@ a {
 }
 
 
-
-
 /* ======== 公用文本框  =========== */
 
+
 /* 弹窗输入 */
+
 .input01 {
   border: 1px solid #ddd;
   width: 14em;
@@ -319,9 +351,12 @@ a {
 
 /* ======== 公用文本框  =========== */
 
+
 /* ======== 公用按钮  ========= */
 
+
 /* 自动大小按钮 */
+
 .btn-auto {
   display: inline-block;
   padding: .5em 2em;
@@ -329,20 +364,21 @@ a {
   color: #fff;
 }
 
+
 /* ======== 公用按钮  ========= */
+
 
 /* iconfont */
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1463103507_9853487.eot');
-  /* IE9*/
-  src: url('//at.alicdn.com/t/font_1463103507_9853487.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1463103507_9853487.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1463103507_9853487.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1463103507_9853487.svg#iconfont') format('svg');
-  /* iOS 4.1- */
+  src: url('//at.alicdn.com/t/font_1463585090_805837.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1463585090_805837.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1463585090_805837.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1463585090_805837.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1463585090_805837.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
+                    
 
 i {
   font-family: 'iconfont' !important;
@@ -420,6 +456,26 @@ i {
 
 .icon-delete:before {
   content: '\e609';
+}
+
+.icon-cameramin:before {
+  content: '\e611';
+}
+
+.icon-picture:before {
+  content: '\e612';
+}
+
+.icon-cameramin:before {
+  content: '\e611';
+}
+
+.icon-arrowleft:before {
+  content: '\e613'; 
+}
+
+.icon-arrowright:before {
+  content: '\e614'; 
 }
 
 

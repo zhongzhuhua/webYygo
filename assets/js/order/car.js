@@ -39,8 +39,8 @@ define(function(require, exports, module) {
 
             for (var i = 0; i < len; i++) {
               var model = list[i];
-              var id = model.id;
-              car += id + '|';
+              var pid = model.pid;
+              car += pid + '|';
               var orderno = model.orderno;
               var name = model.name;
               var img = gm.buildImage(model.img_path);
@@ -48,7 +48,7 @@ define(function(require, exports, module) {
               var nprice = ice.parseInt(model.now_price);
               var num = model.ordernum;
               var proc = price == 0 ? 100 : ice.parseInt(nprice / price);
-              html += listTemp.replace('{{id}}', id).replace(/{{nprice}}/g, nprice).replace('{{num}}', num).replace('{{orderno}}', orderno).replace('{{process}}', proc).replace('{{name}}', name).replace('{{img}}', img).replace('{{price}}', price);
+              html += listTemp.replace(/{{pid}}/g, pid).replace(/{{nprice}}/g, nprice).replace('{{num}}', num).replace('{{process}}', proc).replace('{{price}}', price).replace('{{name}}', name).replace('{{img}}', img);
             }
             var dom = document.createElement('div');
             dom.innerHTML = html;
@@ -140,10 +140,12 @@ define(function(require, exports, module) {
 
   // 初始化
   (function() {
+
     // 初始化
     search(1);
 
     // 绑定滑动事件
     gm.bindScroll(null, null);
+    
   })();
 });
