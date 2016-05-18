@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
   require('layer');
-
+  
   // ajax 数据
   exports.path = '';
   // 域名和端口

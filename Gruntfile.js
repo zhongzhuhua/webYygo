@@ -7,12 +7,12 @@ module.exports = function(grunt) {
     concat: {
       // 合并公用 css
       commonCss: {
-        src: ['assets/lib/layer.mobile/layer/need/layer.css', 'assets/css/global.css', 'assets/lib/ice.scrollY/main.css', 'assets/lib/ice.slider/main.css', 'assets/css/layout.css', 'assets/css/dev.css', 'assets/css/theme-default.css'],
+        src: ['lib/layer.mobile/layer/need/layer.css', 'assets/css/global.css', 'lib/ice.scrollY/main.css', 'lib/ice.slider/main.css', 'assets/css/layout.css', 'assets/css/dev.css', 'assets/css/theme-default.css'],
         dest: 'assets/css/common.css'
       },
       // 合并 commonjs
       commonJs: {
-        src: ['assets/lib/require.js', 'assets/lib/require.config.js', 'assets/lib/ice.js', 'assets/lib/ice.*/main.js'],
+        src: ['lib/require.js', 'lib/require.config.js', 'lib/ice.js', 'lib/ice.*/main.js'],
         dest: 'dist/assets/js/common.js'
       }
     },
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
       lib: {
         files: [{
           expand: true,
-          src: ['assets/lib/*/**'],
+          src: ['lib/*/**'],
           dest: 'dist/'
         }]
       }
@@ -168,13 +168,13 @@ module.exports = function(grunt) {
 
       // 合并压缩 common.js
       commonJs: {
-        files: ['assets/lib/*.js', 'assets/lib/ice*/*.js'],
+        files: ['lib/*.js', 'lib/ice*/*.js'],
         tasks: ['concat:commonJs', 'uglify:commonJs']
       },
 
       // 合并压缩 common.css
       commonCss: {
-        files: ['assets/css/*.css', 'assets/lib/ice*/*.css'],
+        files: ['assets/css/*.css', 'lib/ice*/*.css'],
         tasks: ['concat:commonCss', 'cssmin:commonCss' ]
       },
 
@@ -192,7 +192,7 @@ module.exports = function(grunt) {
 
       // 插件复制
       lib: {
-        files: ['assets/lib/*/**'],
+        files: ['lib/*/**'],
         tasks: ['copy:lib']
       }
     }

@@ -5,7 +5,7 @@ define(function(require, exports, module) {
   var $list = ice.query('#list');
   var listTemp = ice.query('#listTemp').innerHTML;
   var typeLayer = null;
-
+  
   // 查询列表
   var mydata = {
     sortType: gm.getHashCode(),
