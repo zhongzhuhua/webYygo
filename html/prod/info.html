@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	@@include('../../modules/meta.html', {"title": "商品详情"})
+  @@include('../../modules/meta.html', {"title": "商品详情"})
 </head>
-<body> 
-  <div class="ice ice-have-bar bg-greywhite">
+
+<body>
+  <div class="ice ice-have-barmess bg-greywhite">
     <div class="ice-refresh"><span></span></div>
     <div class="ice-main">
 
@@ -19,34 +21,59 @@
           <span id="prodName"></span>
           <span class="col-grey01" id="prodMess"></span>
         </div>
+        <div class="price col-grey01">
+          价值：￥<span id="prodPrice"></span>
+        </div>
+        <div>
+          <div class="process border-box">
+            <div class="ice-process">
+              <div id="prodProcess"></div>
+            </div>
+            <div class="feat flex">
+              <div class="flex-1 txt-l">
+                <div class="cl-blue" id="prodNow">0</div>
+                <div class="col-grey02">已参与</div>
+              </div>
+              <div class="flex-1 txt-r">
+                <div class="cl-red" id="prodNeed">0</div>
+                <div class="col-grey02">剩余</div>
+              </div>
+            </div>
+          </div>
+          <div class="share cl-orange">
+            <div><i class="icon-share"></i></div>
+            <div>分享</div>
+          </div>
+          <div class="clear"></div>
+        </div>
       </div>
       <!-- 产品详细 -->
 
       <!-- 产品信息链接列表 begin -->
       <div class="info-list bg-white mg-top">
         <a href="javascript:;" class="row">
-          <div class="name textover">
+          <div class="name border-box textover">
             <i class="icon-recode cl-red"></i>
             <span>参与记录</span>
           </div>
           <div class="right"><i class="icon-arrowright col-grey02"></i></div>
         </a>
         <a href="javascript:;" class="row">
-          <div class="name textover">
+          <div class="name border-box textover">
             <i class="icon-medal cl-gold"></i>
-            <span>往期记录</span>
+            <span>往期揭晓</span>
           </div>
           <div class="right"><i class="icon-arrowright col-grey02"></i></div>
         </a>
         <a href="javascript:;" class="row">
-          <div class="name textover">
+          <div class="name border-box textover">
             <i class="icon-picture cl-cyan"></i>
             <span>图文详情</span>
           </div>
           <div class="right"><i class="icon-arrowright col-grey02"></i></div>
         </a>
         <a href="javascript:;" class="row">
-          <div class="name textover">
+          <div class="name border-box textover">
             <i class="icon-cameramin cl-orange"></i>
             <span>产品晒单</span>
           </div>
@@ -57,10 +84,19 @@
 
     </div>
   </div>
+  <div class="ice-barmess flex prod-bottom" id="prodButtons">
+    <div class="flex-1">
+      <a href="javascript:;" class="btn-max te-bg car-buy" id="btnBuy">立即云购</a>
+    </div>
+    <div class="flex-1">
+      <a href="javascript:;" class="btn-max te-col te-bd car-add" id="btnCar">加入购物车</a>
+    </div>
+  </div>
   @@include('../../modules/user-bottom.html')
 </body>
 @@include('../../modules/script.html')
 <script>
-	 require(['/assets/js/prod/info.js?v=' + myargs + '001']);
+require(['/assets/js/prod/info.js?v=' + myargs + '001']);
 </script>
+
 </html>

@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
   require('layer');
-  
+
   // ajax 数据
   exports.path = '';
   // 域名和端口
@@ -147,9 +147,10 @@ define(function(require, exports, module) {
   };
 
   // 跳转
-  exports.go = function(url) {
+  function _go(url) {
     location.href = url == null || url == '' ? '/' : url;
   };
+  exports.go = _go;
 
   // 重新加载
   function _reload() {
@@ -158,13 +159,14 @@ define(function(require, exports, module) {
   exports.reload = _reload;
 
   // 打开弹窗
-  exports.open = function(content, tit) {
+  function _open(content, tit) {
     return layer.open({
       title: tit,
       style: 'padding: 0;',
       content: content
     });
   };
+  exports.open = _open;
 
   // 提示
   exports.alert = function(content, callback) {
@@ -314,14 +316,20 @@ define(function(require, exports, module) {
         $dom.addEventListener(ice.tapClick, function(e) {
           var ele = e.srcElement;
           var clz = ele.className;
-          if (clz && clz == 'icon-car') {
+          if (clz && (clz.indexOf('car-add') > -1 || clz.indexOf('car-buy') > -1)) {
+            // 添加产品到购物车
             var car = _car.get();
-            var val = ele.getAttribute('data-value');
-            if (val != null && val != 'undefined') {
+            var val = ice.toEmpty(ele.getAttribute('data-value'));
+            if (val != '') {
               var val = val + '|';
               if (car.indexOf(val) <= -1) {
                 car += val;
                 _car.set(car);
+              }
+
+              // 立即云购的就跳转到购物车
+              if (clz.indexOf('car-buy') > -1) {
+                _go('/html/order/car.html');
               }
             }
           }
@@ -342,7 +350,7 @@ define(function(require, exports, module) {
   exports.ajaxMsg = function(data) {
     try {
       if (data != null) {
-        if(typeof data == 'string' && data != '') {
+        if (typeof data == 'string' && data != '') {
           _mess(data);
         } else {
           if (data.status != '-1') {
@@ -359,5 +367,17 @@ define(function(require, exports, module) {
   // 公用初始化事件
   (function() {
     _car.init();
+
+    // 公用分享
+    var $share = ice.query('.share');
+    if ($share) {
+      $share.addEventListener(ice.tapClick, function(e) {
+        ice.stopDefault(e);
+        layer.open({
+          content: '<img src="/assets/images/share.png" style="width: 10rem; height: 5rem; float: right; padding-right: 2rem; padding-top: .5rem" />',
+          style: 'position:fixed; top:0; right:0; box-shadow: none; background-color: transparent;'
+        });
+      });
+    }
   })();
 });

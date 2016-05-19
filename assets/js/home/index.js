@@ -51,7 +51,7 @@ define(function(require, exports, module) {
             var price = model.prod_price;
             var nprice = model.now_price;
             var num = model.ordernum;
-            var proc = ice.parseInt(nprice / price);
+            var proc = ice.parseInt(nprice / price * 100);
             html += listTemp.replace(/{{pid}}/g, pid).replace('{{num}}', num).replace('{{process}}', proc).replace('{{price}}', price).replace('{{name}}', name).replace('{{img}}', img);
           }
           var dom = document.createElement('div');

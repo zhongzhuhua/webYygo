@@ -51,14 +51,21 @@ a {
 
 /* 底部 */
 
-.ice-bar {
+.ice-bar,
+.ice-barmess {
   position: absolute;
   width: 100%;
-  bottom: 0;
   height: 2.8em;
-  line-height: 2.8em;
   text-align: center;
   z-index: 2;
+}
+
+.ice-bar {
+  bottom: 0;
+}
+
+.ice-barmess {
+  bottom: 2.8em;
 }
 
 
@@ -72,11 +79,24 @@ a {
   bottom: 2.8em;
 }
 
+.ice.ice-have-barmess {
+  bottom: 5.6em;
+}
+
 
 /* ========== 重写框架布局 ========== */
 
 
 /* ======= 重写 slider ======= */
+
+.ice-slider {
+  height: 10em;
+}
+
+.ice-slider .is-main,
+.ice-slider .is-link {
+  height: 8em;
+}
 
 .ice-slider .is-footer {
   background-color: transparent;
@@ -102,6 +122,7 @@ a {
 
 .ice-process div {
   height: .4em;
+  width: 0%;
   min-width: 2%;
 }
 
@@ -129,10 +150,7 @@ a {
 /* ========== 公用提示信息 ========== */
 
 
-/* ======= 重写 layer ========= */
-
-
-/* 移动端兼容，pc 下去掉 */
+/* ======= 重写 layer =========
 
 .layermanim {
   border-radius: .68rem;
@@ -364,6 +382,14 @@ a {
   color: #fff;
 }
 
+/* 百分百按钮 */
+.btn-max {
+  display: block;
+  border-radius: .5em;
+  border-width: 1px;
+  color: #fff;
+  text-align: center;
+}
 
 /* ======== 公用按钮  ========= */
 
@@ -372,13 +398,12 @@ a {
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1463585090_805837.eot'); /* IE9*/
-  src: url('//at.alicdn.com/t/font_1463585090_805837.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1463585090_805837.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1463585090_805837.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1463585090_805837.svg#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('//at.alicdn.com/t/font_1463643511_6608737.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1463643511_6608737.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1463643511_6608737.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1463643511_6608737.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1463643511_6608737.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
-                    
 
 i {
   font-family: 'iconfont' !important;
@@ -476,6 +501,10 @@ i {
 
 .icon-arrowright:before {
   content: '\e614'; 
+}
+
+.icon-share:before {
+  content: '\e615';
 }
 
 

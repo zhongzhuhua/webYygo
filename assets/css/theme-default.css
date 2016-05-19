@@ -6,6 +6,10 @@
   background-color: #fe3068;
 }
 
+.te-bd {
+  border-color: #fe3068;
+}
+
 
 /* 顶部链接 */
 
@@ -79,10 +83,14 @@
 }
 
 
-/* 产品信息 */
+/* 产品信息 产品详情 */
 
 .prod-info {
   border-color: #dedede;
+}
+
+.prod-info .process {
+  border-color: #ccc;
 }
 
 

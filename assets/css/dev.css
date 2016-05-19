@@ -38,6 +38,26 @@
 /* user-bottom */
 
 
+/* prod-bottom [产品底部] */
+
+.prod-bottom {
+  border-top-width: 1px;
+}
+
+.prod-bottom .btn-max {
+  width: 90%;
+  line-height: 2em;
+  margin: .4em auto 0;
+}
+
+.prod-bottom {
+  border-color: #dedede;
+}
+
+
+/* prod-bottom */
+
+
 /* nav-sort [顶部固定菜单栏] */
 
 .nav-sort .long {
@@ -240,10 +260,33 @@
   padding: 1em .8em;
   border-top-width: 1px;
   border-bottom-width: 1px;
+  font-size: .72em;
 }
 
-.prod-info .name {
-  font-size: .72em;
+.prod-info .process {
+  float: left;
+  width: 100%;
+  margin-left: -4em;
+  padding-right: 1em;
+  padding-left: 4em;
+  margin-top: .4em;
+  border-right-width: 1px;
+}
+
+.prod-info .share {
+  float: right;
+  width: 3em;
+  text-align: center;
+}
+
+.prod-info .share i {
+  font-size: 1.8em;
+  padding-bottom: .2em;
+}
+
+.prod-info .feat {
+  margin-top: .4em;
+  font-size: 1.08em;
 }
 
 
@@ -268,7 +311,9 @@
 
 .info-list .name {
   float: left;
-  padding-right: 2em;
+  width: 100%;
+  margin-left: -2em;
+  padding-left: 2em;
 }
 
 .info-list .name i {
