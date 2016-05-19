@@ -4,7 +4,7 @@
 	@@include('../../modules/meta.html', {"title": "购物车"})
 </head>
 <body> 
-  <div class="ice ice-have-bar">
+  <div class="ice ice-have-barmess">
     <div class="ice-refresh"><span></span></div>
     <div class="ice-main">
 
@@ -51,6 +51,24 @@
       
     </div>
   </div>
+
+  <!-- 购物车详情  -->
+  <div class="ice-barmess flex prod-bottom" id="prodButtons">
+    <div class="flex-1 info txt-l">
+      <div>
+        <span>合计</span>
+        <span class="price cl-red">￥<label class="num" id="carPrice">0</label></span>
+      </div>
+      <div class="col-grey02">
+        共&nbsp;<span id="carCount">0</span>&nbsp;个商品
+      </div>
+    </div>
+    <div class="flex-1 txt-r">
+      <a href="javascript:;" class="btn-auto te-bg" id="btnSubmit">去结算</a>
+    </div>
+  </div>
+  <!-- 购物车详情  -->
+
   @@include('../../modules/user-bottom.html', {"car": "te-col"})
 </body>
 @@include('../../modules/script.html')

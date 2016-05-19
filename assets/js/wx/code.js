@@ -18,12 +18,12 @@ define(function(require, exports, module) {
       dataType: 'json',
       success: function(data) {
         try {
+          console.log(data);
           var status = data.status;
-          data = data.data;
+          var isLogin = data.data;
           if(status == '0') {
-            var openid = data.openid;
-            if (openid != null && openid != '') {
-              gm.session.set('openid', openid);
+            if (isLogin != null && isLogin == '1') {
+              gm.session.set('isLogin', isLogin);
 
               // 成功登录之后跳转
               var redirect = gm.session.get('redirect');

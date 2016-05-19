@@ -17,6 +17,9 @@
 
     if($result !== null && $result->status === 0) {
       gm::setSession('user', $result->data);
+      $result->data = '1';
+    } else {
+      $result->data = '0';
     }
   }
   

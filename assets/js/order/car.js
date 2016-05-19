@@ -7,6 +7,11 @@ define(function(require, exports, module) {
   var listTemp = ice.query('#listTemp').innerHTML;
   var _layer = null;
 
+  // 购物车详情
+  var $carCount = ice.query('#carCount');
+  var $carPrice = ice.query('#carPrice');
+  var $inputs = null;
+
   // 查询购物车
   function search(init) {
     var layer = null;
@@ -54,6 +59,8 @@ define(function(require, exports, module) {
             dom.innerHTML = html;
             $list.appendChild(dom);
 
+            $inputs = ice.queryAll('input', $list);
+
             // 绑定操作事件
             bindOpe();
             gm.car.set(car);
@@ -100,11 +107,25 @@ define(function(require, exports, module) {
     };
   };
 
-  // 空购物车
+  // 是否空购物车，设置共计产品数
   function carNone(num) {
-    if(num == null || num == '' || num <= '0') {
+    if (num == null || num == '' || num <= '0') {
       ice.removeClass($carNone, 'hidden');
     }
+
+    $carCount.innerHTML = num;
+    deelCarInfo();
+  };
+
+  // 合计产品金额和数量
+  function deelCarInfo() {
+    var len = $inputs ? $inputs.length : 0;
+    var price = 0;
+    for (var i = 0; i < len; i++) {
+      price += ice.parseInt($inputs[i].value);
+    }
+    $carPrice.innerHTML = price;
+    $carCount.innerHTML = len;
   };
 
   // 删除产品
@@ -136,6 +157,8 @@ define(function(require, exports, module) {
       gm.mess('最多可参与' + max + '人次');
     }
     $input.value = v;
+
+    deelCarInfo();
   };
 
   // 初始化
@@ -145,7 +168,7 @@ define(function(require, exports, module) {
     search(1);
 
     // 绑定滑动事件
-    gm.bindScroll(null, null);
-    
+    gm.bindScroll(gm.refresh, null);
+
   })();
 });

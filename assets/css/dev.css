@@ -38,7 +38,7 @@
 /* user-bottom */
 
 
-/* prod-bottom [产品底部] */
+/* prod-bottom [产品底部][购物车底部] */
 
 .prod-bottom {
   border-top-width: 1px;
@@ -47,11 +47,29 @@
 .prod-bottom .btn-max {
   width: 90%;
   line-height: 2em;
-  margin: .4em auto 0;
+  margin: .6em auto 0;
+}
+
+.prod-bottom .btn-auto {
+  margin-top: .4em;
+  margin-right: 10%;
 }
 
 .prod-bottom {
   border-color: #dedede;
+}
+
+.prod-bottom .info {
+  margin: .6em;
+  font-size: .78em;
+}
+
+.prod-bottom .price {
+  font-size: 1.12em;
+}
+
+.prod-bottom .num {
+  font-weight: 600;
 }
 
 

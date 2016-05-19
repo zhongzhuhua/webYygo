@@ -52,8 +52,9 @@ define(function(require, exports, module) {
 
   // 微信登录
   exports.login = function() {
-    var openid = ice.toEmpty(_session.get('openid'));
-    if (openid == '') {
+    var isLogin = ice.toEmpty(_session.get('isLogin'));
+
+    if (isLogin == '') {
 
       // 登录成功后指向的地址
       _session.set('redirect', encodeURIComponent(location.href));
@@ -316,7 +317,7 @@ define(function(require, exports, module) {
         $dom.addEventListener(ice.tapClick, function(e) {
           var ele = e.srcElement;
           var clz = ele.className;
-          if (clz && (clz.indexOf('car-add') > -1 || clz.indexOf('car-buy') > -1)) {
+          if (clz && (clz == 'icon-car' || clz.indexOf('car-add') > -1 || clz.indexOf('car-buy') > -1)) {
             // 添加产品到购物车
             var car = _car.get();
             var val = ice.toEmpty(ele.getAttribute('data-value'));

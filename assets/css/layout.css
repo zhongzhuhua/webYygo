@@ -55,17 +55,18 @@ a {
 .ice-barmess {
   position: absolute;
   width: 100%;
-  height: 2.8em;
   text-align: center;
   z-index: 2;
 }
 
 .ice-bar {
   bottom: 0;
+  height: 2.8em;
 }
 
 .ice-barmess {
   bottom: 2.8em;
+  height: 3.2em;
 }
 
 
@@ -80,7 +81,7 @@ a {
 }
 
 .ice.ice-have-barmess {
-  bottom: 5.6em;
+  bottom: 6em;
 }
 
 
@@ -150,7 +151,7 @@ a {
 /* ========== 公用提示信息 ========== */
 
 
-/* ======= 重写 layer =========
+/* ======= 重写 layer ========= */
 
 .layermanim {
   border-radius: .68rem;

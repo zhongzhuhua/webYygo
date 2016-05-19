@@ -402,17 +402,18 @@ a {
 .ice-barmess {
   position: absolute;
   width: 100%;
-  height: 2.8em;
   text-align: center;
   z-index: 2;
 }
 
 .ice-bar {
   bottom: 0;
+  height: 2.8em;
 }
 
 .ice-barmess {
   bottom: 2.8em;
+  height: 3.2em;
 }
 
 
@@ -427,7 +428,7 @@ a {
 }
 
 .ice.ice-have-barmess {
-  bottom: 5.6em;
+  bottom: 6em;
 }
 
 
@@ -497,7 +498,7 @@ a {
 /* ========== 公用提示信息 ========== */
 
 
-/* ======= 重写 layer =========
+/* ======= 重写 layer ========= */
 
 .layermanim {
   border-radius: .68rem;
@@ -897,7 +898,7 @@ i {
 /* user-bottom */
 
 
-/* prod-bottom [产品底部] */
+/* prod-bottom [产品底部][购物车底部] */
 
 .prod-bottom {
   border-top-width: 1px;
@@ -906,11 +907,29 @@ i {
 .prod-bottom .btn-max {
   width: 90%;
   line-height: 2em;
-  margin: .4em auto 0;
+  margin: .6em auto 0;
+}
+
+.prod-bottom .btn-auto {
+  margin-top: .4em;
+  margin-right: 10%;
 }
 
 .prod-bottom {
   border-color: #dedede;
+}
+
+.prod-bottom .info {
+  margin: .6em;
+  font-size: .78em;
+}
+
+.prod-bottom .price {
+  font-size: 1.12em;
+}
+
+.prod-bottom .num {
+  font-weight: 600;
 }
 
 
