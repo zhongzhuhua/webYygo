@@ -2,7 +2,7 @@ define(function(require, exports, module) {
   require('layer');
 
   // ajax 数据
-  exports.path = '';
+  exports.path = '/action';
   // 域名和端口
   var _host = location.host;
   // 是否测试
@@ -51,10 +51,10 @@ define(function(require, exports, module) {
   exports.app = _app;
 
   // 微信登录
-  exports.login = function() {
+  function _login() {
     var isLogin = ice.toEmpty(_session.get('isLogin'));
 
-    if (isLogin == '') {
+    if (isLogin != '1') {
 
       // 登录成功后指向的地址
       _session.set('redirect', encodeURIComponent(location.href));
@@ -75,6 +75,8 @@ define(function(require, exports, module) {
 
     return this;
   };
+
+  exports.login = _login;
 
   // 公用调用 绑定下拉刷新
   var _domScroll = ice.query('.ice');
@@ -279,12 +281,6 @@ define(function(require, exports, module) {
       }
       return 0;
     },
-    // 获取购物车数量
-    // getNum: function(car) {
-    //   var car = _app.get('shopcar');
-    //   var arrs = car == null ? '' : car.replace(/^\|/, '').replace(/\|$/, '').split('|');
-    //   return arrs == null ? 0 : arrs.length;
-    // },
     // 删除购物车产品
     remove: function(id) {
       id = ice.trim(ice.toEmpty(id));
@@ -309,6 +305,7 @@ define(function(require, exports, module) {
         _app.set('shopcar', car);
         return _car.setNum(car);
       }
+      _app.set('shopcar', '');
       return 0;
     },
     // 绑定添加事件，必须是 class="icon-car" 的父元素
@@ -359,10 +356,26 @@ define(function(require, exports, module) {
             if (msg != '') {
               _mess(data.msg);
             }
+
+            // 如果需要重新登录
+            if (data.status == '2') {
+              _session.set('isLogin', '0');
+              _login();
+            }
           }
         }
       }
     } catch (e) {}
+  };
+
+  // 公用按钮处理
+  exports.isSubmit = function($btn, sub) {
+    if (sub) {
+      ice.removeClass($btn, 'btn-disabled');
+    } else {
+      ice.addClass($btn, 'btn-disabled');
+    }
+    return sub;
   };
 
   // 公用初始化事件

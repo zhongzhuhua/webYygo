@@ -12,6 +12,7 @@ define(function(require, exports, module) {
   var $prodNow = ice.query('#prodNow');
   var $prodNeed = ice.query('#prodNeed');
   var $prodProcess = ice.query('#prodProcess');
+  var $prodImgInfo = ice.query('#prodImgInfo');
   // 购物车按钮
   var $prodButtons = ice.query('#prodButtons');
   ice.query('#btnCar').setAttribute('data-value', pid);
@@ -26,7 +27,7 @@ define(function(require, exports, module) {
     var layer = gm.loading();
 
     ice.ajax({
-      url: gm.path + '/action/prod/findProd.php?id=' + pid,
+      url: gm.path + '/prod/findProd.php?id=' + pid,
       cache: false,
       dataType: 'json',
       success: function(data) {
@@ -49,6 +50,16 @@ define(function(require, exports, module) {
             $prodNow.innerHTML = nprice;
             $prodNeed.innerHTML = ndprice;
             $prodProcess.style['width'] = proc + '%';
+
+            // 图文详情
+            var img = ice.toEmpty(data.img_info);
+            if(img != '') {
+              $prodImgInfo.setAttribute('href', '/html/prod/imginfo.html?img=' + encodeURIComponent(img))
+            } else {
+              $prodImgInfo.addEventListener(ice.tapClick, function (e) {
+                gm.mess('该产品暂无图文详情');
+              });
+            }
 
             // 图片焦点图
             bindImageSlider(data.img_paths.split('|'));

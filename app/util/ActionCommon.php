@@ -17,4 +17,7 @@
   header('Cache-Control:no-store,no-cache,must-revalidate');
   header("Cache-Control:post-check=0,pre-check=0", false);
   header('Pragma:no-cache');
+
+  // 登录的用户信息
+  $gm_user = gm::getSession('user');
 ?>

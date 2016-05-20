@@ -307,7 +307,6 @@ a {
   background: #fff !important;
 }
 
-
 /* ======== 公用颜色 ======== */
 
 
@@ -390,6 +389,11 @@ a {
   border-width: 1px;
   color: #fff;
   text-align: center;
+}
+
+/* 按钮禁用 */
+.btn-disabled {
+  background-color: #ccc !important;
 }
 
 /* ======== 公用按钮  ========= */

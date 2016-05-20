@@ -28,7 +28,7 @@ define(function(require, exports, module) {
     console.log(mydata);
 
     ice.ajax({
-      url: gm.path + '/action/order/page.php',
+      url: gm.path + '/order/page.php',
       cache: false,
       data: mydata,
       dataType: 'json',

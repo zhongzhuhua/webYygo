@@ -2,7 +2,7 @@
   // 公用系统返回数据 
   class JsonResult {
 
-    // status=0 正常，-1不提示，其他的提示
+    // status=0 正常，-1不提示，2需要重新登录，3需要刷新，其他的提示
     public $status = -1;
     public $msg = '系统繁忙';
     public $data;

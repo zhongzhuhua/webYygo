@@ -99,7 +99,7 @@
 
       if(!gm::isNull($id) && gm::regInt($id)) {
         // 执行查询
-        $sql = "SELECT a.orderno,a.pid,b.name,b.img_paths,b.info,a.ordernum,a.maxcount,a.prod_price,a.now_price,a.frozen_price FROM o_order a "
+        $sql = "SELECT a.orderno,a.pid,b.name,b.img_paths,b.img_info,b.info,a.ordernum,a.maxcount,a.prod_price,a.now_price,a.frozen_price FROM o_order a "
               ."INNER JOIN p_prods b ON a.pid = b.id "
               ."WHERE a.status = 0 AND a.pid='$id'";
         $M = new MysqlDb();

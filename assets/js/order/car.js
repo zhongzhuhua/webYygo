@@ -11,6 +11,11 @@ define(function(require, exports, module) {
   var $carCount = ice.query('#carCount');
   var $carPrice = ice.query('#carPrice');
   var $inputs = null;
+  var inputLen = 0;
+
+  // 结算按钮
+  var $btnSubmit = ice.query('#btnSubmit');
+  var isSubmit = false;
 
   // 查询购物车
   function search(init) {
@@ -27,7 +32,7 @@ define(function(require, exports, module) {
       carNone(0);
     } else {
       ice.ajax({
-        url: gm.path + '/action/order/car.php',
+        url: gm.path + '/order/car.php',
         cache: false,
         data: {
           ids: ids
@@ -50,10 +55,10 @@ define(function(require, exports, module) {
               var name = model.name;
               var img = gm.buildImage(model.img_path);
               var price = ice.parseInt(model.prod_price);
-              var nprice = ice.parseInt(model.now_price);
+              var nprice = price - ice.parseInt(model.now_price);
               var num = model.ordernum;
               var proc = price == 0 ? 100 : ice.parseInt(nprice / price);
-              html += listTemp.replace(/{{pid}}/g, pid).replace(/{{nprice}}/g, nprice).replace('{{num}}', num).replace('{{process}}', proc).replace('{{price}}', price).replace('{{name}}', name).replace('{{img}}', img);
+              html += listTemp.replace('{{orderno}}', orderno).replace(/{{pid}}/g, pid).replace(/{{nprice}}/g, nprice).replace('{{num}}', num).replace('{{process}}', proc).replace('{{price}}', price).replace('{{name}}', name).replace('{{img}}', img);
             }
             var dom = document.createElement('div');
             dom.innerHTML = html;
@@ -113,7 +118,6 @@ define(function(require, exports, module) {
       ice.removeClass($carNone, 'hidden');
     }
 
-    $carCount.innerHTML = num;
     deelCarInfo();
   };
 
@@ -126,6 +130,10 @@ define(function(require, exports, module) {
     }
     $carPrice.innerHTML = price;
     $carCount.innerHTML = len;
+
+    // 如果产品个数大于0则按钮可以点击
+    isSubmit = gm.isSubmit($btnSubmit, (len > 0));
+    inputLen = len;
   };
 
   // 删除产品
@@ -161,11 +169,61 @@ define(function(require, exports, module) {
     deelCarInfo();
   };
 
+  // 绑定提交按钮
+  function bindSubmit() {
+    $btnSubmit.addEventListener(ice.tapClick, function(e) {
+      ice.stopDefault(e);
+      mySubmit();
+    });
+  };
+
+  // 提交订单
+  function mySubmit() {
+    if (!isSubmit && inputLen > 0) return;
+    isSubmit = gm.isSubmit($btnSubmit, false);
+    gm.mess('订单提交中，请稍后...');
+
+    var prods = '';
+    for (var i = 0; i < inputLen; i++) {
+      var oid = $inputs[i].getAttribute('orderno');
+      var num = $inputs[i].value;
+      prods += '|' + oid + '=' + num;
+    }
+
+    console.log(prods);
+
+    ice.ajax({
+      url: gm.path + '/order/add.php',
+      type: 'post',
+      data: {
+        prods: prods
+      },
+      async: false,
+      dataType: 'json',
+      success: function(data) {
+        gm.ajaxMsg(data);
+        try {
+          if(data.status == '0') {
+            gm.go('/html/order/pay.html?orderno=' + data.data);
+            gm.car.set(null);
+          }
+        } catch(e) {
+          console.log(e.message);
+        }
+      }
+    });
+
+    isSubmit = gm.isSubmit($btnSubmit, true);
+  };
+
   // 初始化
   (function() {
 
     // 初始化
     search(1);
+
+    // 绑定提交
+    bindSubmit();
 
     // 绑定滑动事件
     gm.bindScroll(gm.refresh, null);

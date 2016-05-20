@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 
     // 登录注册
     ice.ajax({
-      url: gm.path + '/action/wechat/doLogin.php',
+      url: gm.path + '/wechat/doLogin.php',
       data: mydata,
       type: 'post',
       dataType: 'json',
@@ -44,8 +44,8 @@ define(function(require, exports, module) {
 
   // 初始化
   (function() {
-    var openid = ice.toEmpty(gm.session.get('openid'));
-    if (openid == '') {
+    var isLogin = ice.toEmpty(gm.session.get('isLogin'));
+    if (isLogin != '1') {
       login();
     } else {
       var redirect = gm.session.get('redirect');
