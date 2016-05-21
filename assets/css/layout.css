@@ -54,6 +54,7 @@ a {
 .ice-bar,
 .ice-barmess {
   position: absolute;
+  position: fixed;
   width: 100%;
   text-align: center;
   z-index: 2;
@@ -185,13 +186,6 @@ a {
 /* ======== 公用颜色 ======== */
 
 
-/* 灰色 */
-
-.col-grey {
-  color: #333;
-}
-
-
 /* 绿色 */
 
 .col-green {
@@ -307,6 +301,7 @@ a {
   background: #fff !important;
 }
 
+
 /* ======== 公用颜色 ======== */
 
 
@@ -382,7 +377,9 @@ a {
   color: #fff;
 }
 
+
 /* 百分百按钮 */
+
 .btn-max {
   display: block;
   border-radius: .5em;
@@ -391,23 +388,34 @@ a {
   text-align: center;
 }
 
+
 /* 按钮禁用 */
+
 .btn-disabled {
   background-color: #ccc !important;
 }
 
+
 /* ======== 公用按钮  ========= */
+
+
+/* 雪碧图 */
+
+.sp-wx {
+  background-image: url('/assets/images/pay.jpg');
+  background-size: contain;
+}
+
+
+/* 雪碧图 */
 
 
 /* iconfont */
 
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1463643511_6608737.eot'); /* IE9*/
-  src: url('//at.alicdn.com/t/font_1463643511_6608737.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1463643511_6608737.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1463643511_6608737.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1463643511_6608737.svg#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('//at.alicdn.com/t/font_1463817465_601653.eot');
+  src: url('//at.alicdn.com/t/font_1463817465_601653.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1463817465_601653.woff') format('woff'), url('//at.alicdn.com/t/font_1463817465_601653.ttf') format('truetype'), url('//at.alicdn.com/t/font_1463817465_601653.svg#iconfont') format('svg');
 }
 
 i {
@@ -501,11 +509,11 @@ i {
 }
 
 .icon-arrowleft:before {
-  content: '\e613'; 
+  content: '\e613';
 }
 
 .icon-arrowright:before {
-  content: '\e614'; 
+  content: '\e614';
 }
 
 .icon-share:before {

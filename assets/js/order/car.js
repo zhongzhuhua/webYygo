@@ -160,7 +160,7 @@ define(function(require, exports, module) {
     if (v <= 0) {
       v = 1;
       gm.mess('至少参与1人次');
-    } else if (v >= max) {
+    } else if (v > max) {
       v = max;
       gm.mess('最多可参与' + max + '人次');
     }
@@ -203,9 +203,21 @@ define(function(require, exports, module) {
       success: function(data) {
         gm.ajaxMsg(data);
         try {
-          if(data.status == '0') {
-            gm.go('/html/order/pay.html?orderno=' + data.data);
-            gm.car.set(null);
+          var status = data.status;
+          var model = data.data;
+          var orderno = ice.toEmpty(model.orderno);
+          var fees = ice.parseInt(model.fees);
+
+          if(status == '0') {
+            if(orderno == '' || fees <= 0) {
+              gm.mess('订单信息异常，请刷新重试');
+            } else {
+              var jsapi = encodeURIComponent(data.jsapi);
+              gm.go('/html/order/pay.html?orderno=' + orderno + '&fees=' + fees + '&jsapi=' + jsapi);
+            }
+          } else if(orderno != '') {
+            // 如果订单号不为空且执行结果不正确，立即解冻订单
+            // ...
           }
         } catch(e) {
           console.log(e.message);

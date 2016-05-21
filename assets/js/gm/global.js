@@ -15,7 +15,7 @@ define(function(require, exports, module) {
       if (_istest) {
         return 'wxea3db525582377d1';
       } else {
-        return 'wx2bb7a8b9edef392a';
+        return 'wx5b08cfd22ea4c57e';
       }
     },
     // 获取请求路径
@@ -151,7 +151,7 @@ define(function(require, exports, module) {
 
   // 跳转
   function _go(url) {
-    location.href = url == null || url == '' ? '/' : url;
+    location.href = url == null || url == '' ? '/html/home/index.html' : url;
   };
   exports.go = _go;
 

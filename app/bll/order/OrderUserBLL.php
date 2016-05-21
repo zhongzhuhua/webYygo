@@ -4,13 +4,13 @@
   // 用户订单 ou_order + ou_orderinfo
   class OrderUserBLL {
 
-  	private $logkey = null;
-		public function __construct() {
-			$logkey = gm::getLogKey();
-		}
+    private $logkey = null;
+    public function __construct() {
+      $logkey = gm::getLogKey();
+    }
 
 
-		/**
+    /**
      * 新增用户订单
      * @memo 每次新增用户订单的时候，先解冻用户未付款的订单
      * @param uid 用户
@@ -18,7 +18,7 @@
      */
     public function insert($uid, $prods) {
       $result = new JsonResult();
-      $orderno;
+      $order = null;
       try {
         // 基础校验
         $prods = trim($prods, '|');
@@ -32,10 +32,10 @@
 
         // 新增订单
         $prodList = explode('|', $prods);
-        $orderno = $this->_insert($uid, $prodList);
-        $result->data = $orderno;
+        $order = $this->_insert($uid, $prodList);
 
-        if(!gm::isNull($orderno)) {
+        if(!gm::isNull($order)) {
+          $result->data = $order;
           $result->success('');
         } else {
           throw new MyException('提交订单失败，请刷新重试');
@@ -59,6 +59,8 @@
 
       // 创建订单时间
       $ou_orderno = gm::getOrderNo();
+      $result = null;
+      $fees = 0;
 
       try {
         // 基础校验
@@ -90,6 +92,7 @@
               throw new MyException('订单提交失败,请刷新重试');
             }
 
+            $fees = $fees + $num;
             // 添加一个产品
             $sql_append .= " ('$orderno','$ou_orderno','$num'),";
             // 冻结该订单对应的金额
@@ -127,8 +130,16 @@
         // 事务 - 新增订单明细
         $M->ope($insertInfoSql, $conn);
 
-        // 事务 - 提交
-        $M->commit($conn);
+        // 事务 - 提交 
+        $M->rollback($conn); 
+        $M->commit($conn);   
+        
+
+        // 返回订单信息
+        $result = array(
+          'orderno' => $ou_orderno,
+          'fees' => $fees
+        );
       } catch(Exception $e) {
         if(!is_null($M)) {
           $M->rollback($conn);
@@ -136,7 +147,7 @@
         throw $e;
       }
 
-      return $ou_orderno;
+      return $result;
     }
   }
 ?>

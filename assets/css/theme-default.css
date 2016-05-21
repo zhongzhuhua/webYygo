@@ -10,6 +10,7 @@
   border-color: #fe3068;
 }
 
+
 /* 顶部链接 */
 
 .ice-nav .link {
@@ -102,6 +103,17 @@
 
 .info-list .name {
   color: #999;
+}
+
+
+/* 支付方式 */
+
+.pay-list >div {
+  border-color: #dedede;
+}
+
+.pay-list .method {
+  border-color: #eee;
 }
 
 

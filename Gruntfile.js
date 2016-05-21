@@ -98,7 +98,7 @@ module.exports = function(grunt) {
       lib: {
         files: [{
           expand: true,
-          src: ['lib/*/**'],
+          src: ['lib/*/**', 'libapp/*/**'],
           dest: 'dist/'
         }]
       }
@@ -192,7 +192,7 @@ module.exports = function(grunt) {
 
       // 插件复制
       lib: {
-        files: ['lib/*/**'],
+        files: ['lib/*/**', 'libapp/*/**'],
         tasks: ['copy:lib']
       }
     }

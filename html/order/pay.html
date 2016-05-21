@@ -3,44 +3,54 @@
 <head>
 	@@include('../../modules/meta.html', {"title": "购物车"})
 </head>
-<body> 
+<body class="bg-greywhite"> 
+
   <div class="ice ice-have-barmess">
     <div class="ice-refresh"><span></span></div>
     <div class="ice-main">
 
-      <!-- 订单价格 begin -->
-      <div class="gm-sec gm-sec08 gm-bgcw gm-mgt01">
-        <span class="g-mess fl-l">商品合计</span>
-        <span class="g-money fl-r gm-colm"><label id="money">0</label> 元</span>
+      <!-- 商品合计 begin -->
+      <div class="pay-list mg-top">
+        <div class="row flex">
+          <div class="flex-2 cl-grey">
+            商品合计
+          </div>
+          <div class="flex-1 te-col txt-r">
+            <span id="prodFees">0</span>元
+          </div>
+        </div>
       </div>
-      <!-- 订单价格 end -->
+      <!-- 商品合计 -->
+
       <!-- 支付方式 begin -->
-      <div class="gm-list gm-list11 gm-bgcw gm-mgt01">
-        <div class="g-tit g-border">
-          您的付款方式
-        </div>
-        <div class="g-row g-border">
-          <div class="g-pay gm-col10 icon fl-l">&#xe62f;</div>
-          <div class="g-mess">
-            <span>微信支付</span>
-            <span class="g-info">适合有微信支付的用户</span>
+      <div class="pay-list mg-top">
+        <div class="row border col-black">第三方支付</div>
+        <div class="row method">
+          <div class="icon">
+            <i class="icon-wx col-green"></i>
           </div>
-          <div class="icon g-icon j-choose g-choose"></div>
-        </div>
-      </div>
-      <!-- 支付方式 end -->
-      <!-- 订单支付 begin -->
-      <div class="gm-frm g-mgmin">
-        <div class="gm-frm01 hidden" id="button">
-          <div class="g-btns j-btns">
-            <a class="gm-btn gm-btn01" id="btnSubmit" href="javascript:;">确认支付</a>
+          <div class="payment">
+            <div>微信支付</div>
+            <div class="memo col-grey01">适合拥有微信支付的用户</div>
+            <div class="righticon cl-grey">
+              <i class="icon-right cl-orange"></i>
+            </div>
           </div>
         </div>
+        <div class="clear"></div>
       </div>
-      <!-- 订单支付 end -->
+      <!-- 支付方式 -->
       
     </div>
-  </div> 
+  </div>
+  
+  <!-- 支付按钮 begin -->
+  <div class="ice-barmess flex button-bottom">
+    <div class="flex-1">
+      <a href="javascript:;" class="btn-max te-bg" id="btnSubmit">确认支付</a>
+    </div>
+  </div>
+  <!-- 支付按钮 -->
 
   @@include('../../modules/user-bottom.html', {"car": "te-col"})
 </body>

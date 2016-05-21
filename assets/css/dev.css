@@ -38,6 +38,17 @@
 /* user-bottom */
 
 
+/* button-bottom [底部按钮] */
+
+.button-bottom .btn-max {
+  margin-left: 5%;
+  width: 90%;
+  line-height: 2.6em;
+}
+
+/* button-bottom */
+
+
 /* prod-bottom [产品底部][购物车底部] */
 
 .prod-bottom {
@@ -347,6 +358,64 @@
 
 
 /* info-list */
+
+
+/* pay-list [支付方式] */
+
+.pay-list {
+  background-color: #fff;
+  font-size: .92em;
+}
+
+.pay-list .row {
+  padding: .8em;
+}
+
+.pay-list .border {
+  border-bottom-width: 1px;
+}
+
+.pay-list .method {
+  height: 3em;
+  border-bottom-width: 1px;
+}
+
+.pay-list .icon {
+  float: left;
+  width: 3em;
+  height: 3em;
+  line-height: 3em;
+}
+
+.pay-list .icon i {
+  margin-top: -.1em;
+  font-size: 3em;
+}
+
+.pay-list .payment {
+  position: relative;
+  padding-top: .2em;
+  padding-left: 3.6em;
+}
+
+.pay-list .memo {
+  font-size: .9em;
+}
+
+.pay-list .righticon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 3em;
+  line-height: 3em;
+}
+
+.pay-list .righticon i {
+  font-size: 2em;
+}
+
+
+/* pay-list */
 
 
 /* win-type [分类弹窗] */

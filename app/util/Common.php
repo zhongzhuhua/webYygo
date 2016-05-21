@@ -8,7 +8,7 @@
      * 记录系统日志
      * @param type 错误位置 action bll
      * @param funName 错误的方法
-     * @param mess 错误信息
+     * @param mess 错误信息，可以是字符串或者 Exception
      * @param logkey 日志标识 time().'_'.gm::getcode(4)
      */
     public static function log($type, $funName, $mess, $logkey) {
@@ -75,7 +75,7 @@
      */
     public static function getJson($jsonResult) {
       try {
-        $jsonResult === null ? new JsonResult() : $jsonResult;
+        $jsonResult = $jsonResult === null ? new JsonResult() : $jsonResult;
       } catch (Exception $e) {
         $jsonResult = new JsonResult();
       }
