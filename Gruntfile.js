@@ -67,7 +67,7 @@ module.exports = function(grunt) {
         options: {
 
         },
-        src: 'html/**/*.html',
+        src: 'html/**/*.*',
         dest: 'dist/'
       }
     },
@@ -114,7 +114,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/html',
-          src: '**/*.html',
+          src: '**/*.*',
           dest: 'dist/html'
         }]
       }

@@ -54,7 +54,7 @@
           $jsApiParameters = $tools->GetJsApiParameters($order);
           $result->jsapi = $jsApiParameters;
         } catch(Exception $e) {
-          $result->error($e->getMessage(), 4);
+          $result->error('创建微信订单失败', 4);
         }
       } else {
         $result->jsapi = true;

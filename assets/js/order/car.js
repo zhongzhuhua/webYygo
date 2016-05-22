@@ -64,7 +64,7 @@ define(function(require, exports, module) {
             dom.innerHTML = html;
             $list.appendChild(dom);
 
-            $inputs = ice.queryAll('input', $list);
+            $inputs = $list.getElementsByTagName('input')
 
             // 绑定操作事件
             bindOpe();
@@ -125,6 +125,7 @@ define(function(require, exports, module) {
   function deelCarInfo() {
     var len = $inputs ? $inputs.length : 0;
     var price = 0;
+
     for (var i = 0; i < len; i++) {
       price += ice.parseInt($inputs[i].value);
     }
@@ -144,6 +145,7 @@ define(function(require, exports, module) {
       carNum = gm.car.remove(id);
       dom.parentNode.removeChild(dom);
     }
+
     carNone(carNum);
     gm.close(_layer, 0);
   };
@@ -193,7 +195,7 @@ define(function(require, exports, module) {
     console.log(prods);
 
     ice.ajax({
-      url: gm.path + '/order/add.php',
+      url: gm.path + '/wechat/addOrder.php',
       type: 'post',
       data: {
         prods: prods
@@ -214,6 +216,7 @@ define(function(require, exports, module) {
             } else {
               var jsapi = encodeURIComponent(data.jsapi);
               gm.go('/html/order/pay.html?orderno=' + orderno + '&fees=' + fees + '&jsapi=' + jsapi);
+              // gm.go('/html/wx/pay.php?orderno=' + orderno + '&fees=' + fees + '&jsapi=' + jsapi);
             }
           } else if(orderno != '') {
             // 如果订单号不为空且执行结果不正确，立即解冻订单
