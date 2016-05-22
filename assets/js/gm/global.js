@@ -2,7 +2,8 @@ define(function(require, exports, module) {
   require('layer');
 
   // ajax 数据
-  exports.path = '/action';
+  var _path = '/action';
+  exports.path = _path;
   // 域名和端口
   var _host = location.host;
   // 是否测试
@@ -378,9 +379,32 @@ define(function(require, exports, module) {
     return sub;
   };
 
+  // 公用清除订单信息
+  function _clearOrder() {
+    var pay = _session.get('pay');
+    if(pay === '1') {
+      _session.set('pay', '');
+      _session.set('payOrder', '');
+      _session.set('payJsapi', '');
+      _session.set('payFees', '');
+
+      ice.ajax({
+        url: _path + '/order/cancel.php',
+        async: false,
+        success: function() {
+          console.log('提交成功');
+        }
+      }); 
+    }
+  };
+  exports.clearOrder = _clearOrder;
+
   // 公用初始化事件
   (function() {
     _car.init();
+
+    // 清除订单
+    _clearOrder();
 
     // 公用分享
     var $share = ice.query('.share');

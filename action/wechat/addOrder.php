@@ -52,8 +52,11 @@
           $input->SetOpenid($openid);
           $order = WxPayApi::unifiedOrder($input);
           $jsApiParameters = $tools->GetJsApiParameters($order);
-          $result->jsapi = $jsApiParameters;
+
+          // $result->jsapi = $jsApiParameters;
+          $result->jsapi = true;
         } catch(Exception $e) {
+          $bll->unfrozen($uid);
           $result->error('创建微信订单失败', 4);
         }
       } else {

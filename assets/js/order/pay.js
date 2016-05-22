@@ -2,15 +2,12 @@ define(function(require, exports, module) {
   var gm = require('global').login();
   var ice = gm.ice;
 
-  var $prodFees = ice.query('#prodFees');
-  var fees = ice.request('fees');
-  var orderno = ice.request('orderno');
-  var jsapi = ice.parseJson(decodeURIComponent(ice.request('jsapi')));
 
   // 支付
   var $btnSubmit = ice.query('#btnSubmit');
 
-  $prodFees.innerHTML = fees;
+  // 支付接口模版
+  var jsapi = null;
 
   // 微信支付回调
   function callpay() {
@@ -56,15 +53,44 @@ define(function(require, exports, module) {
     });
   };
 
+  // 加载订单信息
+  function initOrder() {
+    gm.session.set('pay', '1');
+    var $prodFees = ice.query('#prodFees');
+    var fees = ice.parseInt(gm.session.get('payFees'));
+    var jsapi = gm.session.get('payJsapi');
+    var orderno = gm.session.get('payOrder');
+    var porder = ice.request('orderno');
+
+    // 判断订单信息
+    if(porder != null && orderno != null && porder == orderno && jsapi != null && jsapi != '') {
+      $prodFees.innerHTML = fees;
+      jsapi = ice.parseJson(decodeURIComponent(ice.request('jsapi')));
+    } else {
+      gm.go();
+    }
+  };
 
   // 初始化
   (function() {
+
+    // 3分钟后订单失效
+    setTimeout(function() {
+      gm.clearOrder();
+      gm.alert('<div style="padding: 1em;">该订单已经过期</div>', function() {
+        gm.go('/html/order/car.html');
+      });
+    }, 1000 * 60 * 3);
+  
+
+    // 初始化订单
+    initOrder();
 
     // 绑定支付
     bindSubmit();
 
     // 绑定滑动事件
-    gm.bindScroll(gm.refresh, null);
+    gm.bindScroll(null, null);
 
   })();
 });

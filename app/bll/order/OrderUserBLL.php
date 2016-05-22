@@ -51,6 +51,22 @@
     }
 
     /**
+     * 解冻用户订单，无返回值
+     * @memo 根据用户号，解冻该用户未解冻的订单
+     * @param uid 用户
+     */
+    public function unfrozen($uid) {
+      try {
+        // 基础校验
+        if(!gm::isNull($uid)) {
+          $this->_unfrozen($uid);
+        }
+      } catch (Exception $e) {
+        gm::log(__CLASS__, __FUNCTION__, $e, $this->logkey);
+      }
+    }
+
+    /**
      * 新增用户订单
      * @param uid 用户
      * @param prodList ['order=num','order=num']
@@ -131,7 +147,7 @@
         $M->ope($insertInfoSql, $conn);
 
         // 事务 - 提交 
-        $M->rollback($conn); 
+        // $M->rollback($conn); 
         $M->commit($conn);   
         
 
@@ -148,6 +164,22 @@
       }
 
       return $result;
+    }
+
+    /**
+     * 解冻用户订单，无返回值
+     * @param uid 用户
+     */
+    private function _unfrozen($uid) {
+      $uid = gm::removeAttr($uid);
+      if(!gm::isNull($uid)) {
+        $sql = "call pro_unfrozen('$uid', @result)";
+        $M = new MysqlDb();
+        $result = $M->prodOut($sql);
+        if(!gm::isNull($result)) {
+          gm::log(__CLASS__, __FUNCTION__, $e, $this->logkey);
+        }
+      }
     }
   }
 ?>

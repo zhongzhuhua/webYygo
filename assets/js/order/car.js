@@ -183,7 +183,6 @@ define(function(require, exports, module) {
   function mySubmit() {
     if (!isSubmit && inputLen > 0) return;
     isSubmit = gm.isSubmit($btnSubmit, false);
-    gm.mess('订单提交中，请稍后...');
 
     var prods = '';
     for (var i = 0; i < inputLen; i++) {
@@ -193,6 +192,7 @@ define(function(require, exports, module) {
     }
 
     console.log(prods);
+    gm.mess('订单提交中，请稍后...');
 
     ice.ajax({
       url: gm.path + '/wechat/addOrder.php',
@@ -209,21 +209,24 @@ define(function(require, exports, module) {
           var model = data.data;
           var orderno = ice.toEmpty(model.orderno);
           var fees = ice.parseInt(model.fees);
+          var jsapi = ice.toEmpty(data.jsapi);
 
           if(status == '0') {
-            if(orderno == '' || fees <= 0) {
+            if(orderno == '' || fees <= 0 || jsapi == '') {
               gm.mess('订单信息异常，请刷新重试');
             } else {
-              var jsapi = encodeURIComponent(data.jsapi);
-              gm.go('/html/order/pay.html?orderno=' + orderno + '&fees=' + fees + '&jsapi=' + jsapi);
-              // gm.go('/html/wx/pay.php?orderno=' + orderno + '&fees=' + fees + '&jsapi=' + jsapi);
+              jsapi = encodeURIComponent(jsapi);
+              gm.session.set('payOrder', orderno);
+              gm.session.set('payFees', fees);
+              gm.session.set('payJsapi', jsapi);
+              gm.go('/html/order/pay.html?orderno=' + orderno);
             }
           } else if(orderno != '') {
             // 如果订单号不为空且执行结果不正确，立即解冻订单
             // ...
           }
         } catch(e) {
-          console.log(e.message);
+          gm.mess(e.message);
         }
       }
     });
