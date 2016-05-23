@@ -1,6 +1,5 @@
 <?php  
   require_once $_SERVER['DOCUMENT_ROOT'].'/app/util/ActionCommon.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/app/bll/order/OrderUserBLL.php';
 
   // 微信订单
   require_once $_SERVER['DOCUMENT_ROOT'].'/libapp/wechat/lib/WxPay.Api.php';
@@ -8,62 +7,45 @@
   require_once $_SERVER['DOCUMENT_ROOT'].'/libapp/wechat/lib/WxPay.JsApiPay.php';
 
   // 创建用户临时订单
-  $result = null;
-  $prods = $_POST['prods'];
+  $result = new JsonResult();
 
-  if(is_null($gm_user)) {
-    $result = new JsonResult();
-    echo gm::getJson($result);
-  } else {
-    $uid = $gm_user['uid'];
-    $openid = $gm_user['openid'];
+  try {
+    $wxfee = $_POST['fees'];
+    $orderno = $_POST['orderno'];
 
-    if(gm::isNull($uid) || gm::isNull($openid)) {
-      $result = new JsonResult();
-      echo gm::getJson($result);;
+    if(gm::isNull($gm_user) || gm::isNull($gm_user['uid']) || gm::isNull($gm_user['openid'])) {
+      $result->error('', 2);
+    } else if(gm::isNull($wxfee) || gm::isNull($orderno) || gm::regInt($wxfee) || $wxfee <= 0) {
+      $result->error('订单信息无效，请返回重试');
     } else {
-      // 创建系统订单
-      $bll = new OrderUserBLL();
-      $result = $bll->insert($uid, $prods);
-
-      // 创建微信订单 
-      if(!configs::$istest) {
-        $orderno = $result->data['orderno'];
-        $wxfee = $result->data['fees'] * 100;
-
-        if(configs::$wxtest) {
-          $wxfee = 1;
-        }
-
-        try {
-          // 初始化支付
-          $tools = new JsApiPay();
-
-          // 统一订单接口
-          $input = new WxPayUnifiedOrder();
-          $input->SetBody("幕拍商品");
-          $input->SetGoods_tag("幕拍商品");
-          $input->SetOut_trade_no($orderno);
-          $input->SetTotal_fee($wxfee);
-          $input->SetTime_start(date("YmdHis"));
-          $input->SetTime_expire(date("YmdHis", time() + 600));
-          $input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
-          $input->SetTrade_type("JSAPI");
-          $input->SetOpenid($openid);
-          $order = WxPayApi::unifiedOrder($input);
-          $jsApiParameters = $tools->GetJsApiParameters($order);
-
-          // $result->jsapi = $jsApiParameters;
-          $result->jsapi = true;
-        } catch(Exception $e) {
-          $bll->unfrozen($uid);
-          $result->error('创建微信订单失败', 4);
-        }
-      } else {
-        $result->jsapi = true;
+      // 测试的话，付款1分钱
+      if(configs::$wxtest) {
+        $wxfee = 1;
       }
 
-      echo gm::getJson($result);
+      // 初始化支付
+      $tools = new JsApiPay();
+
+      // 统一订单接口
+      $input = new WxPayUnifiedOrder();
+      $input->SetBody("幕拍商品");
+      $input->SetGoods_tag("幕拍商品");
+      $input->SetOut_trade_no($orderno);
+      $input->SetTotal_fee($wxfee);
+      $input->SetTime_start(date("YmdHis"));
+      $input->SetTime_expire(date("YmdHis", time() + 600));
+      $input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
+      $input->SetTrade_type("JSAPI");
+      $input->SetOpenid($openid);
+      $order = WxPayApi::unifiedOrder($input);
+      $jsApiParameters = $tools->GetJsApiParameters($order);
+
+      $result->data = $jsApiParameters;
+      $result->success('');
     }
+  } catch(Exception $e) {
+    $result->error($e->getMessage());
   }
+
+  echo gm::getJson($result);
 ?>

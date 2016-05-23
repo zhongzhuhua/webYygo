@@ -547,6 +547,7 @@ a {
 
 /* 绿色 */
 
+.col-right,
 .col-green {
   color: #51c332;
 }
@@ -577,6 +578,12 @@ a {
   color: #666;
 }
 
+/* 红色 */
+
+.col-error,
+.col-red {
+  color: #f00;
+}
 
 /* 背景-类型背景颜色 颜色-字体颜色 */
 
@@ -929,6 +936,7 @@ i {
   width: 90%;
   line-height: 2.6em;
 }
+
 
 /* button-bottom */
 
@@ -1300,6 +1308,33 @@ i {
 
 
 /* pay-list */
+
+
+/* pay-info [支付详情] */
+
+.pay-info .result {
+  padding-top: .6em;
+  padding-bottom: 1em;
+}
+
+.pay-info i {
+  font-size: 4em;
+}
+
+.pay-info .row {
+  padding: 0 1em;
+  height: 3em;
+  line-height: 3em;
+  font-size: .8em;
+}
+
+.pay-info .mess {
+  padding: 0 1em;
+  font-size: .4em;
+}
+
+
+/* pay-info */
 
 
 /* win-type [分类弹窗] */

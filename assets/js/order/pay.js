@@ -3,6 +3,11 @@ define(function(require, exports, module) {
   var ice = gm.ice;
 
 
+  var $prodFees = ice.query('#prodFees');
+  var fees = ice.parseInt(gm.session.get('payFees'));
+  var orderno = gm.session.get('payOrder');
+  var porder = ice.request('orderno');
+
   // 支付
   var $btnSubmit = ice.query('#btnSubmit');
 
@@ -25,28 +30,57 @@ define(function(require, exports, module) {
 
   //调用微信JS api 支付
   function jsApiCall() {
-    if(jsapi == undefined || jsapi == '') {
-      gm.mess('微信支付回调失败，请重试');
-      return;
-    }
-    WeixinJSBridge.invoke(
-      'getBrandWCPayRequest',
-      jsapi,
-      function(res) {
-        res = res.err_msg;
-        if(res == undefined || res == '') {
-          res = '付款失败';
-        } else if (res.indexOf('cancel') > -1) {
-          res = '取消付款';
-        } else if (res.indexOf('ok') > -1) {
-          res = '恭喜您，支付成功';
+    ice.ajax({
+      url: gm.path + '/wx/addOrder.php',
+      data: {
+        orderno: orderno,
+        fees: fees
+      },
+      type: 'post',
+      dataType: 'json',
+      success: function(data) {
+        gm.ajaxMsg(data);
+
+        try {
+          if (data.status == '0') {
+            jsapi = data.data;
+
+            if (jsapi == null || jsapi == '') {
+              if (gm.istest) {
+                paySuccess();
+              } else {
+                // 调用微信支付
+                WeixinJSBridge.invoke(
+                  'getBrandWCPayRequest',
+                  jsapi,
+                  function(res) {
+                    res = res.err_msg;
+                    if (res == undefined || res == '') {
+                      res = '付款失败';
+                    } else if (res.indexOf('cancel') > -1) {
+                      res = '取消付款';
+                    } else if (res.indexOf('ok') > -1) {
+                      paySuccess();
+                    }
+                    gm.mess(res);
+                  }
+                );
+              }
+            }
+          }
+        } catch (e) {
+          console.log(e.message);
         }
-        gm.mess(res);
       }
-    );
+    });
   };
 
-  // 绑定支付
+  // 成功支付之后
+  function paySuccess() {
+    gm.go('/order/pay-success.html?orderno=' + orderno + '&fees=' + fees);
+  };
+
+  // 绑定支付，目前只有微信支付，直接绑定即可
   function bindSubmit() {
     $btnSubmit.addEventListener(ice.tapClick, function(e) {
       callpay();
@@ -56,16 +90,10 @@ define(function(require, exports, module) {
   // 加载订单信息
   function initOrder() {
     gm.session.set('pay', '1');
-    var $prodFees = ice.query('#prodFees');
-    var fees = ice.parseInt(gm.session.get('payFees'));
-    var jsapi = gm.session.get('payJsapi');
-    var orderno = gm.session.get('payOrder');
-    var porder = ice.request('orderno');
 
     // 判断订单信息
-    if(porder != null && orderno != null && porder == orderno && jsapi != null && jsapi != '') {
+    if (porder != null && orderno != null && porder == orderno) {
       $prodFees.innerHTML = fees;
-      jsapi = ice.parseJson(decodeURIComponent(ice.request('jsapi')));
     } else {
       gm.go();
     }
@@ -81,7 +109,7 @@ define(function(require, exports, module) {
         gm.go('/html/order/car.html');
       });
     }, 1000 * 60 * 3);
-  
+
 
     // 初始化订单
     initOrder();

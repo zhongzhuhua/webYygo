@@ -195,12 +195,11 @@ define(function(require, exports, module) {
     gm.mess('订单提交中，请稍后...');
 
     ice.ajax({
-      url: gm.path + '/wechat/addOrder.php',
+      url: gm.path + '/order/add.php',
       type: 'post',
       data: {
         prods: prods
       },
-      async: false,
       dataType: 'json',
       success: function(data) {
         gm.ajaxMsg(data);
@@ -209,29 +208,26 @@ define(function(require, exports, module) {
           var model = data.data;
           var orderno = ice.toEmpty(model.orderno);
           var fees = ice.parseInt(model.fees);
-          var jsapi = ice.toEmpty(data.jsapi);
 
           if(status == '0') {
-            if(orderno == '' || fees <= 0 || jsapi == '') {
+            if(orderno == '' || fees <= 0) {
               gm.mess('订单信息异常，请刷新重试');
             } else {
-              jsapi = encodeURIComponent(jsapi);
               gm.session.set('payOrder', orderno);
               gm.session.set('payFees', fees);
-              gm.session.set('payJsapi', jsapi);
               gm.go('/html/order/pay.html?orderno=' + orderno);
             }
-          } else if(orderno != '') {
-            // 如果订单号不为空且执行结果不正确，立即解冻订单
-            // ...
           }
         } catch(e) {
           gm.mess(e.message);
         }
+
+        isSubmit = gm.isSubmit($btnSubmit, true);
+      },
+      error: function() {
+        isSubmit = gm.isSubmit($btnSubmit, true);
       }
     });
-
-    isSubmit = gm.isSubmit($btnSubmit, true);
   };
 
   // 初始化

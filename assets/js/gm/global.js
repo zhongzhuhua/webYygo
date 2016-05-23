@@ -385,7 +385,6 @@ define(function(require, exports, module) {
     if(pay === '1') {
       _session.set('pay', '');
       _session.set('payOrder', '');
-      _session.set('payJsapi', '');
       _session.set('payFees', '');
 
       ice.ajax({

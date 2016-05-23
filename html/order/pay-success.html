@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  @@include('../../modules/meta.html', {"title": "支付详情"})
+</head>
+<body class="bg-greywhite"> 
+
+  <div class="ice ice-have-bar">
+    <div class="ice-refresh"><span></span></div>
+    <div class="ice-main">
+      <!-- 支付详情 begin -->
+      <div class="pay-info txt-c bg-white">
+        <div class="result">
+          <div>
+            <i class="icon-right col-green"></i>
+            <i class="icon-error col-red hidden"></i>
+          </div>
+          <div class="col-green">
+            支付成功
+          </div>
+          <div class="col-red hidden">
+            支付失败
+          </div>
+        </div>
+      </div>
+      <!-- 支付详情 -->
+      
+      <!-- 提示信息 begin -->
+      <div class="pay-info bg-white mg-top hidden">
+        <div class="row col-red">
+          
+        </div>
+      </div>
+      <!-- 提示信息 -->
+
+      <!-- 订单详情 begin -->
+      <div class="pay-info mg-top bg-white">
+        <div class="row">
+          <span class="fl-l">订单号</span>
+          <span class="fl-r te-col">134098103840918340918</span>
+        </div>
+        <div class="row">
+          <span class="fl-l">支付金额</span>
+          <span class="fl-r te-col">0元</span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <!-- 订单详情 -->
+
+      <!-- 提示信息 begin -->
+      <div class="pay-info mg-top">
+        <div class="mess col-grey02">
+          如果您的订单支付失败了，请拍照保留该页面或者记住订单号，以便办理异常订单退款。
+        </div>
+      </div>
+      <!-- 提示信息 -->
+
+      <!-- 按钮 begin -->
+      <div class="txt-c mg-top">
+        <a href="/html/home/index.html" class="btn-auto te-bg">返回首页</a>
+      </div>
+      <!-- 按钮 -->
+
+    </div>
+  </div>
+
+  @@include('../../modules/user-bottom.html')
+</body>
+@@include('../../modules/script.html')
+<script>
+   require(['/assets/js/order/pay-success.js?v=' + myargs + '002']);
+</script>
+</html>

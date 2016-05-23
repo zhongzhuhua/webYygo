@@ -188,6 +188,7 @@ a {
 
 /* 绿色 */
 
+.col-right,
 .col-green {
   color: #51c332;
 }
@@ -218,6 +219,12 @@ a {
   color: #666;
 }
 
+/* 红色 */
+
+.col-error,
+.col-red {
+  color: #f00;
+}
 
 /* 背景-类型背景颜色 颜色-字体颜色 */
 
