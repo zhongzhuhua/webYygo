@@ -8,6 +8,7 @@
   ini_set('zlib.output_compression_level', '4');
   // error_reporting(E_ERROR | E_WARNING | E_PARSE);
   // 引用公用类
+  require_once $_SERVER['DOCUMENT_ROOT'].'/configs.php';
   require_once $_SERVER['DOCUMENT_ROOT'].'/app/util/Common.php';
   require_once $_SERVER['DOCUMENT_ROOT'].'/app/util/MyException.php';
   require_once $_SERVER['DOCUMENT_ROOT'].'/app/util/JsonResult.php';

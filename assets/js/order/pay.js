@@ -31,7 +31,7 @@ define(function(require, exports, module) {
   //调用微信JS api 支付
   function jsApiCall() {
     ice.ajax({
-      url: gm.path + '/wx/addOrder.php',
+      url: gm.path + '/wechat/addOrder.php',
       data: {
         orderno: orderno,
         fees: fees
@@ -92,7 +92,7 @@ define(function(require, exports, module) {
     gm.session.set('pay', '1');
 
     // 判断订单信息
-    if (porder != null && orderno != null && porder == orderno) {
+    if (porder != null && orderno != null && porder == orderno && fees > 0) {
       $prodFees.innerHTML = fees;
     } else {
       gm.go();

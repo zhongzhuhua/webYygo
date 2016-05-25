@@ -13,10 +13,12 @@
     $wxfee = $_POST['fees'];
     $orderno = $_POST['orderno'];
 
+    $wxfee = gm::isNull($wxfee) ? 0 : $wxfee * 100;
+
     if(gm::isNull($gm_user) || gm::isNull($gm_user['uid']) || gm::isNull($gm_user['openid'])) {
       $result->error('', 2);
-    } else if(gm::isNull($wxfee) || gm::isNull($orderno) || gm::regInt($wxfee) || $wxfee <= 0) {
-      $result->error('订单信息无效，请返回重试');
+    } else if(gm::isNull($wxfee) || gm::isNull($orderno) || !gm::regInt($wxfee) || $wxfee <= 0) {
+      $result->error('订单信息无效，请返回重试!');
     } else {
       // 测试的话，付款1分钱
       if(configs::$wxtest) {
@@ -43,6 +45,7 @@
       $result->data = $jsApiParameters;
       $result->success('');
     }
+
   } catch(Exception $e) {
     $result->error($e->getMessage());
   }
