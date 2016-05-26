@@ -97,7 +97,7 @@
       $utime = gm::getNowTime();
       $result = null;
       $fees = 0;
-
+ 
       try {
         // 基础校验
         $uid = gm::removeAttr($uid);
@@ -222,21 +222,55 @@
           return '支付失败，支付金额异常';
         }
 
-        // 查询系统订单
-        $sql = "SELECT a.status,a.orderno,utime FROM ou_order a WHERE a.status='12' AND a.orderno='$orderno'";
+        // 数据库操作
         $M = new MysqlDb();
-        $result = $M->find($sql, null);
+
+        // 查询订单所有产品
+        $sql = 
+           "SELECT o.pid FROM ou_order ou "
+          ."INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
+          ."INNER JOIN o_order o ON oi.orderno=o.orderno";
+        $prods = $M->find($sql, null);
+        $prodsCount = $prods == null ? 0 : count($prods);
+
+        if($prodsCount <= 0) {
+          return '订单详情异常';
+        }
 
         // =========== 开始事务 ============
-        $M = new MysqlDb();
         $conn = $M->getConn();
         $M->begin($conn);
 
+        // === 更新产品冻结数量 ===
+        $sql = 
+           "UPDATE o_order a "
+          ."INNER JOIN ("
+          ."  SELECT oi.orderno,oi.times FROM ou_order ou "
+          ."  INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
+          .") b ON a.orderno=b.orderno "
+          ."SET a.frozen_price=a.frozen_price-b.times,"
+          ."a.status=(CASE WHEN (a.prod_price=a.now_price AND a.frozen_price-b.times=0) THEN 10 ELSE a.status END) "
+          ."WHERE a.frozen_price-b.times>=0 ";
+
         // === 更新订单状态 ===
         $sql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
+        $count = $M->ope($usql, $conn);
+        if(gm::isNull($count) || $count != 1) {
+          throw new MyException('更新订单状态失效');
+        }
+
+        $count = $M->ope($usql, $conn);
+        if(gm::isNull($count) || $count != $prodsCount) {
+          throw new MyException('解冻产品数量异常');
+        }
         
 
         $M->commit($conn);
+
+        // 创建新订单
+        try {
+          $M->prod("call pro_payorder('$orderno')");
+        } catch(Exception $e) { }
       } catch(Exception $e) {
         if(!is_null($M)) {
           $M->rollback($conn);

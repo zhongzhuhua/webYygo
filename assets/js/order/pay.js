@@ -19,15 +19,19 @@ define(function(require, exports, module) {
 
   // 微信支付回调
   function callpay() {
-    if (typeof WeixinJSBridge == 'undefined') {
-      if (document.addEventListener) {
-        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-      } else if (document.attachEvent) {
-        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-      }
+    if(gm.istest) {
+
     } else {
-      jsApiCall();
+      if (typeof WeixinJSBridge == 'undefined') {
+        if (document.addEventListener) {
+          document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        } else if (document.attachEvent) {
+          document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+          document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+      } else {
+        jsApiCall();
+      }
     }
   };
 
@@ -53,26 +57,22 @@ define(function(require, exports, module) {
             jsapi = ice.parseJson(data.data);
 
             if (jsapi != null) {
-              if (gm.istest) {
-                paySuccess();
-              } else {
-                // 调用微信支付
-                WeixinJSBridge.invoke(
-                  'getBrandWCPayRequest',
-                  jsapi,
-                  function(res) {
-                    res = res.err_msg;
-                    if (res == undefined || res == '') {
-                      res = '付款失败';
-                    } else if (res.indexOf('cancel') > -1) {
-                      res = '取消付款';
-                    } else if (res.indexOf('ok') > -1) {
-                      paySuccess();
-                    }
-                    gm.mess(res);
+              // 调用微信支付
+              WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                jsapi,
+                function(res) {
+                  res = res.err_msg;
+                  if (res == undefined || res == '') {
+                    res = '付款失败';
+                  } else if (res.indexOf('cancel') > -1) {
+                    res = '取消付款';
+                  } else if (res.indexOf('ok') > -1) {
+                    paySuccess();
                   }
-                );
-              }
+                  gm.mess(res);
+                }
+              );
             } else {
               gm.mess('初始化微信订单参数出错！');
             }

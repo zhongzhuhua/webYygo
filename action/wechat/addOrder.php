@@ -32,34 +32,18 @@
       $input = new WxPayUnifiedOrder();
       $input->SetBody("幕拍商品");
       $input->SetGoods_tag("幕拍商品");
-      $input->SetOut_trade_no(time());
-      $input->SetTotal_fee(1);
+      $input->SetOut_trade_no($orderno);
+      $input->SetTotal_fee($wxfee);
       $input->SetTime_start(date("YmdHis"));
       $input->SetTime_expire(date("YmdHis", time() + 600));
       $input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
       $input->SetTrade_type("JSAPI");
-      $input->SetOpenid('oK_uExI5NXDAKcc_8E71q0KXxhms');
+      $input->SetOpenid($openid);
       $order = WxPayApi::unifiedOrder($input);
       $jsApiParameters = $tools->GetJsApiParameters($order);
+
       $result->data = $jsApiParameters;
       $result->success('');
-
-      // 统一订单接口
-      // $input = new WxPayUnifiedOrder();
-      // $input->SetBody("幕拍商品");
-      // $input->SetGoods_tag("幕拍商品");
-      // $input->SetOut_trade_no($orderno);
-      // $input->SetTotal_fee($wxfee);
-      // $input->SetTime_start(date("YmdHis"));
-      // $input->SetTime_expire(date("YmdHis", time() + 600));
-      // $input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
-      // $input->SetTrade_type("JSAPI");
-      // $input->SetOpenid($openid);
-      // $order = WxPayApi::unifiedOrder($input);
-      // $jsApiParameters = $tools->GetJsApiParameters($order);
-
-      // $result->data = $jsApiParameters;
-      // $result->success('');
     }
 
   } catch(Exception $e) {
