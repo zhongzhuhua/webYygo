@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  @@include('../../modules/meta.html', {"title": "订单支付"})
+</head>
+
+<body>
+  <button id="button">支付测试</button>
+  <div id="pay" style="word-break: break-all;"></div>
+</body>
+@@include('../../modules/script.html')
+<script>
+var jsapi = null;
+ice.ajax({
+  url: '/action/wechat/addOrder-test.php',
+  cache: false,
+  dataType: 'json',
+  success: function(data) {
+    jsapi = ice.parseJson(data.data);
+  }
+});
+
+document.getElementById('button').onclick = function() {
+  callpay();
+};
+
+// 微信支付回调
+function callpay() {
+  if (typeof WeixinJSBridge == 'undefined') {
+    if (document.addEventListener) {
+      document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+    } else if (document.attachEvent) {
+      document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+      document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+    }
+  } else {
+    jsApiCall();
+  }
+};
+
+//调用微信JS api 支付
+function jsApiCall() {
+  // 调用微信支付
+  WeixinJSBridge.invoke(
+    'getBrandWCPayRequest',
+    jsapi,
+    function(res) {
+      res = res.err_msg;
+      if (res == undefined || res == '') {
+        res = '付款失败';
+      } else if (res.indexOf('cancel') > -1) {
+        res = '取消付款';
+      } else if (res.indexOf('ok') > -1) {
+        paySuccess();
+      }
+      gm.mess(res);
+    }
+  );
+};
+</script>
+
+</html>

@@ -67,6 +67,25 @@
     }
 
     /**
+     * 订单支付成功，解冻产品金额，更改用户订单状态
+     * @param orderno 成功支付的订单
+     * @param fees 成功支付的金额，以元为单位
+     */
+    public function paySuccess($orderno, $fees) {
+      $result = '';
+      try {
+        $result = $this->_paySuccess($orderno, $fees);
+      } catch(MyException $e) {
+        $result->error($e->errorMessage());
+      } catch (Exception $e) {
+        $result->error('订单支付失败，错误代码：'.$this->logkey);
+        gm::log(__CLASS__, __FUNCTION__, $e, $this->logkey);
+      }
+
+      return $result;
+    }
+
+    /**
      * 新增用户订单
      * @param uid 用户
      * @param prodList ['order=num','order=num']
@@ -75,6 +94,7 @@
 
       // 创建订单时间
       $ou_orderno = gm::getOrderNo();
+      $utime = gm::getNowTime();
       $result = null;
       $fees = 0;
 
@@ -87,7 +107,7 @@
         }
 
         // 新增用户订单语句
-        $insertSql = "insert into ou_order(orderno, uid) values('$ou_orderno', '$uid')";
+        $insertSql = "insert into ou_order(orderno, uid, utime) values('$ou_orderno', '$uid', '$utime')";
 
         // 新增订单详情语句
         $insertInfoSql = "insert into ou_orderinfo(orderno,ou_orderno,times) values ";
@@ -180,6 +200,51 @@
           gm::log(__CLASS__, __FUNCTION__, $e, $this->logkey);
         }
       }
+    }
+
+    /**
+     * 订单支付成功，解冻产品金额，更改用户订单状态
+     * @param orderno 成功支付的订单
+     * @param fees 成功支付的金额，以元为单位
+     * @return string '' 代表执行成功
+     */
+    private function _paySuccess($orderno, $fees) {
+      $result = '支付失败，请刷新重试';
+      $M;
+      $conn;
+      try {
+        $orderno = gm::removeAttr($orderno);
+        if(gm::isNull($orderno)) {
+          return '该订单不存在';
+        }
+
+        if($fees == null || !gm::regInt($fees)) {
+          return '支付失败，支付金额异常';
+        }
+
+        // 查询系统订单
+        $sql = "SELECT a.status,a.orderno,utime FROM ou_order a WHERE a.status='12' AND a.orderno='$orderno'";
+        $M = new MysqlDb();
+        $result = $M->find($sql, null);
+
+        // =========== 开始事务 ============
+        $M = new MysqlDb();
+        $conn = $M->getConn();
+        $M->begin($conn);
+
+        // === 更新订单状态 ===
+        $sql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
+        
+
+        $M->commit($conn);
+      } catch(Exception $e) {
+        if(!is_null($M)) {
+          $M->rollback($conn);
+        }
+        throw $e;
+      }
+
+      return $result;
     }
   }
 ?>

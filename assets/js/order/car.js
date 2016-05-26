@@ -15,7 +15,7 @@ define(function(require, exports, module) {
 
   // 结算按钮
   var $btnSubmit = ice.query('#btnSubmit');
-  var isSubmit = false;
+  var isSubmit = false; 
 
   // 查询购物车
   function search(init) {

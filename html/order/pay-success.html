@@ -10,12 +10,12 @@
     <div class="ice-main">
       <!-- 支付详情 begin -->
       <div class="pay-info txt-c bg-white">
-        <div class="result">
+        <div class="result" id="result">
           <div>
-            <i class="icon-right col-green"></i>
+            <i class="icon-right col-green hidden"></i>
             <i class="icon-error col-red hidden"></i>
           </div>
-          <div class="col-green">
+          <div class="col-green hidden">
             支付成功
           </div>
           <div class="col-red hidden">
@@ -27,7 +27,7 @@
       
       <!-- 提示信息 begin -->
       <div class="pay-info bg-white mg-top hidden">
-        <div class="row col-red">
+        <div class="row col-red" id="msg">
           
         </div>
       </div>
@@ -37,11 +37,11 @@
       <div class="pay-info mg-top bg-white">
         <div class="row">
           <span class="fl-l">订单号</span>
-          <span class="fl-r te-col">134098103840918340918</span>
+          <span class="fl-r te-col" id="orderno"></span>
         </div>
         <div class="row">
           <span class="fl-l">支付金额</span>
-          <span class="fl-r te-col">0元</span>
+          <span class="fl-r te-col"><label id="fees"></label>元</span>
         </div>
         <div class="clear"></div>
       </div>

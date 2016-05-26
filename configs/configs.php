@@ -5,7 +5,7 @@
     // 是否测试环境
     static $istest = false;
     // 是否微信测试
-    static $wxtest = true;
+    static $wxtest = false;
     
     // 微信配置
     static $wechat = array(
