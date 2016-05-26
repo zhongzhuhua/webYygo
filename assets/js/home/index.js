@@ -121,8 +121,10 @@ define(function(require, exports, module) {
     search(1);
 
     // 绑定滑动事件
-    gm.bindScroll(null, function() {
-      search()
+    gm.bindScroll(function() {
+      search(1);
+    }, function() {
+      search();
     });
 
     // 顶部菜单

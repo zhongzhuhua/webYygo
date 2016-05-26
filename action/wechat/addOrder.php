@@ -14,8 +14,9 @@
     $orderno = $_POST['orderno'];
 
     $wxfee = gm::isNull($wxfee) ? 0 : $wxfee * 100;
+    $openid = $gm_user['openid'];
 
-    if(gm::isNull($gm_user) || gm::isNull($gm_user['uid']) || gm::isNull($gm_user['openid'])) {
+    if(gm::isNull($gm_user) || gm::isNull($gm_user['uid']) || gm::isNull($openid)) {
       $result->error('', 2);
     } else if(gm::isNull($wxfee) || gm::isNull($orderno) || !gm::regInt($wxfee)) {
       $result->error('订单信息无效，请返回重试!');
@@ -24,7 +25,7 @@
       if(configs::$wxtest) {
         $wxfee = 1;
       }
-
+ 
       // 初始化支付
       $tools = new JsApiPay();
 
@@ -33,7 +34,7 @@
       $input->SetBody("幕拍商品");
       $input->SetGoods_tag("幕拍商品");
       $input->SetOut_trade_no($orderno);
-      $input->SetTotal_fee($wxfee);
+      $input->SetTotal_fee(intval($wxfee));
       $input->SetTime_start(date("YmdHis"));
       $input->SetTime_expire(date("YmdHis", time() + 600));
       $input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
