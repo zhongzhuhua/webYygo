@@ -1,10 +1,11 @@
 define(function(require, exports, module) {
-  var gm = require('global').login();
+  var gm = require('global').login(true);
   var ice = gm.ice;
   
+  var layer;
   // 数据
-  var orderno = ice.query('orderno');
-  var fees = ice.parseInt(ice.query('fees'));
+  var orderno = ice.request('orderno');
+  var fees = ice.parseInt(ice.request('fees'));
   
   // 控件
   var $orderno = ice.query('#orderno');

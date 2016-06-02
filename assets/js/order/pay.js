@@ -20,7 +20,7 @@ define(function(require, exports, module) {
   // 微信支付回调
   function callpay() {
     if(gm.istest) {
-      
+      paySuccess();
     } else {
       if (typeof WeixinJSBridge == 'undefined') {
         if (document.addEventListener) {

@@ -22,5 +22,11 @@
       $this->status = 0;
       $this->msg = $_msg;
     }
+
+    public static function login() {
+      $result = new JsonResult();
+      $result->error('login', 2);
+      return $result;
+    }
   }
 ?>

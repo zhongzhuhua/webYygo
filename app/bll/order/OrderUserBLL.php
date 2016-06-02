@@ -67,14 +67,17 @@
     }
 
     /**
-     * 订单支付成功，解冻产品金额，更改用户订单状态
+     * 订单支付成功，解冻产品金额，更改用户订单状态，返回 '' 则是执行成功
      * @param orderno 成功支付的订单
      * @param fees 成功支付的金额，以元为单位
      */
     public function paySuccess($orderno, $fees) {
-      $result = '';
+      $result = new JsonResult();
       try {
-        $result = $this->_paySuccess($orderno, $fees);
+        $msg = $this->_paySuccess($orderno, $fees);
+        if(gm::isNull($msg)) {
+          $result->success('订单支付成功');
+        }
       } catch(MyException $e) {
         $result->error($e->errorMessage());
       } catch (Exception $e) {
@@ -208,7 +211,7 @@
      * @param fees 成功支付的金额，以元为单位
      * @return string '' 代表执行成功
      */
-    private function _paySuccess($orderno, $fees) {
+    private function _paySuccess2($orderno, $fees) {
       $result = '支付失败，请刷新重试';
       $M;
       $conn;
@@ -218,7 +221,7 @@
           return '该订单不存在';
         }
 
-        if($fees == null || !gm::regInt($fees)) {
+        if($fees == null) {
           return '支付失败，支付金额异常';
         }
 
@@ -227,14 +230,17 @@
 
         // 查询订单所有产品
         $sql = 
-           "SELECT o.pid FROM ou_order ou "
+           "SELECT COUNT(times) FROM ou_order ou "
           ."INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
           ."INNER JOIN o_order o ON oi.orderno=o.orderno";
-        $prods = $M->find($sql, null);
-        $prodsCount = $prods == null ? 0 : count($prods);
+        $needFee = $M->findOne($sql, null);
 
-        if($prodsCount <= 0) {
-          return '订单详情异常';
+        if(gm::isNull($needFee) || $needFee == '0') {
+          return '订单详情异常，请刷新重试';
+        } else if($needFee != $fees) {
+          if(!configs::$wxtest) {
+            return '支付失败，支付金额错误';
+          }
         }
 
         // =========== 开始事务 ============
@@ -252,16 +258,17 @@
           ."a.status=(CASE WHEN (a.prod_price=a.now_price AND a.frozen_price-b.times=0) THEN 10 ELSE a.status END) "
           ."WHERE a.frozen_price-b.times>=0 ";
 
+        // === 解冻商品数量 ===
+        $count = $M->ope($sql, $conn);
+        if(gm::isNull($count) || $count < 1) {
+          throw new MyException('解冻产品数量异常');
+        }
+
         // === 更新订单状态 ===
-        $sql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
+        $usql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
         $count = $M->ope($usql, $conn);
         if(gm::isNull($count) || $count != 1) {
           throw new MyException('更新订单状态失效');
-        }
-
-        $count = $M->ope($usql, $conn);
-        if(gm::isNull($count) || $count != $prodsCount) {
-          throw new MyException('解冻产品数量异常');
         }
         
 
@@ -271,6 +278,8 @@
         try {
           $M->prod("call pro_payorder('$orderno')");
         } catch(Exception $e) { }
+
+        return '';
       } catch(Exception $e) {
         if(!is_null($M)) {
           $M->rollback($conn);
@@ -280,5 +289,90 @@
 
       return $result;
     }
+
+    /**
+     * 订单支付成功，解冻产品金额，更改用户订单状态
+     * @param orderno 成功支付的订单
+     * @param fees 成功支付的金额，以元为单位
+     * @return string '' 代表执行成功
+     */
+    private function _paySuccess($orderno, $fees) {
+      $result = '支付失败，请刷新重试';
+      $M;
+      $conn;
+      try {
+        $orderno = gm::removeAttr($orderno);
+        if(gm::isNull($orderno)) {
+          return '该订单不存在';
+        }
+
+        if($fees == null) {
+          return '支付失败，支付金额异常';
+        }
+
+        // 数据库操作
+        $M = new MysqlDb();
+
+        // 查询订单所有产品
+        $sql = 
+           "SELECT COUNT(times) FROM ou_order ou "
+          ."INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
+          ."INNER JOIN o_order o ON oi.orderno=o.orderno";
+        $needFee = $M->findOne($sql, null);
+
+        if(gm::isNull($needFee) || $needFee == '0') {
+          return '订单详情异常，请刷新重试';
+        } else if($needFee != $fees) {
+          if(!configs::$wxtest) {
+            return '支付失败，支付金额错误';
+          }
+        }
+
+        // =========== 开始事务 ============
+        $conn = $M->getConn();
+        $M->begin($conn);
+
+        // === 更新产品冻结数量 ===
+        $sql = 
+           "UPDATE o_order a "
+          ."INNER JOIN ("
+          ."  SELECT oi.orderno,oi.times FROM ou_order ou "
+          ."  INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
+          .") b ON a.orderno=b.orderno "
+          ."SET a.frozen_price=a.frozen_price-b.times,"
+          ."a.status=(CASE WHEN (a.prod_price=a.now_price AND a.frozen_price-b.times=0) THEN 10 ELSE a.status END) "
+          ."WHERE a.frozen_price-b.times>=0 ";
+
+        // === 解冻商品数量 ===
+        $count = $M->ope($sql, $conn);
+        if(gm::isNull($count) || $count < 1) {
+          throw new MyException('解冻产品数量异常');
+        }
+
+        // === 更新订单状态 ===
+        $usql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
+        $count = $M->ope($usql, $conn);
+        if(gm::isNull($count) || $count != 1) {
+          throw new MyException('更新订单状态失效');
+        }
+        
+
+        $M->commit($conn);
+
+        // 创建新订单
+        try {
+          $M->prod("call pro_payorder('$orderno')");
+        } catch(Exception $e) { }
+
+        return '';
+      } catch(Exception $e) {
+        if(!is_null($M)) {
+          $M->rollback($conn);
+        }
+        throw $e;
+      }
+
+      return $result;
+    }    
   }
 ?>

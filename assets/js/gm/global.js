@@ -8,6 +8,7 @@ define(function(require, exports, module) {
   var _host = location.host;
   // 是否测试
   var _istest = _host.indexOf(':') > -1;
+  exports.istest = _istest;
 
   // 公用配置
   var _configs = {
@@ -52,7 +53,7 @@ define(function(require, exports, module) {
   exports.app = _app;
 
   // 微信登录
-  function _login() {
+  function _login(noclear) {
     var isLogin = ice.toEmpty(_session.get('isLogin'));
 
     if (isLogin != '1') {
@@ -72,6 +73,11 @@ define(function(require, exports, module) {
       } else {
         location.href = href;
       }
+    }
+
+    // 如果 noclear = true 则不要清除订单
+    if(!noclear) {
+      _clearOrder();
     }
 
     return this;
@@ -382,7 +388,7 @@ define(function(require, exports, module) {
   // 公用清除订单信息
   function _clearOrder() {
     var pay = _session.get('pay');
-    if(pay === '1') {
+    if(pay == '1') {
       _session.set('pay', '');
       _session.set('payOrder', '');
       _session.set('payFees', '');
@@ -396,14 +402,10 @@ define(function(require, exports, module) {
       }); 
     }
   };
-  exports.clearOrder = _clearOrder;
 
   // 公用初始化事件
   (function() {
     _car.init();
-
-    // 清除订单
-    _clearOrder();
 
     // 公用分享
     var $share = ice.query('.share');

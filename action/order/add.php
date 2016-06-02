@@ -7,15 +7,13 @@
   $prods = $_POST['prods'];
 
   if(is_null($gm_user)) {
-    $result = new JsonResult();
-    echo gm::getJson($result);
+    echo gm::getJson(JsonResult::login());
   } else {
     $uid = $gm_user['uid'];
     $openid = $gm_user['openid'];
 
     if(gm::isNull($uid) || gm::isNull($openid)) {
-      $result = new JsonResult();
-      echo gm::getJson($result);;
+      echo gm::getJson(JsonResult::login());
     } else {
       // 创建系统订单
       $bll = new OrderUserBLL();
