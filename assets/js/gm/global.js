@@ -402,6 +402,8 @@ define(function(require, exports, module) {
       }); 
     }
   };
+  // exports.clearOrder = _clearOrder;
+  exports.clearOrder = function(){};
 
   // 公用初始化事件
   (function() {

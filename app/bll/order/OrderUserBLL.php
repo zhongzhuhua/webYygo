@@ -313,17 +313,27 @@
         // 数据库操作
         $M = new MysqlDb();
 
-        // 查询订单所有产品
+        // 查询订单所有产品;
         $sql = 
-           "SELECT COUNT(times) FROM ou_order ou "
-          ."INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
-          ."INNER JOIN o_order o ON oi.orderno=o.orderno";
-        $needFee = $M->findOne($sql, null);
+           "SELECT oi.ou_orderno,oi.orderno,oi.times FROM ou_order ou "
+          ."INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno "
+          ."WHERE ou.status='12' AND ou.orderno='$orderno'"; 
 
-        if(gm::isNull($needFee) || $needFee == '0') {
+        $list = $M->find($sql, null);
+
+        if(count($list) == 0) {
           return '订单详情异常，请刷新重试';
-        } else if($needFee != $fees) {
-          if(!configs::$wxtest) {
+        }
+        
+        // 计算所需金额
+        if(!configs::wxtest) {
+          $needFees = 0;
+
+          foreach($list as $row) {
+            $needFees = $needFees + $row['times'];
+          }
+
+          if($fees != $needFees) {
             return '支付失败，支付金额错误';
           }
         }
@@ -332,9 +342,31 @@
         $conn = $M->getConn();
         $M->begin($conn);
 
-        // === 更新产品冻结数量 ===
-        $sql = 
-           "UPDATE o_order a "
+        // === 更新订单状态 ===
+        $sql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
+        $count = $M->ope($sql, $conn);
+        if($count != 1) {
+          $M->rollback($conn);
+          return '更新订单状态失效';
+        }
+
+        // === 循环更新冻结数量，生成用户订单 ===
+        foreach ($list as $row) {
+          $times = $row['times'];
+          $sql = 
+            "UPDATE o_order a "
+           ."SET a.frozen_price=a.frozen_price-$times,"
+           ."a.status=(CASE WHEN (a.prod_price=a.now_price AND a.frozen_price-$times=0) THEN 10 ELSE a.status END) "
+           ."WHERE a.frozen_price-$times>=0";
+          $count = $M->ope($sql, $conn);
+          if($count != 1) {
+            $M->rollback($conn);
+            return '解冻产品数量异常';
+          }
+        }
+        
+
+         "UPDATE o_order a "
           ."INNER JOIN ("
           ."  SELECT oi.orderno,oi.times FROM ou_order ou "
           ."  INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
@@ -343,28 +375,8 @@
           ."a.status=(CASE WHEN (a.prod_price=a.now_price AND a.frozen_price-b.times=0) THEN 10 ELSE a.status END) "
           ."WHERE a.frozen_price-b.times>=0 ";
 
-        // === 解冻商品数量 ===
-        $count = $M->ope($sql, $conn);
-        if(gm::isNull($count) || $count < 1) {
-          throw new MyException('解冻产品数量异常');
-        }
-
-        // === 更新订单状态 ===
-        $usql = "update ou_order a set a.status='0' where a.status='12' and a.orderno='$orderno'";
-        $count = $M->ope($usql, $conn);
-        if(gm::isNull($count) || $count != 1) {
-          throw new MyException('更新订单状态失效');
-        }
-        
-
         $M->commit($conn);
 
-        // 创建新订单
-        try {
-          $M->prod("call pro_payorder('$orderno')");
-        } catch(Exception $e) { }
-
-        return '';
       } catch(Exception $e) {
         if(!is_null($M)) {
           $M->rollback($conn);
