@@ -315,7 +315,7 @@
 
         // 查询订单所有产品;
         $sql = 
-           "SELECT oi.ou_orderno,oi.orderno,oi.times FROM ou_order ou "
+           "SELECT oi.ou_orderno,oi.orderno,oi.times,ou.uid FROM ou_order ou "
           ."INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno "
           ."WHERE ou.status='12' AND ou.orderno='$orderno'"; 
 
@@ -363,19 +363,32 @@
             $M->rollback($conn);
             return '解冻产品数量异常';
           }
+
+          // 循环生成用户码
+          for($i = 0; $ < $times; i++) {
+            $utime = gm::getNowTime();
+            $utime2 = substr(preg_replace('/[^\d]/','',$utime), 8);
+            $sql = 
+               "UPDATE o_ordercode a "
+              ."INNER JOIN ( "
+              ."  SELECT ucode,orderno FROM o_ordercode WHERE orderno='2016060218002908569370' ORDER BY RAND() LIMIT 1 "
+              .") b ON a.ucode=b.ucode AND a.orderno=b.orderno "
+              ."SET a.utime='$utime',a.utime2='$utime2',a.uid='$uid',a.ou_orderno='$orderno'";
+            $count = $M->ope($sql, ,$conn);
+            if($count != 1) {
+              $M->rollback($conn);
+              return '生成中奖码异常';
+            }
+          }
         }
-        
 
-         "UPDATE o_order a "
-          ."INNER JOIN ("
-          ."  SELECT oi.orderno,oi.times FROM ou_order ou "
-          ."  INNER JOIN ou_orderinfo oi ON ou.orderno=oi.ou_orderno AND ou.status=12 AND ou.orderno='$orderno' "
-          .") b ON a.orderno=b.orderno "
-          ."SET a.frozen_price=a.frozen_price-b.times,"
-          ."a.status=(CASE WHEN (a.prod_price=a.now_price AND a.frozen_price-b.times=0) THEN 10 ELSE a.status END) "
-          ."WHERE a.frozen_price-b.times>=0 ";
-
+        // 提交数据
         $M->commit($conn);
+
+        // 创建新订单
+        try {
+          $M->prod("call pro_neworders('$orderno')");
+        } catch(Exception $e) { }
 
       } catch(Exception $e) {
         if(!is_null($M)) {

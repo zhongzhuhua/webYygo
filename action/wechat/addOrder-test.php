@@ -13,7 +13,7 @@
   // 统一订单接口
   $input = new WxPayUnifiedOrder();
   $input->SetBody("幕拍商品");
-  $input->SetGoods_tag("幕拍商品");
+  $input->SetGoods_tag("幕拍商品"); 
   $input->SetOut_trade_no('zhongzhuhua');
   $input->SetTotal_fee(1);
   $input->SetTime_start(date("YmdHis"));
